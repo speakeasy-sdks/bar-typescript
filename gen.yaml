@@ -2,20 +2,15 @@ configVersion: 1.0.0
 management:
   docChecksum: 8db86c8597b22945c2b3f77241037075
   docVersion: 1.0.0
-  speakeasyVersion: 1.111.0
-  generationVersion: 2.173.0
+  speakeasyVersion: 1.114.1
+  generationVersion: 2.181.1
 generation:
-  comments:
-    disableComments: false
-    omitDescriptionIfSummaryPresent: false
-  baseServerURL: ""
-  repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
+  comments: {}
   sdkClassName: speakeasy-bar
-  singleTagPerOp: false
-  tagNamespacingDisabled: false
+  repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
 features:
   typescript:
-    core: 2.94.0
+    core: 3.1.0
     errors: 2.81.7
     examples: 2.81.3
     globalSecurity: 2.82.0
@@ -23,10 +18,18 @@ features:
     inputOutputModels: 2.81.1
     serverIDs: 2.81.2
 typescript:
-  version: 0.1.0
+  version: 0.2.0
   author: speakeasy-bar-test
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
+  imports:
+    option: openapi
+    paths:
+      callbacks: sdk/models/callbacks
+      errors: sdk/models/errors
+      operations: sdk/models/operations
+      shared: sdk/models/shared
+      webhooks: sdk/models/webhooks
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
   maxMethodParams: 0
   packageName: speakeasy-bar

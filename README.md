@@ -15,15 +15,15 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 - [ ] 🎁 Publish your SDK to package managers by [configuring automatic publishing](https://www.speakeasyapi.dev/docs/productionize-sdks/publish-sdks)
 - [ ] ✨ When ready to productionize, delete this section from the README
 <!-- Start SDK Installation -->
-# SDK Installation
+## SDK Installation
 
-## NPM
+### NPM
 
 ```bash
 npm add https://github.com/speakeasy-sdks/bar-typescript
 ```
 
-## Yarn
+### Yarn
 
 ```bash
 yarn add https://github.com/speakeasy-sdks/bar-typescript
@@ -32,8 +32,6 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 
 ## SDK Example Usage
 <!-- Start SDK Example Usage -->
-
-
 ```typescript
 import { SpeakeasyBar } from "speakeasy-bar";
 import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
@@ -54,34 +52,32 @@ import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
 <!-- End SDK Example Usage -->
 
 <!-- Start SDK Available Operations -->
-# Available Resources and Operations
+## Available Resources and Operations
 
 
-## [authentication](docs/sdks/authentication/README.md)
+### [.authentication](docs/sdks/authentication/README.md)
 
 * [authenticate](docs/sdks/authentication/README.md#authenticate) - Authenticate with the API by providing a username and password.
 
-## [config](docs/sdks/config/README.md)
-
-* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
-
-## [drinks](docs/sdks/drinks/README.md)
+### [.drinks](docs/sdks/drinks/README.md)
 
 * [getDrink](docs/sdks/drinks/README.md#getdrink) - Get a drink.
 * [listDrinks](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
 
-## [ingredients](docs/sdks/ingredients/README.md)
+### [.ingredients](docs/sdks/ingredients/README.md)
 
 * [listIngredients](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
 
-## [orders](docs/sdks/orders/README.md)
+### [.orders](docs/sdks/orders/README.md)
 
 * [createOrder](docs/sdks/orders/README.md#createorder) - Create an order.
+
+### [.config](docs/sdks/config/README.md)
+
+* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
 <!-- End SDK Available Operations -->
 
 <!-- Start Dev Containers -->
-
-
 
 <!-- End Dev Containers -->
 
@@ -134,20 +130,19 @@ You can override the default server globally by passing a server name to the `se
 
 
 Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
- * `environment: ServerEnvironment`
+ * `environment: models.ServerEnvironment`
 
  * `organization: string`
 
 For example:
-
 
 ```typescript
 import { SpeakeasyBar } from "speakeasy-bar";
 
 (async () => {
     const sdk = new SpeakeasyBar({
-        apiKey: "",
         server: "customer",
+        apiKey: "",
     });
 
     const res = await sdk.authentication.authenticate({});
@@ -164,14 +159,13 @@ import { SpeakeasyBar } from "speakeasy-bar";
 
 The default server can also be overridden globally by passing a URL to the `serverURL: str` optional parameter when initializing the SDK client instance. For example:
 
-
 ```typescript
 import { SpeakeasyBar } from "speakeasy-bar";
 
 (async () => {
     const sdk = new SpeakeasyBar({
-        apiKey: "",
         serverURL: "https://speakeasy.bar",
+        apiKey: "",
     });
 
     const res = await sdk.authentication.authenticate({});
@@ -203,9 +197,41 @@ const httpClient = axios.create({
 
 const sdk = new SpeakeasyBar({defaultClient: httpClient});
 ```
-
-
 <!-- End Custom HTTP Client -->
+
+
+
+<!-- Start Authentication -->
+
+# Authentication
+
+## Per-Client Security Schemes
+
+Your SDK supports the following security scheme globally:
+
+| Name     | Type     | Scheme   |
+| -------- | -------- | -------- |
+| `apiKey` | apiKey   | API key  |
+
+To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
+
+```typescript
+import { SpeakeasyBar } from "speakeasy-bar";
+
+(async () => {
+    const sdk = new SpeakeasyBar({
+        apiKey: "",
+    });
+
+    const res = await sdk.authentication.authenticate({});
+
+    if (res.statusCode == 200) {
+        // handle response
+    }
+})();
+
+```
+<!-- End Authentication -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
