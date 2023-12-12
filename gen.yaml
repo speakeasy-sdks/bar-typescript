@@ -2,8 +2,8 @@ configVersion: 1.0.0
 management:
   docChecksum: 8db86c8597b22945c2b3f77241037075
   docVersion: 1.0.0
-  speakeasyVersion: 1.121.1
-  generationVersion: 2.194.1
+  speakeasyVersion: 1.126.0
+  generationVersion: 2.213.3
 generation:
   comments: {}
   sdkClassName: speakeasy-bar
@@ -12,15 +12,16 @@ generation:
     optionalPropertyRendering: withExample
 features:
   typescript:
-    core: 3.1.4
+    core: 3.3.0
     errors: 2.81.8
     examples: 2.81.3
-    globalSecurity: 2.82.0
+    globalSecurity: 2.82.1
     globalServerURLs: 2.82.1
     inputOutputModels: 2.82.0
+    methodSecurity: 2.82.0
     serverIDs: 2.81.2
 typescript:
-  version: 0.3.3
+  version: 0.4.0
   author: speakeasy-bar-test
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
@@ -38,3 +39,4 @@ typescript:
   outputModelSuffix: output
   packageName: speakeasy-bar
   repoSubDirectory: .
+  templateVersion: v1

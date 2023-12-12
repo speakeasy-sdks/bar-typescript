@@ -48,7 +48,6 @@ src/sdk/models/operations/index.ts
 src/sdk/models/shared/index.ts
 src/sdk/models/callbacks/index.ts
 src/sdk/models/webhooks/index.ts
-USAGE.md
 docs/sdk/models/operations/authenticaterequestbody.md
 docs/sdk/models/operations/authenticateresponsebody.md
 docs/sdk/models/operations/authenticateresponse.md
@@ -86,4 +85,5 @@ docs/sdks/drinks/README.md
 docs/sdks/ingredients/README.md
 docs/sdks/orders/README.md
 docs/sdks/config/README.md
+USAGE.md
 .gitattributes

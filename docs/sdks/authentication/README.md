@@ -18,9 +18,9 @@ Authenticate with the API by providing a username and password.
 ```typescript
 import { SpeakeasyBar } from "speakeasy-bar";
 
-(async() => {
+async function run() {
   const sdk = new SpeakeasyBar({
-    apiKey: "",
+    apiKey: "<YOUR_API_KEY_HERE>",
   });
 
   const res = await sdk.authentication.authenticate({});
@@ -28,7 +28,9 @@ import { SpeakeasyBar } from "speakeasy-bar";
   if (res.statusCode == 200) {
     // handle response
   }
-})();
+}
+
+run();
 ```
 
 ### Parameters

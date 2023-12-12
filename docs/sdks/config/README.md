@@ -15,9 +15,9 @@ Subscribe to webhooks.
 import { SpeakeasyBar } from "speakeasy-bar";
 import { Webhook } from "speakeasy-bar/dist/sdk/models/operations";
 
-(async() => {
+async function run() {
   const sdk = new SpeakeasyBar({
-    apiKey: "",
+    apiKey: "<YOUR_API_KEY_HERE>",
   });
 
   const res = await sdk.config.subscribeToWebhooks([
@@ -27,7 +27,9 @@ import { Webhook } from "speakeasy-bar/dist/sdk/models/operations";
   if (res.statusCode == 200) {
     // handle response
   }
-})();
+}
+
+run();
 ```
 
 ### Parameters
