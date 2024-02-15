@@ -25,7 +25,7 @@ async function run() {
 
   const res = await sdk.ingredients.listIngredients({
     ingredients: [
-      "string",
+      "<value>",
     ],
   });
 
