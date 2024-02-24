@@ -40,7 +40,9 @@ import { SpeakeasyBar } from "speakeasy-bar";
 import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
 
 async function run() {
-    const sdk = new SpeakeasyBar();
+    const sdk = new SpeakeasyBar({
+        apiKey: "<YOUR_API_KEY_HERE>",
+    });
 
     const res = await sdk.drinks.listDrinks({});
 
@@ -95,9 +97,7 @@ Example
 import { SpeakeasyBar } from "speakeasy-bar";
 
 async function run() {
-    const sdk = new SpeakeasyBar({
-        apiKey: "<YOUR_API_KEY_HERE>",
-    });
+    const sdk = new SpeakeasyBar();
 
     let res;
     try {
@@ -143,7 +143,6 @@ import { SpeakeasyBar } from "speakeasy-bar";
 async function run() {
     const sdk = new SpeakeasyBar({
         server: "customer",
-        apiKey: "<YOUR_API_KEY_HERE>",
     });
 
     const res = await sdk.authentication.authenticate({});
@@ -172,7 +171,6 @@ import { SpeakeasyBar } from "speakeasy-bar";
 async function run() {
     const sdk = new SpeakeasyBar({
         serverURL: "https://speakeasy.bar",
-        apiKey: "<YOUR_API_KEY_HERE>",
     });
 
     const res = await sdk.authentication.authenticate({});

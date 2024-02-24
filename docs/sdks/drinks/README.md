@@ -65,7 +65,9 @@ import { SpeakeasyBar } from "speakeasy-bar";
 import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
 
 async function run() {
-  const sdk = new SpeakeasyBar();
+  const sdk = new SpeakeasyBar({
+    apiKey: "<YOUR_API_KEY_HERE>",
+  });
 
   const res = await sdk.drinks.listDrinks({});
 

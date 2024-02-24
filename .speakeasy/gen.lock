@@ -4,21 +4,20 @@ management:
   docChecksum: 8db86c8597b22945c2b3f77241037075
   docVersion: 1.0.0
   speakeasyVersion: internal
-  generationVersion: 2.258.2
-  releaseVersion: 0.5.1
-  configChecksum: 70e1edf0172672f3c45d80d327261b58
+  generationVersion: 2.272.4
+  releaseVersion: 0.6.0
+  configChecksum: 17eb0eb79ed9f72aa75c6d533390c723
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
 features:
   typescript:
-    core: 3.4.7
+    core: 3.4.8
     errors: 2.81.8
     examples: 2.81.3
-    globalSecurity: 2.82.2
+    globalSecurity: 2.82.3
     globalServerURLs: 2.82.1
     inputOutputModels: 2.83.0
-    methodSecurity: 2.82.0
     serverIDs: 2.81.2
 generatedFiles:
   - src/sdk/authentication.ts
