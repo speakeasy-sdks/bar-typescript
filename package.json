@@ -1,6 +1,6 @@
 {
   "name": "speakeasy-bar",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "speakeasy-bar-test",
   "scripts": {
     "prepare": "tsc --build",

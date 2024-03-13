@@ -3,10 +3,10 @@ id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
   docChecksum: 8db86c8597b22945c2b3f77241037075
   docVersion: 1.0.0
-  speakeasyVersion: internal
-  generationVersion: 2.275.4
-  releaseVersion: 0.7.0
-  configChecksum: 769270ca1fdcf11850b56fe3dd69e771
+  speakeasyVersion: 1.207.1
+  generationVersion: 2.280.6
+  releaseVersion: 0.7.1
+  configChecksum: 1c0e204f06ec82f0c56fc523c9a2707d
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -17,7 +17,7 @@ features:
     errors: 2.81.8
     examples: 2.81.3
     globalSecurity: 2.82.4
-    globalServerURLs: 2.82.1
+    globalServerURLs: 2.82.2
     inputOutputModels: 2.83.0
     serverIDs: 2.81.2
     webhooks: 1.0.0
