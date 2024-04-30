@@ -22,6 +22,7 @@ jobs:
       openapi_docs: |
         - ./openapi.yaml
       speakeasy_version: latest
+      create_release: true
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
