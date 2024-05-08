@@ -1,0 +1,14 @@
+speakeasyVersion: 1.284.0
+sources: {}
+targets: {}
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        bar-api:
+            inputs:
+                - location: ./openapi.yaml
+    targets:
+        bar-typescript:
+            target: typescript
+            source: bar-api
