@@ -10,10 +10,10 @@ import { SDKConfiguration } from "./sdk";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 
 /**
- * The ingredients endpoints.
+ * The configuration endpoints.
  */
 
-export class Ingredients {
+export class Configuration {
     private sdkConfiguration: SDKConfiguration;
 
     constructor(sdkConfig: SDKConfiguration) {
@@ -21,24 +21,30 @@ export class Ingredients {
     }
 
     /**
-     * Get a list of ingredients.
+     * Subscribe to webhooks.
      *
      * @remarks
-     * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
+     * Subscribe to webhooks.
      */
-    async listIngredients(
-        req: operations.ListIngredientsRequest,
+    async subscribeToWebhooks(
+        req: operations.RequestBody[],
         config?: AxiosRequestConfig
-    ): Promise<operations.ListIngredientsResponse> {
-        if (!(req instanceof utils.SpeakeasyBase)) {
-            req = new operations.ListIngredientsRequest(req);
-        }
-
+    ): Promise<operations.SubscribeToWebhooksResponse> {
         const baseURL: string = utils.templateUrl(
             this.sdkConfiguration.serverURL,
             this.sdkConfiguration.serverDefaults
         );
-        const operationUrl: string = baseURL.replace(/\/$/, "") + "/ingredients";
+        const operationUrl: string = baseURL.replace(/\/$/, "") + "/webhooks/subscribe";
+
+        let [reqBodyHeaders, reqBody]: [object, any] = [{}, null];
+
+        try {
+            [reqBodyHeaders, reqBody] = utils.serializeRequestBody(req, "request", "json");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                throw new Error(`Error serializing request body, cause: ${e.message}`);
+            }
+        }
         const client: AxiosInstance = this.sdkConfiguration.defaultClient;
         let globalSecurity = this.sdkConfiguration.security;
         if (typeof globalSecurity === "function") {
@@ -48,18 +54,23 @@ export class Ingredients {
             globalSecurity = new shared.Security(globalSecurity);
         }
         const properties = utils.parseSecurityProperties(globalSecurity);
-        const headers: RawAxiosRequestHeaders = { ...config?.headers, ...properties.headers };
-        const queryParams: string = utils.serializeQueryParams(req);
+        const headers: RawAxiosRequestHeaders = {
+            ...reqBodyHeaders,
+            ...config?.headers,
+            ...properties.headers,
+        };
+        if (reqBody == null) throw new Error("request body is required");
         headers["Accept"] = "application/json";
 
         headers["user-agent"] = this.sdkConfiguration.userAgent;
 
         const httpRes: AxiosResponse = await client.request({
             validateStatus: () => true,
-            url: operationUrl + queryParams,
-            method: "get",
+            url: operationUrl,
+            method: "post",
             headers: headers,
             responseType: "arraybuffer",
+            data: reqBody,
             ...config,
         });
 
@@ -69,30 +80,15 @@ export class Ingredients {
             throw new Error(`status code not found in response: ${httpRes}`);
         }
 
-        const res: operations.ListIngredientsResponse = new operations.ListIngredientsResponse({
-            statusCode: httpRes.status,
-            contentType: responseContentType,
-            rawResponse: httpRes,
-        });
+        const res: operations.SubscribeToWebhooksResponse =
+            new operations.SubscribeToWebhooksResponse({
+                statusCode: httpRes.status,
+                contentType: responseContentType,
+                rawResponse: httpRes,
+            });
         const decodedRes = new TextDecoder().decode(httpRes?.data);
         switch (true) {
             case httpRes?.status == 200:
-                if (utils.matchContentType(responseContentType, `application/json`)) {
-                    res.classes = [];
-                    const resFieldDepth: number = utils.getResFieldDepth(res);
-                    res.classes = utils.objectToClass(
-                        JSON.parse(decodedRes),
-                        shared.Ingredient,
-                        resFieldDepth
-                    );
-                } else {
-                    throw new errors.SDKError(
-                        "unknown content-type received: " + responseContentType,
-                        httpRes.status,
-                        decodedRes,
-                        httpRes
-                    );
-                }
                 break;
             case httpRes?.status >= 400 && httpRes?.status < 500:
                 throw new errors.SDKError(

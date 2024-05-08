@@ -7,11 +7,8 @@ import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
 
 export class CreateOrderRequest extends SpeakeasyBase {
-    @SpeakeasyMetadata({
-        data: "request, media_type=application/json",
-        elemType: shared.OrderInput,
-    })
-    requestBody: shared.OrderInput[];
+    @SpeakeasyMetadata({ data: "request, media_type=application/json" })
+    requestBody: any;
 
     /**
      * The url to call when the order is updated.
@@ -21,6 +18,9 @@ export class CreateOrderRequest extends SpeakeasyBase {
 }
 
 export class CreateOrderResponse extends SpeakeasyBase {
+    @SpeakeasyMetadata()
+    body?: Uint8Array;
+
     /**
      * HTTP response content type for this operation
      */
@@ -34,12 +34,6 @@ export class CreateOrderResponse extends SpeakeasyBase {
     error?: shared.ErrorT;
 
     /**
-     * The order was created successfully.
-     */
-    @SpeakeasyMetadata()
-    order?: shared.Order;
-
-    /**
      * HTTP response status code for this operation
      */
     @SpeakeasyMetadata()
@@ -50,4 +44,10 @@ export class CreateOrderResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     rawResponse: AxiosResponse;
+
+    /**
+     * The order was created successfully.
+     */
+    @SpeakeasyMetadata()
+    oneOf?: any;
 }

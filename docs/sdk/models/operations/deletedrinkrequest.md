@@ -1,4 +1,4 @@
-# GetDrinkRequest
+# DeleteDrinkRequest
 
 
 ## Fields

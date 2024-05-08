@@ -1,5 +1,9 @@
-# Config
-(*config*)
+# Configuration
+(*configuration*)
+
+## Overview
+
+The configuration endpoints.
 
 ### Available Operations
 
@@ -20,7 +24,7 @@ async function run() {
     apiKey: "<YOUR_API_KEY_HERE>",
   });
 
-  const res = await sdk.config.subscribeToWebhooks([
+  const res = await sdk.configuration.subscribeToWebhooks([
     {},
   ]);
 

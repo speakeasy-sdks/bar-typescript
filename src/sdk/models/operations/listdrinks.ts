@@ -10,8 +10,8 @@ export class ListDrinksRequest extends SpeakeasyBase {
     /**
      * The type of drink to filter by. If not provided all drinks will be returned.
      */
-    @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=drinkType" })
-    drinkType?: shared.DrinkType;
+    @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=type" })
+    type?: shared.DrinkType;
 }
 
 export class ListDrinksResponse extends SpeakeasyBase {
@@ -42,6 +42,6 @@ export class ListDrinksResponse extends SpeakeasyBase {
     /**
      * A list of drinks.
      */
-    @SpeakeasyMetadata({ elemType: shared.Drink })
-    classes?: shared.Drink[];
+    @SpeakeasyMetadata()
+    anies?: any[];
 }

@@ -12,6 +12,10 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeader
 /**
  * The orders endpoints.
  */
+export enum CreateOrderAcceptEnum {
+    applicationJson = "application/json",
+    applicationXml = "application/xml",
+}
 
 export class Orders {
     private sdkConfiguration: SDKConfiguration;
@@ -28,7 +32,8 @@ export class Orders {
      */
     async createOrder(
         req: operations.CreateOrderRequest,
-        config?: AxiosRequestConfig
+        config?: AxiosRequestConfig,
+        acceptHeaderOverride?: CreateOrderAcceptEnum
     ): Promise<operations.CreateOrderResponse> {
         if (!(req instanceof utils.SpeakeasyBase)) {
             req = new operations.CreateOrderRequest(req);
@@ -65,7 +70,11 @@ export class Orders {
         };
         const queryParams: string = utils.serializeQueryParams(req);
         if (reqBody == null) throw new Error("request body is required");
-        headers["Accept"] = "application/json";
+        if (acceptHeaderOverride !== undefined) {
+            headers["Accept"] = acceptHeaderOverride.toString();
+        } else {
+            headers["Accept"] = "application/json;q=1, application/xml;q=0";
+        }
 
         headers["user-agent"] = this.sdkConfiguration.userAgent;
 
@@ -94,7 +103,9 @@ export class Orders {
         switch (true) {
             case httpRes?.status == 200:
                 if (utils.matchContentType(responseContentType, `application/json`)) {
-                    res.order = utils.objectToClass(JSON.parse(decodedRes), shared.Order);
+                    res.oneOf = JSON.parse(decodedRes);
+                } else if (utils.matchContentType(responseContentType, `application/xml`)) {
+                    res.body = httpRes?.data;
                 } else {
                     throw new errors.SDKError(
                         "unknown content-type received: " + responseContentType,

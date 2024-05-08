@@ -5,9 +5,22 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
-import { Expose, Type } from "class-transformer";
 
-export class StockUpdateResponse extends SpeakeasyBase {
+export class SearchDrinksRequest extends SpeakeasyBase {
+    /**
+     * The search query.
+     */
+    @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=query" })
+    query: string;
+
+    /**
+     * The type of drink to filter by. If not provided all drinks will be returned.
+     */
+    @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=type" })
+    type?: shared.DrinkType;
+}
+
+export class SearchDrinksResponse extends SpeakeasyBase {
     /**
      * HTTP response content type for this operation
      */
@@ -31,16 +44,10 @@ export class StockUpdateResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     rawResponse: AxiosResponse;
-}
 
-export class StockUpdateRequestBody extends SpeakeasyBase {
-    @SpeakeasyMetadata()
-    @Expose({ name: "drink" })
-    @Type(() => shared.DrinkInput)
-    drink?: shared.DrinkInput;
-
-    @SpeakeasyMetadata()
-    @Expose({ name: "ingredient" })
-    @Type(() => shared.Ingredient)
-    ingredient?: shared.Ingredient;
+    /**
+     * A list of drinks.
+     */
+    @SpeakeasyMetadata({ elemType: shared.Drink })
+    classes?: shared.Drink[];
 }

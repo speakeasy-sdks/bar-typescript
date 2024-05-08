@@ -4,7 +4,12 @@
 
 export * from "./authenticate";
 export * from "./createorder";
+export * from "./deletedrink";
 export * from "./getdrink";
 export * from "./listdrinks";
-export * from "./listingredients";
+export * from "./searchdrinks";
 export * from "./subscribetowebhooks";
+export * from "./updatedrinkjson";
+export * from "./updatedrinkmultipart";
+export * from "./updatedrinkraw";
+export * from "./updatedrinkstring";

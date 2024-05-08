@@ -7,7 +7,7 @@ workflow:
     sources:
         bar-api:
             inputs:
-                - location: ./openapi.yaml
+                - location: https://raw.githubusercontent.com/speakeasy-api/openapi-reference-documentation/main/example/openapi.yaml
     targets:
         bar-typescript:
             target: typescript

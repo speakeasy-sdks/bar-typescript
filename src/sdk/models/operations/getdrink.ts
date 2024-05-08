@@ -7,8 +7,8 @@ import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
 
 export class GetDrinkRequest extends SpeakeasyBase {
-    @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=name" })
-    name: string;
+    @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=productCode" })
+    productCode: string;
 }
 
 export class GetDrinkResponse extends SpeakeasyBase {
@@ -29,6 +29,9 @@ export class GetDrinkResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     error?: shared.ErrorT;
+
+    @SpeakeasyMetadata()
+    headers: Record<string, string[]>;
 
     /**
      * HTTP response status code for this operation

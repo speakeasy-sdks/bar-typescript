@@ -5,14 +5,30 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
-import { Expose, Type } from "class-transformer";
 
-export class StockUpdateResponse extends SpeakeasyBase {
+export class UpdateDrinkJsonRequest extends SpeakeasyBase {
+    @SpeakeasyMetadata({ data: "request, media_type=application/json" })
+    drink: shared.DrinkInput;
+
+    @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=productCode" })
+    productCode: string;
+}
+
+export class UpdateDrinkJsonResponse extends SpeakeasyBase {
+    @SpeakeasyMetadata()
+    body?: Uint8Array;
+
     /**
      * HTTP response content type for this operation
      */
     @SpeakeasyMetadata()
     contentType: string;
+
+    /**
+     * The drink was updated successfully.
+     */
+    @SpeakeasyMetadata()
+    drink?: shared.Drink;
 
     /**
      * An unknown error occurred interacting with the API.
@@ -31,16 +47,4 @@ export class StockUpdateResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     rawResponse: AxiosResponse;
-}
-
-export class StockUpdateRequestBody extends SpeakeasyBase {
-    @SpeakeasyMetadata()
-    @Expose({ name: "drink" })
-    @Type(() => shared.DrinkInput)
-    drink?: shared.DrinkInput;
-
-    @SpeakeasyMetadata()
-    @Expose({ name: "ingredient" })
-    @Type(() => shared.Ingredient)
-    ingredient?: shared.Ingredient;
 }

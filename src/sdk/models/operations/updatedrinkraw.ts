@@ -6,20 +6,29 @@ import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
 
-export class ListIngredientsRequest extends SpeakeasyBase {
-    /**
-     * A list of ingredients to filter by. If not provided all ingredients will be returned.
-     */
-    @SpeakeasyMetadata({ data: "queryParam, style=form;explode=false;name=ingredients" })
-    ingredients?: string[];
+export class UpdateDrinkRawRequest extends SpeakeasyBase {
+    @SpeakeasyMetadata({ data: "request, media_type=text/csv" })
+    requestBody: Uint8Array;
+
+    @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=productCode" })
+    productCode: string;
 }
 
-export class ListIngredientsResponse extends SpeakeasyBase {
+export class UpdateDrinkRawResponse extends SpeakeasyBase {
+    @SpeakeasyMetadata()
+    body?: Uint8Array;
+
     /**
      * HTTP response content type for this operation
      */
     @SpeakeasyMetadata()
     contentType: string;
+
+    /**
+     * The drink was updated successfully.
+     */
+    @SpeakeasyMetadata()
+    drink?: shared.Drink;
 
     /**
      * An unknown error occurred interacting with the API.
@@ -38,10 +47,4 @@ export class ListIngredientsResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     rawResponse: AxiosResponse;
-
-    /**
-     * A list of ingredients.
-     */
-    @SpeakeasyMetadata({ elemType: shared.Ingredient })
-    classes?: shared.Ingredient[];
 }

@@ -25,13 +25,7 @@ async function run() {
   });
 
   const res = await sdk.orders.createOrder({
-    requestBody: [
-      {
-        productCode: "APM-1F2D3",
-        quantity: 26535,
-        type: OrderType.Drink,
-      },
-    ],
+    requestBody: "<value>",
   });
 
   if (res.statusCode == 200) {

@@ -5,33 +5,29 @@
 import * as utils from "../internal/utils";
 import * as shared from "../sdk/models/shared";
 import { Authentication } from "./authentication";
-import { Config } from "./config";
+import { Configuration } from "./configuration";
 import { Drinks } from "./drinks";
-import { Ingredients } from "./ingredients";
 import { Orders } from "./orders";
 import axios from "axios";
 import { AxiosInstance } from "axios";
 
 /**
- * The production server.
- */
-export const ServerProd = "prod";
-/**
- * The staging server.
- */
-export const ServerStaging = "staging";
-/**
- * A per-organization and per-environment API.
- */
-export const ServerCustomer = "customer";
-/**
  * Contains the list of servers available to the SDK
  */
-export const ServerList = {
-    [ServerProd]: "https://speakeasy.bar",
-    [ServerStaging]: "https://staging.speakeasy.bar",
-    [ServerCustomer]: "https://{organization}.{environment}.speakeasy.bar",
-} as const;
+export const ServerList = [
+    /**
+     * The production server.
+     */
+    "https://speakeasy.bar",
+    /**
+     * The staging server.
+     */
+    "https://staging.speakeasy.bar",
+    /**
+     * A per-organization and per-environment API.
+     */
+    "https://{organization}.{environment}.speakeasy.bar",
+] as const;
 
 /**
  * The environment name. Defaults to the production environment.
@@ -56,7 +52,7 @@ export type SDKProps = {
     /**
      * Allows overriding the default server used by the SDK
      */
-    server?: keyof typeof ServerList;
+    serverIdx?: number;
 
     /**
      * Allows setting the environment variable for url substitution
@@ -85,9 +81,9 @@ export class SDKConfiguration {
     serverDefaults: any;
     language = "typescript";
     openapiDocVersion = "1.0.0";
-    sdkVersion = "0.7.4";
+    sdkVersion = "0.8.0";
     genVersion = "2.326.3";
-    userAgent = "speakeasy-sdk/typescript 0.7.4 2.326.3 1.0.0 speakeasy-bar";
+    userAgent = "speakeasy-sdk/typescript 0.8.0 2.326.3 1.0.0 speakeasy-bar";
     retryConfig?: utils.RetryConfig;
     public constructor(init?: Partial<SDKConfiguration>) {
         Object.assign(this, init);
@@ -112,14 +108,13 @@ export class SpeakeasyBar {
      */
     public drinks: Drinks;
     /**
-     * The ingredients endpoints.
-     */
-    public ingredients: Ingredients;
-    /**
      * The orders endpoints.
      */
     public orders: Orders;
-    public config: Config;
+    /**
+     * The configuration endpoints.
+     */
+    public configuration: Configuration;
 
     private sdkConfiguration: SDKConfiguration;
 
@@ -127,19 +122,22 @@ export class SpeakeasyBar {
         let serverURL = props?.serverURL;
         let defaults: any = {};
 
-        const serverDefaults = {
-            prod: {},
-            staging: {},
-            customer: {
+        const serverDefaults = [
+            {},
+            {},
+            {
                 environment: props?.environment?.toString() ?? "prod",
                 organization: props?.organization?.toString() ?? "api",
             },
-        };
+        ];
 
         if (!serverURL) {
-            const server = props?.server ?? ServerProd;
-            serverURL = ServerList[server];
-            defaults = serverDefaults[server];
+            const serverIdx = props?.serverIdx ?? 0;
+            if (serverIdx < 0 || serverIdx >= ServerList.length) {
+                throw new Error(`Invalid server index ${serverIdx}`);
+            }
+            serverURL = ServerList[serverIdx];
+            defaults = serverDefaults[serverIdx];
         }
 
         const defaultClient = props?.defaultClient ?? axios.create();
@@ -154,8 +152,7 @@ export class SpeakeasyBar {
 
         this.authentication = new Authentication(this.sdkConfiguration);
         this.drinks = new Drinks(this.sdkConfiguration);
-        this.ingredients = new Ingredients(this.sdkConfiguration);
         this.orders = new Orders(this.sdkConfiguration);
-        this.config = new Config(this.sdkConfiguration);
+        this.configuration = new Configuration(this.sdkConfiguration);
     }
 }

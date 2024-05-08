@@ -5,9 +5,13 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../../../sdk/models/shared";
 import { AxiosResponse } from "axios";
-import { Expose, Type } from "class-transformer";
 
-export class StockUpdateResponse extends SpeakeasyBase {
+export class DeleteDrinkRequest extends SpeakeasyBase {
+    @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=productCode" })
+    productCode: string;
+}
+
+export class DeleteDrinkResponse extends SpeakeasyBase {
     /**
      * HTTP response content type for this operation
      */
@@ -31,16 +35,4 @@ export class StockUpdateResponse extends SpeakeasyBase {
      */
     @SpeakeasyMetadata()
     rawResponse: AxiosResponse;
-}
-
-export class StockUpdateRequestBody extends SpeakeasyBase {
-    @SpeakeasyMetadata()
-    @Expose({ name: "drink" })
-    @Type(() => shared.DrinkInput)
-    drink?: shared.DrinkInput;
-
-    @SpeakeasyMetadata()
-    @Expose({ name: "ingredient" })
-    @Type(() => shared.Ingredient)
-    ingredient?: shared.Ingredient;
 }

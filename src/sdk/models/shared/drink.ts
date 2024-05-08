@@ -3,16 +3,46 @@
  */
 
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { DrinkIngredient } from "./drinkingredient";
 import { DrinkType } from "./drinktype";
-import { Expose } from "class-transformer";
+import { Expose, Type } from "class-transformer";
+
+/**
+ * The level of data included in the response.
+ */
+export enum DataLevel {
+    Authenticated = "authenticated",
+}
 
 export class Drink extends SpeakeasyBase {
+    /**
+     * The level of data included in the response.
+     */
+    @SpeakeasyMetadata()
+    @Expose({ name: "dataLevel" })
+    dataLevel?: DataLevel;
+
+    /**
+     * The ingredients required to make the drink, only available when authenticated.
+     */
+    @SpeakeasyMetadata({ elemType: DrinkIngredient })
+    @Expose({ name: "ingredients" })
+    @Type(() => DrinkIngredient)
+    ingredients?: DrinkIngredient[];
+
     /**
      * The name of the drink.
      */
     @SpeakeasyMetadata()
     @Expose({ name: "name" })
     name: string;
+
+    /**
+     * A photo of the drink.
+     */
+    @SpeakeasyMetadata()
+    @Expose({ name: "photo" })
+    photo?: string;
 
     /**
      * The price of one unit of the drink in US cents.
@@ -22,11 +52,11 @@ export class Drink extends SpeakeasyBase {
     price: number;
 
     /**
-     * The product code of the drink, only available when authenticated.
+     * The product code of a drink, only available when authenticated.
      */
     @SpeakeasyMetadata()
     @Expose({ name: "productCode" })
-    productCode?: string;
+    productCode: string;
 
     /**
      * The number of units of the drink in stock, only available when authenticated.

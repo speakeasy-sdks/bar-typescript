@@ -15,18 +15,18 @@ export class Ingredient extends SpeakeasyBase {
     name: string;
 
     /**
-     * The product code of the ingredient, only available when authenticated.
+     * A photo of the ingredient.
+     */
+    @SpeakeasyMetadata()
+    @Expose({ name: "photo" })
+    photo?: string;
+
+    /**
+     * The product code of an ingredient, only available when authenticated.
      */
     @SpeakeasyMetadata()
     @Expose({ name: "productCode" })
     productCode?: string;
-
-    /**
-     * The number of units of the ingredient in stock, only available when authenticated.
-     */
-    @SpeakeasyMetadata()
-    @Expose({ name: "stock" })
-    stock?: number;
 
     /**
      * The type of ingredient.

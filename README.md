@@ -37,12 +37,11 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 
 ```typescript
 import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
 
 async function run() {
     const sdk = new SpeakeasyBar();
 
-    const res = await sdk.drinks.listDrinks({});
+    const res = await sdk.authentication.authenticate({});
 
     if (res.statusCode == 200) {
         // handle response
@@ -63,20 +62,22 @@ run();
 
 ### [drinks](docs/sdks/drinks/README.md)
 
+* [deleteDrink](docs/sdks/drinks/README.md#deletedrink) - Delete a drink.
 * [getDrink](docs/sdks/drinks/README.md#getdrink) - Get a drink.
 * [listDrinks](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
-
-### [ingredients](docs/sdks/ingredients/README.md)
-
-* [listIngredients](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
+* [searchDrinks](docs/sdks/drinks/README.md#searchdrinks) - Search for drinks.
+* [updateDrinkJson](docs/sdks/drinks/README.md#updatedrinkjson) - Update a drink.
+* [updateDrinkMultipart](docs/sdks/drinks/README.md#updatedrinkmultipart) - Update a drink.
+* [updateDrinkRaw](docs/sdks/drinks/README.md#updatedrinkraw) - Update a drink.
+* [updateDrinkString](docs/sdks/drinks/README.md#updatedrinkstring) - Update a drink.
 
 ### [orders](docs/sdks/orders/README.md)
 
 * [createOrder](docs/sdks/orders/README.md#createorder) - Create an order.
 
-### [config](docs/sdks/config/README.md)
+### [configuration](docs/sdks/configuration/README.md)
 
-* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
+* [subscribeToWebhooks](docs/sdks/configuration/README.md#subscribetowebhooks) - Subscribe to webhooks.
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -123,15 +124,15 @@ run();
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Name
+### Select Server by Index
 
-You can override the default server globally by passing a server name to the `server: string` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
+You can override the default server globally by passing a server index to the `serverIdx: number` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| Name | Server | Variables |
-| ----- | ------ | --------- |
-| `prod` | `https://speakeasy.bar` | None |
-| `staging` | `https://staging.speakeasy.bar` | None |
-| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment` (default is `prod`), `organization` (default is `api`) |
+| # | Server | Variables |
+| - | ------ | --------- |
+| 0 | `https://speakeasy.bar` | None |
+| 1 | `https://staging.speakeasy.bar` | None |
+| 2 | `https://{organization}.{environment}.speakeasy.bar` | `environment` (default is `prod`), `organization` (default is `api`) |
 
 #### Example
 
@@ -140,7 +141,7 @@ import { SpeakeasyBar } from "speakeasy-bar";
 
 async function run() {
     const sdk = new SpeakeasyBar({
-        server: "customer",
+        serverIdx: 2,
     });
 
     const res = await sdk.authentication.authenticate({});
