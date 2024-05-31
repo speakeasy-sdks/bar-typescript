@@ -1,6 +1,6 @@
 configVersion: 2.0.0
 generation:
-  sdkClassName: speakeasy-bar
+  sdkClassName: BarSDK
   usageSnippets:
     optionalPropertyRendering: withExample
   fixes:
@@ -23,7 +23,7 @@ typescript:
       shared: sdk/models/shared
       webhooks: sdk/models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 0
+  maxMethodParams: 4
   outputModelSuffix: output
-  packageName: speakeasy-bar
-  templateVersion: v1
+  packageName: @speakeasy-sdks/speakeasy-bar
+  templateVersion: v2
