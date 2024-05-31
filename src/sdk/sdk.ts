@@ -7,8 +7,9 @@ import { SDKOptions, serverURLFromOptions } from "../lib/config";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK } from "../lib/sdks";
 import { Authentication } from "./authentication";
-import { Configuration } from "./configuration";
+import { Config } from "./config";
 import { Drinks } from "./drinks";
+import { Ingredients } from "./ingredients";
 import { Orders } from "./orders";
 
 export class BarSDK extends ClientSDK {
@@ -48,13 +49,18 @@ export class BarSDK extends ClientSDK {
         return (this._drinks ??= new Drinks(this.options$));
     }
 
+    private _ingredients?: Ingredients;
+    get ingredients(): Ingredients {
+        return (this._ingredients ??= new Ingredients(this.options$));
+    }
+
     private _orders?: Orders;
     get orders(): Orders {
         return (this._orders ??= new Orders(this.options$));
     }
 
-    private _configuration?: Configuration;
-    get configuration(): Configuration {
-        return (this._configuration ??= new Configuration(this.options$));
+    private _config?: Config;
+    get config(): Config {
+        return (this._config ??= new Config(this.options$));
     }
 }

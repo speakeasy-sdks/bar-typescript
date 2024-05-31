@@ -1,22 +1,23 @@
 lockVersion: 2.0.0
 id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
-  docChecksum: 2116d84d2b9ee4035e4961f058081236
+  docChecksum: df07f1659dbc7224abd8310507e51bb9
   docVersion: 1.0.0
   speakeasyVersion: 1.299.4
   generationVersion: 2.338.7
-  releaseVersion: 0.9.2
-  configChecksum: 269a1c8953d92c6b18a0371e617784c4
+  releaseVersion: 0.10.0
+  configChecksum: ec7aef5221b5b5fd3aec08af12e75437
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
   published: true
 features:
   typescript:
-    acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
     callbacks: 1.0.0
     core: 3.9.10
+    errors: 2.81.10
+    examples: 2.81.4
     flattening: 2.81.1
     globalSecurity: 2.82.9
     globalSecurityCallbacks: 0.1.0
@@ -25,13 +26,14 @@ features:
     inputOutputModels: 2.82.0
     responseFormat: 0.2.3
     sdkHooks: 0.1.0
-    unions: 2.85.5
+    serverIDs: 2.81.2
     webhooks: 1.0.0
 generatedFiles:
   - src/sdk/authentication.ts
   - src/sdk/drinks.ts
+  - src/sdk/ingredients.ts
   - src/sdk/orders.ts
-  - src/sdk/configuration.ts
+  - src/sdk/config.ts
   - src/sdk/sdk.ts
   - .eslintrc.js
   - .npmignore
@@ -59,28 +61,22 @@ generatedFiles:
   - src/sdk/types/rfcdate.ts
   - tsconfig.json
   - src/sdk/models/operations/authenticate.ts
-  - src/sdk/models/operations/deletedrink.ts
   - src/sdk/models/operations/getdrink.ts
   - src/sdk/models/operations/listdrinks.ts
-  - src/sdk/models/operations/searchdrinks.ts
-  - src/sdk/models/operations/updatedrinkjson.ts
-  - src/sdk/models/operations/updatedrinkmultipart.ts
-  - src/sdk/models/operations/updatedrinkraw.ts
-  - src/sdk/models/operations/updatedrinkstring.ts
+  - src/sdk/models/operations/listingredients.ts
   - src/sdk/models/operations/createorder.ts
   - src/sdk/models/operations/subscribetowebhooks.ts
   - src/sdk/models/shared/error.ts
   - src/sdk/models/shared/drink.ts
   - src/sdk/models/shared/drinktype.ts
-  - src/sdk/models/shared/drinkingredient.ts
-  - src/sdk/models/shared/publicdrink.ts
-  - src/sdk/models/shared/drinkinput.ts
-  - src/sdk/models/shared/drinkorder.ts
-  - src/sdk/models/shared/ingredientorder.ts
-  - src/sdk/models/shared/order.ts
-  - src/sdk/models/shared/security.ts
   - src/sdk/models/shared/ingredient.ts
   - src/sdk/models/shared/ingredienttype.ts
+  - src/sdk/models/shared/order.ts
+  - src/sdk/models/shared/ordertype.ts
+  - src/sdk/models/shared/orderinput.ts
+  - src/sdk/models/shared/security.ts
+  - src/sdk/models/shared/ingredientinput.ts
+  - src/sdk/models/shared/drinkinput.ts
   - src/sdk/models/errors/apierror.ts
   - src/sdk/models/callbacks/createorder.ts
   - src/sdk/models/webhooks/stockupdate.ts
@@ -92,56 +88,29 @@ generatedFiles:
   - docs/sdk/models/operations/authenticaterequestbody.md
   - docs/sdk/models/operations/authenticateresponsebody.md
   - docs/sdk/models/operations/authenticateresponse.md
-  - docs/sdk/models/operations/deletedrinkrequest.md
-  - docs/sdk/models/operations/deletedrinkresponse.md
   - docs/sdk/models/operations/getdrinkrequest.md
   - docs/sdk/models/operations/getdrinkresponse.md
   - docs/sdk/models/operations/listdrinksrequest.md
-  - docs/sdk/models/operations/responsebody.md
   - docs/sdk/models/operations/listdrinksresponse.md
-  - docs/sdk/models/operations/searchdrinksrequest.md
-  - docs/sdk/models/operations/searchdrinksresponse.md
-  - docs/sdk/models/operations/updatedrinkjsonrequest.md
-  - docs/sdk/models/operations/updatedrinkjsonresponse.md
-  - docs/sdk/models/operations/photo.md
-  - docs/sdk/models/operations/updatedrinkmultipartrequestbody.md
-  - docs/sdk/models/operations/updatedrinkmultipartrequest.md
-  - docs/sdk/models/operations/updatedrinkmultipartresponse.md
-  - docs/sdk/models/operations/updatedrinkrawrequest.md
-  - docs/sdk/models/operations/updatedrinkrawresponse.md
-  - docs/sdk/models/operations/updatedrinkstringrequest.md
-  - docs/sdk/models/operations/updatedrinkstringresponse.md
-  - docs/sdk/models/operations/createorderrequestbody.md
+  - docs/sdk/models/operations/listingredientsrequest.md
+  - docs/sdk/models/operations/listingredientsresponse.md
   - docs/sdk/models/operations/createorderrequest.md
-  - docs/sdk/models/operations/createorderresponsebody.md
   - docs/sdk/models/operations/createorderresponse.md
   - docs/sdk/models/operations/webhook.md
   - docs/sdk/models/operations/requestbody.md
   - docs/sdk/models/operations/subscribetowebhooksresponse.md
   - docs/sdk/models/shared/errort.md
-  - docs/sdk/models/shared/datalevel.md
   - docs/sdk/models/shared/drink.md
   - docs/sdk/models/shared/drinktype.md
-  - docs/sdk/models/shared/drinkingredient.md
-  - docs/sdk/models/shared/publicdrinkdatalevel.md
-  - docs/sdk/models/shared/publicdrink.md
-  - docs/sdk/models/shared/drinkinput.md
-  - docs/sdk/models/shared/barcounter.md
-  - docs/sdk/models/shared/ordertype.md
-  - docs/sdk/models/shared/status.md
-  - docs/sdk/models/shared/drinkorder.md
-  - docs/sdk/models/shared/ingredientorderordertype.md
-  - docs/sdk/models/shared/ingredientorderstatus.md
-  - docs/sdk/models/shared/ingredientorder.md
-  - docs/sdk/models/shared/orderordertype.md
-  - docs/sdk/models/shared/orderstatus.md
-  - docs/sdk/models/shared/order.md
-  - docs/sdk/models/shared/drinkorderinput.md
-  - docs/sdk/models/shared/ingredientorderinput.md
-  - docs/sdk/models/shared/orderinput.md
-  - docs/sdk/models/shared/security.md
   - docs/sdk/models/shared/ingredient.md
   - docs/sdk/models/shared/ingredienttype.md
+  - docs/sdk/models/shared/status.md
+  - docs/sdk/models/shared/order.md
+  - docs/sdk/models/shared/ordertype.md
+  - docs/sdk/models/shared/orderinput.md
+  - docs/sdk/models/shared/security.md
+  - docs/sdk/models/shared/ingredientinput.md
+  - docs/sdk/models/shared/drinkinput.md
   - docs/sdk/models/errors/apierror.md
   - docs/sdk/models/callbacks/createorderorderupdateresponse.md
   - docs/sdk/models/callbacks/createorderorderupdaterequestbody.md
@@ -150,8 +119,9 @@ generatedFiles:
   - docs/sdks/barsdk/README.md
   - docs/sdks/authentication/README.md
   - docs/sdks/drinks/README.md
+  - docs/sdks/ingredients/README.md
   - docs/sdks/orders/README.md
-  - docs/sdks/configuration/README.md
+  - docs/sdks/config/README.md
   - USAGE.md
   - .gitattributes
   - src/hooks/hooks.ts

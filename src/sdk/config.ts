@@ -12,7 +12,7 @@ import * as errors from "./models/errors";
 import * as operations from "./models/operations";
 import * as z from "zod";
 
-export class Configuration extends ClientSDK {
+export class Config extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
 
     constructor(options: SDKOptions = {}) {

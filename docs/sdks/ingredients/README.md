@@ -1,17 +1,17 @@
-# Configuration
-(*configuration*)
+# Ingredients
+(*ingredients*)
 
 ## Overview
 
-The configuration endpoints.
+The ingredients endpoints.
 
 ### Available Operations
 
-* [subscribeToWebhooks](#subscribetowebhooks) - Subscribe to webhooks.
+* [listIngredients](#listingredients) - Get a list of ingredients.
 
-## subscribeToWebhooks
+## listIngredients
 
-Subscribe to webhooks.
+Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
 
 ### Example Usage
 
@@ -23,8 +23,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.configuration.subscribeToWebhooks([
-    {},
+  const result = await barSDK.ingredients.listIngredients([
+    "<value>",
   ]);
 
   // Handle the result
@@ -38,14 +38,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.RequestBody[]](../../models/.md)                                                                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `ingredients`                                                                                                                                                                  | *string*[]                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                             | A list of ingredients to filter by. If not provided all ingredients will be returned.                                                                                          |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise\<[operations.SubscribeToWebhooksResponse](../../sdk/models/operations/subscribetowebhooksresponse.md)\>**
+**Promise\<[operations.ListIngredientsResponse](../../sdk/models/operations/listingredientsresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

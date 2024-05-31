@@ -9,12 +9,8 @@ export type ListDrinksRequest = {
     /**
      * The type of drink to filter by. If not provided all drinks will be returned.
      */
-    type?: shared.DrinkType | undefined;
+    drinkType?: shared.DrinkType | undefined;
 };
-
-export type ResponseBody =
-    | (shared.PublicDrink & { dataLevel: shared.PublicDrinkDataLevel.Unauthenticated })
-    | (shared.Drink & { dataLevel: shared.DataLevel.Authenticated });
 
 export type ListDrinksResponse = {
     /**
@@ -36,73 +32,34 @@ export type ListDrinksResponse = {
     /**
      * A list of drinks.
      */
-    unions?:
-        | Array<
-              | (shared.PublicDrink & { dataLevel: shared.PublicDrinkDataLevel.Unauthenticated })
-              | (shared.Drink & { dataLevel: shared.DataLevel.Authenticated })
-          >
-        | undefined;
+    classes?: Array<shared.Drink> | undefined;
 };
 
 /** @internal */
 export namespace ListDrinksRequest$ {
     export const inboundSchema: z.ZodType<ListDrinksRequest, z.ZodTypeDef, unknown> = z
         .object({
-            type: shared.DrinkType$.inboundSchema.optional(),
+            drinkType: shared.DrinkType$.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
-                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.drinkType === undefined ? null : { drinkType: v.drinkType }),
             };
         });
 
     export type Outbound = {
-        type?: string | undefined;
+        drinkType?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListDrinksRequest> = z
         .object({
-            type: shared.DrinkType$.outboundSchema.optional(),
+            drinkType: shared.DrinkType$.outboundSchema.optional(),
         })
         .transform((v) => {
             return {
-                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.drinkType === undefined ? null : { drinkType: v.drinkType }),
             };
         });
-}
-
-/** @internal */
-export namespace ResponseBody$ {
-    export const inboundSchema: z.ZodType<ResponseBody, z.ZodTypeDef, unknown> = z.union([
-        shared.PublicDrink$.inboundSchema.and(
-            z
-                .object({ dataLevel: z.literal(shared.PublicDrinkDataLevel.Unauthenticated) })
-                .transform((v) => ({ dataLevel: v.dataLevel }))
-        ),
-        shared.Drink$.inboundSchema.and(
-            z
-                .object({ dataLevel: z.literal(shared.DataLevel.Authenticated) })
-                .transform((v) => ({ dataLevel: v.dataLevel }))
-        ),
-    ]);
-
-    export type Outbound =
-        | (shared.PublicDrink$.Outbound & {
-              dataLevel: shared.PublicDrinkDataLevel.Unauthenticated;
-          })
-        | (shared.Drink$.Outbound & { dataLevel: shared.DataLevel.Authenticated });
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ResponseBody> = z.union([
-        shared.PublicDrink$.outboundSchema.and(
-            z
-                .object({ dataLevel: z.literal(shared.PublicDrinkDataLevel.Unauthenticated) })
-                .transform((v) => ({ dataLevel: v.dataLevel }))
-        ),
-        shared.Drink$.outboundSchema.and(
-            z
-                .object({ dataLevel: z.literal(shared.DataLevel.Authenticated) })
-                .transform((v) => ({ dataLevel: v.dataLevel }))
-        ),
-    ]);
 }
 
 /** @internal */
@@ -113,26 +70,7 @@ export namespace ListDrinksResponse$ {
             Error: shared.ErrorT$.inboundSchema.optional(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            unions: z
-                .array(
-                    z.union([
-                        shared.PublicDrink$.inboundSchema.and(
-                            z
-                                .object({
-                                    dataLevel: z.literal(
-                                        shared.PublicDrinkDataLevel.Unauthenticated
-                                    ),
-                                })
-                                .transform((v) => ({ dataLevel: v.dataLevel }))
-                        ),
-                        shared.Drink$.inboundSchema.and(
-                            z
-                                .object({ dataLevel: z.literal(shared.DataLevel.Authenticated) })
-                                .transform((v) => ({ dataLevel: v.dataLevel }))
-                        ),
-                    ])
-                )
-                .optional(),
+            classes: z.array(shared.Drink$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -140,7 +78,7 @@ export namespace ListDrinksResponse$ {
                 ...(v.Error === undefined ? null : { error: v.Error }),
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.unions === undefined ? null : { unions: v.unions }),
+                ...(v.classes === undefined ? null : { classes: v.classes }),
             };
         });
 
@@ -149,14 +87,7 @@ export namespace ListDrinksResponse$ {
         Error?: shared.ErrorT$.Outbound | undefined;
         StatusCode: number;
         RawResponse: never;
-        unions?:
-            | Array<
-                  | (shared.PublicDrink$.Outbound & {
-                        dataLevel: shared.PublicDrinkDataLevel.Unauthenticated;
-                    })
-                  | (shared.Drink$.Outbound & { dataLevel: shared.DataLevel.Authenticated })
-              >
-            | undefined;
+        classes?: Array<shared.Drink$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListDrinksResponse> = z
@@ -167,26 +98,7 @@ export namespace ListDrinksResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            unions: z
-                .array(
-                    z.union([
-                        shared.PublicDrink$.outboundSchema.and(
-                            z
-                                .object({
-                                    dataLevel: z.literal(
-                                        shared.PublicDrinkDataLevel.Unauthenticated
-                                    ),
-                                })
-                                .transform((v) => ({ dataLevel: v.dataLevel }))
-                        ),
-                        shared.Drink$.outboundSchema.and(
-                            z
-                                .object({ dataLevel: z.literal(shared.DataLevel.Authenticated) })
-                                .transform((v) => ({ dataLevel: v.dataLevel }))
-                        ),
-                    ])
-                )
-                .optional(),
+            classes: z.array(shared.Drink$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -194,7 +106,7 @@ export namespace ListDrinksResponse$ {
                 ...(v.error === undefined ? null : { Error: v.error }),
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.unions === undefined ? null : { unions: v.unions }),
+                ...(v.classes === undefined ? null : { classes: v.classes }),
             };
         });
 }

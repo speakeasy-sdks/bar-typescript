@@ -1,36 +1,27 @@
-# Orders
-(*orders*)
-
-## Overview
-
-The orders endpoints.
+# Config
+(*config*)
 
 ### Available Operations
 
-* [createOrder](#createorder) - Create an order.
+* [subscribeToWebhooks](#subscribetowebhooks) - Subscribe to webhooks.
 
-## createOrder
+## subscribeToWebhooks
 
-Create an order for a drink.
+Subscribe to webhooks.
 
 ### Example Usage
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
   apiKey: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {
-  const result = await barSDK.orders.createOrder([
-    {
-      productCode: "APM-1F2D3",
-      quantity: 26535,
-      type: OrderType.Drink,
-    },
-  ], "<value>");
+  const result = await barSDK.config.subscribeToWebhooks([
+    {},
+  ]);
 
   // Handle the result
   console.log(result)
@@ -43,15 +34,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `requestBody`                                                                                                                                                                  | [shared.OrderInput](../../sdk/models/shared/orderinput.md)[]                                                                                                                   | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `callbackUrl`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | The url to call when the order is updated.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.RequestBody[]](../../models/.md)                                                                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise\<[operations.CreateOrderResponse](../../sdk/models/operations/createorderresponse.md)\>**
+**Promise\<[operations.SubscribeToWebhooksResponse](../../sdk/models/operations/subscribetowebhooksresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

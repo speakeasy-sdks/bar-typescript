@@ -7,22 +7,25 @@ import { RetryConfig } from "./retries";
 import { Params, pathToFunc } from "./url";
 
 /**
+ * The production server.
+ */
+export const ServerProd = "prod";
+/**
+ * The staging server.
+ */
+export const ServerStaging = "staging";
+/**
+ * A per-organization and per-environment API.
+ */
+export const ServerCustomer = "customer";
+/**
  * Contains the list of servers available to the SDK
  */
-export const ServerList = [
-    /**
-     * The production server.
-     */
-    "https://speakeasy.bar",
-    /**
-     * The staging server.
-     */
-    "https://staging.speakeasy.bar",
-    /**
-     * A per-organization and per-environment API.
-     */
-    "https://{organization}.{environment}.speakeasy.bar",
-] as const;
+export const ServerList = {
+    [ServerProd]: "https://speakeasy.bar",
+    [ServerStaging]: "https://staging.speakeasy.bar",
+    [ServerCustomer]: "https://{organization}.{environment}.speakeasy.bar",
+} as const;
 
 /**
  * The environment name. Defaults to the production environment.
@@ -40,7 +43,7 @@ export type SDKOptions = {
     /**
      * Allows overriding the default server used by the SDK
      */
-    serverIdx?: number;
+    server?: keyof typeof ServerList;
     /**
      * Allows setting the environment variable for url substitution
      */
@@ -62,23 +65,21 @@ export type SDKOptions = {
 export function serverURLFromOptions(options: SDKOptions): URL | null {
     let serverURL = options.serverURL;
 
-    const serverParams: Params[] = [
-        {},
-        {},
-        {
+    const serverParams: Record<string, Params> = {
+        prod: {},
+        staging: {},
+        customer: {
             environment: options.environment ?? "prod",
             organization: options.organization ?? "api",
         },
-    ];
+    };
+
     let params: Params = {};
 
     if (!serverURL) {
-        const serverIdx = options.serverIdx ?? 0;
-        if (serverIdx < 0 || serverIdx >= ServerList.length) {
-            throw new Error(`Invalid server index ${serverIdx}`);
-        }
-        serverURL = ServerList[serverIdx] || "";
-        params = serverParams[serverIdx] || {};
+        const server = options.server ?? ServerProd;
+        serverURL = ServerList[server] || "";
+        params = serverParams[server] || {};
     }
 
     const u = pathToFunc(serverURL)(params);
@@ -88,7 +89,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
     language: "typescript",
     openapiDocVersion: "1.0.0",
-    sdkVersion: "0.9.2",
+    sdkVersion: "0.10.0",
     genVersion: "2.338.7",
-    userAgent: "speakeasy-sdk/typescript 0.9.2 2.338.7 1.0.0 @speakeasy-sdks/speakeasy-bar",
+    userAgent: "speakeasy-sdk/typescript 0.10.0 2.338.7 1.0.0 @speakeasy-sdks/speakeasy-bar",
 } as const;
