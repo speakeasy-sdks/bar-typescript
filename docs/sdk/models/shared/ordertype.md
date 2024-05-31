@@ -1,11 +1,8 @@
 # OrderType
 
-The type of order.
-
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `Drink`      | drink        |
-| `Ingredient` | ingredient   |
+| Name    | Value   |
+| ------- | ------- |
+| `Drink` | drink   |

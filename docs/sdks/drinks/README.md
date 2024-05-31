@@ -23,20 +23,17 @@ Delete a drink. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.deleteDrink("AC-A2DF3");
 
-  const res = await sdk.drinks.deleteDrink({
-    productCode: "AC-A2DF3",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -44,15 +41,16 @@ run();
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `request`                                                                          | [operations.DeleteDrinkRequest](../../sdk/models/operations/deletedrinkrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
-| `config`                                                                           | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                       | :heavy_minus_sign:                                                                 | Available config options for making requests.                                      |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.DeleteDrinkResponse](../../sdk/models/operations/deletedrinkresponse.md)>**
+**Promise\<[operations.DeleteDrinkResponse](../../sdk/models/operations/deletedrinkresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -67,20 +65,17 @@ Get a drink by product code. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.getDrink("NAC-3F2D1");
 
-  const res = await sdk.drinks.getDrink({
-    productCode: "NAC-3F2D1",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -88,15 +83,16 @@ run();
 
 ### Parameters
 
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `request`                                                                    | [operations.GetDrinkRequest](../../sdk/models/operations/getdrinkrequest.md) | :heavy_check_mark:                                                           | The request object to use for the request.                                   |
-| `config`                                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                 | :heavy_minus_sign:                                                           | Available config options for making requests.                                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.GetDrinkResponse](../../sdk/models/operations/getdrinkresponse.md)>**
+**Promise\<[operations.GetDrinkResponse](../../sdk/models/operations/getdrinkresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -111,17 +107,16 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+const barSDK = new BarSDK();
 
 async function run() {
-  const sdk = new SpeakeasyBar();
+  const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
 
-  const res = await sdk.drinks.listDrinks({});
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -129,15 +124,16 @@ run();
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `request`                                                                        | [operations.ListDrinksRequest](../../sdk/models/operations/listdrinksrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
-| `config`                                                                         | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                     | :heavy_minus_sign:                                                               | Available config options for making requests.                                    |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`                                                                                                                                                                         | [shared.DrinkType](../../sdk/models/shared/drinktype.md)                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | The type of drink to filter by. If not provided all drinks will be returned.                                                                                                   |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise<[operations.ListDrinksResponse](../../sdk/models/operations/listdrinksresponse.md)>**
+**Promise\<[operations.ListDrinksResponse](../../sdk/models/operations/listdrinksresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -152,19 +148,16 @@ Search for drinks, if authenticated this will include stock levels and product c
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+const barSDK = new BarSDK();
 
 async function run() {
-  const sdk = new SpeakeasyBar();
+  const result = await barSDK.drinks.searchDrinks("<value>", DrinkType.Other);
 
-  const res = await sdk.drinks.searchDrinks({
-    query: "<value>",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -172,15 +165,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `request`                                                                            | [operations.SearchDrinksRequest](../../sdk/models/operations/searchdrinksrequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
-| `config`                                                                             | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                         | :heavy_minus_sign:                                                                   | Available config options for making requests.                                        |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `query`                                                                                                                                                                        | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The search query.                                                                                                                                                              |
+| `type`                                                                                                                                                                         | [shared.DrinkType](../../sdk/models/shared/drinktype.md)                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | The type of drink to filter by. If not provided all drinks will be returned.                                                                                                   |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise<[operations.SearchDrinksResponse](../../sdk/models/operations/searchdrinksresponse.md)>**
+**Promise\<[operations.SearchDrinksResponse](../../sdk/models/operations/searchdrinksresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -195,33 +190,30 @@ Update a drink. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.updateDrinkJson({
+    ingredients: [
+      {
+        ingredientProductCode: "NAC-3F2D1",
+        quantity: 895218,
+      },
+    ],
+    name: "Old Fashioned",
+    photo: "https://speakeasy.bar/drinks/old_fashioned.jpg",
+    price: 1000,
+    productCode: "AC-A2DF3",
+    type: DrinkType.Cocktail,
+  }, "APM-1F2D3");
 
-  const res = await sdk.drinks.updateDrinkJson({
-    drink: {
-      ingredients: [
-        {
-          ingredientProductCode: "NAC-3F2D1",
-          quantity: 895218,
-        },
-      ],
-      name: "Old Fashioned",
-      photo: "https://speakeasy.bar/drinks/negroni.jpg",
-      price: 1000,
-      productCode: "NAC-3F2D1",
-    },
-    productCode: "APM-1F2D3",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -229,15 +221,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `request`                                                                                  | [operations.UpdateDrinkJsonRequest](../../sdk/models/operations/updatedrinkjsonrequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
-| `config`                                                                                   | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                               | :heavy_minus_sign:                                                                         | Available config options for making requests.                                              |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `drink`                                                                                                                                                                        | [shared.DrinkInput](../../sdk/models/shared/drinkinput.md)                                                                                                                     | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.UpdateDrinkJsonResponse](../../sdk/models/operations/updatedrinkjsonresponse.md)>**
+**Promise\<[operations.UpdateDrinkJsonResponse](../../sdk/models/operations/updatedrinkjsonresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -252,29 +246,20 @@ Update a drink. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.updateDrinkMultipart({
+    name: "Negroni",
+    price: 1000,
+  }, "AC-A2DF3");
 
-  const res = await sdk.drinks.updateDrinkMultipart({
-    requestBody: {
-      name: "Negroni",
-      photo: {
-        content: new TextEncoder().encode("0x40f816dD98"),
-        fileName: "bicycle_brent_degree.htm",
-      },
-      price: 1500,
-    },
-    productCode: "NAC-3F2D1",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -282,15 +267,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `request`                                                                                            | [operations.UpdateDrinkMultipartRequest](../../sdk/models/operations/updatedrinkmultipartrequest.md) | :heavy_check_mark:                                                                                   | The request object to use for the request.                                                           |
-| `config`                                                                                             | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                         | :heavy_minus_sign:                                                                                   | Available config options for making requests.                                                        |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `requestBody`                                                                                                                                                                  | [operations.UpdateDrinkMultipartRequestBody](../../sdk/models/operations/updatedrinkmultipartrequestbody.md)                                                                   | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.UpdateDrinkMultipartResponse](../../sdk/models/operations/updatedrinkmultipartresponse.md)>**
+**Promise\<[operations.UpdateDrinkMultipartResponse](../../sdk/models/operations/updatedrinkmultipartresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -305,22 +292,17 @@ Update a drink. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { DrinkType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.updateDrinkRaw(new TextEncoder().encode("0x200BD6d80E"), "AC-A2DF3");
 
-  const res = await sdk.drinks.updateDrinkRaw({
-    requestBody: new TextEncoder().encode("0x200BD6d80E"),
-    productCode: "AC-A2DF3",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -328,15 +310,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `request`                                                                                | [operations.UpdateDrinkRawRequest](../../sdk/models/operations/updatedrinkrawrequest.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
-| `config`                                                                                 | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                             | :heavy_minus_sign:                                                                       | Available config options for making requests.                                            |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `requestBody`                                                                                                                                                                  | *Uint8Array*                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.UpdateDrinkRawResponse](../../sdk/models/operations/updatedrinkrawresponse.md)>**
+**Promise\<[operations.UpdateDrinkRawResponse](../../sdk/models/operations/updatedrinkrawresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
@@ -351,21 +335,19 @@ Update a drink. Only available when authenticated.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.drinks.updateDrinkString("Old Fashioned
+  
+  A classic cocktail made with bourbon, bitters, sugar and a twist of orange peel.", "AC-A2DF3");
 
-  const res = await sdk.drinks.updateDrinkString({
-    requestBody: "<value>",
-    productCode: "AC-A2DF3",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -373,15 +355,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `request`                                                                                      | [operations.UpdateDrinkStringRequest](../../sdk/models/operations/updatedrinkstringrequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
-| `config`                                                                                       | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                   | :heavy_minus_sign:                                                                             | Available config options for making requests.                                                  |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    | Example                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `requestBody`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |                                                                                                                                                                                |
+| `productCode`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            | [object Object]                                                                                                                                                                |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |                                                                                                                                                                                |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |                                                                                                                                                                                |
 
 
 ### Response
 
-**Promise<[operations.UpdateDrinkStringResponse](../../sdk/models/operations/updatedrinkstringresponse.md)>**
+**Promise\<[operations.UpdateDrinkStringResponse](../../sdk/models/operations/updatedrinkstringresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

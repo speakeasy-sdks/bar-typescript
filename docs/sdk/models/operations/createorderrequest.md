@@ -5,5 +5,5 @@
 
 | Field                                      | Type                                       | Required                                   | Description                                |
 | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
-| `requestBody`                              | *any*                                      | :heavy_check_mark:                         | N/A                                        |
+| `requestBody`                              | *operations.CreateOrderRequestBody*        | :heavy_check_mark:                         | N/A                                        |
 | `callbackUrl`                              | *string*                                   | :heavy_minus_sign:                         | The url to call when the order is updated. |

@@ -1,6 +1,19 @@
-speakeasyVersion: 1.284.0
-sources: {}
-targets: {}
+speakeasyVersion: 1.299.4
+sources:
+    bar-api:
+        sourceNamespace: bar-api
+        sourceRevisionDigest: sha256:b688cd751118caf0462fee460396cec910bbbfec1efb2fe41eea555edc8d4d51
+        sourceBlobDigest: sha256:7ead99ab45079a3201c2f9f3bc8a361c0324e729c9e0f31decd8979d26e69b1a
+        tags:
+            - latest
+            - main
+targets:
+    bar-typescript:
+        source: bar-api
+        sourceNamespace: bar-api
+        sourceRevisionDigest: sha256:b688cd751118caf0462fee460396cec910bbbfec1efb2fe41eea555edc8d4d51
+        sourceBlobDigest: sha256:7ead99ab45079a3201c2f9f3bc8a361c0324e729c9e0f31decd8979d26e69b1a
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -8,6 +21,8 @@ workflow:
         bar-api:
             inputs:
                 - location: https://raw.githubusercontent.com/speakeasy-api/openapi-reference-documentation/main/example/openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/bar-api
     targets:
         bar-typescript:
             target: typescript
