@@ -8,3 +8,6 @@ targets:
     bar-typescript:
         target: typescript
         source: bar-api
+        publish:
+            npm:
+                token: $npm_token
