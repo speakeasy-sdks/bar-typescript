@@ -10,9 +10,8 @@ import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
 import * as errors from "./models/errors";
 import * as operations from "./models/operations";
-import * as shared from "./models/shared";
 
-export class Orders extends ClientSDK {
+export class Ingredients extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
 
     constructor(options: SDKOptions = {}) {
@@ -40,37 +39,34 @@ export class Orders extends ClientSDK {
     }
 
     /**
-     * Create an order.
+     * Get a list of ingredients.
      *
      * @remarks
-     * Create an order for a drink.
+     * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
-    async createOrder(
-        requestBody: Array<shared.OrderInput>,
-        callbackUrl?: string | undefined,
+    async listIngredients(
+        ingredients?: Array<string> | undefined,
         options?: RequestOptions
-    ): Promise<operations.CreateOrderResponse> {
-        const input$: operations.CreateOrderRequest = {
-            requestBody: requestBody,
-            callbackUrl: callbackUrl,
+    ): Promise<operations.ListIngredientsResponse> {
+        const input$: operations.ListIngredientsRequest = {
+            ingredients: ingredients,
         };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.CreateOrderRequest$.outboundSchema.parse(value$),
+            (value$) => operations.ListIngredientsRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = null;
 
-        const path$ = this.templateURLComponent("/order")();
+        const path$ = this.templateURLComponent("/ingredients")();
 
         const query$ = [
-            enc$.encodeForm("callback_url", payload$.callback_url, {
-                explode: true,
+            enc$.encodeForm("ingredients", payload$.ingredients, {
+                explode: false,
                 charEncoding: "percent",
             }),
         ]
@@ -86,7 +82,7 @@ export class Orders extends ClientSDK {
             security$ = {};
         }
         const context = {
-            operationID: "createOrder",
+            operationID: "listIngredients",
             oAuth2Scopes: [],
             securitySource: this.options$.apiKey,
         };
@@ -97,7 +93,7 @@ export class Orders extends ClientSDK {
             context,
             {
                 security: securitySettings$,
-                method: "POST",
+                method: "GET",
                 path: path$,
                 headers: headers$,
                 query: query$,
@@ -115,11 +111,11 @@ export class Orders extends ClientSDK {
             Headers: {},
         };
 
-        const [result$] = await this.matcher<operations.CreateOrderResponse>()
-            .json(200, operations.CreateOrderResponse$, { key: "Order" })
+        const [result$] = await this.matcher<operations.ListIngredientsResponse>()
+            .json(200, operations.ListIngredientsResponse$, { key: "classes" })
             .fail("4XX")
             .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.CreateOrderResponse$, { key: "Error" })
+            .json("default", operations.ListIngredientsResponse$, { key: "Error" })
             .match(response, { extraFields: responseFields$ });
 
         return result$;

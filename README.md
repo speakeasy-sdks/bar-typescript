@@ -23,15 +23,46 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
 
-### Example
+### Example 1
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK();
 
 async function run() {
-    const result = await barSDK.authentication.authenticate({});
+    const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
+
+    // Handle the result
+    console.log(result);
+}
+
+run();
+
+```
+
+### Example 2
+
+```typescript
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+const barSDK = new BarSDK({
+    apiKey: "<YOUR_API_KEY_HERE>",
+});
+
+async function run() {
+    const result = await barSDK.orders.createOrder(
+        [
+            {
+                productCode: "APM-1F2D3",
+                quantity: 26535,
+                type: OrderType.Drink,
+            },
+        ],
+        "<value>"
+    );
 
     // Handle the result
     console.log(result);
@@ -51,22 +82,20 @@ run();
 
 ### [drinks](docs/sdks/drinks/README.md)
 
-* [deleteDrink](docs/sdks/drinks/README.md#deletedrink) - Delete a drink.
 * [getDrink](docs/sdks/drinks/README.md#getdrink) - Get a drink.
 * [listDrinks](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
-* [searchDrinks](docs/sdks/drinks/README.md#searchdrinks) - Search for drinks.
-* [updateDrinkJson](docs/sdks/drinks/README.md#updatedrinkjson) - Update a drink.
-* [updateDrinkMultipart](docs/sdks/drinks/README.md#updatedrinkmultipart) - Update a drink.
-* [updateDrinkRaw](docs/sdks/drinks/README.md#updatedrinkraw) - Update a drink.
-* [updateDrinkString](docs/sdks/drinks/README.md#updatedrinkstring) - Update a drink.
+
+### [ingredients](docs/sdks/ingredients/README.md)
+
+* [listIngredients](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
 
 ### [orders](docs/sdks/orders/README.md)
 
 * [createOrder](docs/sdks/orders/README.md#createorder) - Create an order.
 
-### [configuration](docs/sdks/configuration/README.md)
+### [config](docs/sdks/config/README.md)
 
-* [subscribeToWebhooks](docs/sdks/configuration/README.md#subscribetowebhooks) - Subscribe to webhooks.
+* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -123,21 +152,21 @@ run();
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Index
+### Select Server by Name
 
-You can override the default server globally by passing a server index to the `serverIdx` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+You can override the default server globally by passing a server name to the `server` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| # | Server | Variables |
-| - | ------ | --------- |
-| 0 | `https://speakeasy.bar` | None |
-| 1 | `https://staging.speakeasy.bar` | None |
-| 2 | `https://{organization}.{environment}.speakeasy.bar` | `environment` (default is `prod`), `organization` (default is `api`) |
+| Name | Server | Variables |
+| ----- | ------ | --------- |
+| `prod` | `https://speakeasy.bar` | None |
+| `staging` | `https://staging.speakeasy.bar` | None |
+| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment` (default is `prod`), `organization` (default is `api`) |
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    serverIdx: 2,
+    server: "customer",
 });
 
 async function run() {
@@ -283,45 +312,6 @@ yarn add @speakeasy-sdks/speakeasy-bar
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 <!-- End Requirements [requirements] -->
-
-<!-- Start File uploads [file-upload] -->
-## File uploads
-
-Certain SDK methods accept files as part of a multi-part request. It is possible and typically recommended to upload files as a stream rather than reading the entire contents into memory. This avoids excessive memory consumption and potentially crashing with out-of-memory errors when working with very large files. The following example demonstrates how to attach a file stream to a request.
-
-> [!TIP]
->
-> Depending on your JavaScript runtime, there are convenient utilities that return a handle to a file without reading the entire contents into memory:
->
-> - **Node.js v20+:** Since v20, Node.js comes with a native `openAsBlob` function in [`node:fs`](https://nodejs.org/docs/latest-v20.x/api/fs.html#fsopenasblobpath-options).
-> - **Bun:** The native [`Bun.file`](https://bun.sh/docs/api/file-io#reading-files-bun-file) function produces a file handle that can be used for streaming file uploads.
-> - **Browsers:** All supported browsers return an instance to a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when reading the value from an `<input type="file">` element.
-> - **Node.js v18:** A file stream can be created using the `fileFrom` helper from [`fetch-blob/from.js`](https://www.npmjs.com/package/fetch-blob).
-
-```typescript
-import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-
-const barSDK = new BarSDK({
-    apiKey: "<YOUR_API_KEY_HERE>",
-});
-
-async function run() {
-    const result = await barSDK.drinks.updateDrinkMultipart(
-        {
-            name: "Negroni",
-            price: 1000,
-        },
-        "AC-A2DF3"
-    );
-
-    // Handle the result
-    console.log(result);
-}
-
-run();
-
-```
-<!-- End File uploads [file-upload] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

@@ -6,7 +6,7 @@ import * as shared from "../shared";
 import * as z from "zod";
 
 export type GetDrinkRequest = {
-    productCode: string;
+    name: string;
 };
 
 export type GetDrinkResponse = {
@@ -22,7 +22,6 @@ export type GetDrinkResponse = {
      * An unknown error occurred interacting with the API.
      */
     error?: shared.ErrorT | undefined;
-    headers: { [k: string]: Array<string> };
     /**
      * HTTP response status code for this operation
      */
@@ -37,25 +36,25 @@ export type GetDrinkResponse = {
 export namespace GetDrinkRequest$ {
     export const inboundSchema: z.ZodType<GetDrinkRequest, z.ZodTypeDef, unknown> = z
         .object({
-            productCode: z.string(),
+            name: z.string(),
         })
         .transform((v) => {
             return {
-                productCode: v.productCode,
+                name: v.name,
             };
         });
 
     export type Outbound = {
-        productCode: string;
+        name: string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetDrinkRequest> = z
         .object({
-            productCode: z.string(),
+            name: z.string(),
         })
         .transform((v) => {
             return {
-                productCode: v.productCode,
+                name: v.name,
             };
         });
 }
@@ -67,7 +66,6 @@ export namespace GetDrinkResponse$ {
             ContentType: z.string(),
             Drink: shared.Drink$.inboundSchema.optional(),
             Error: shared.ErrorT$.inboundSchema.optional(),
-            Headers: z.record(z.array(z.string())),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
         })
@@ -76,7 +74,6 @@ export namespace GetDrinkResponse$ {
                 contentType: v.ContentType,
                 ...(v.Drink === undefined ? null : { drink: v.Drink }),
                 ...(v.Error === undefined ? null : { error: v.Error }),
-                headers: v.Headers,
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
             };
@@ -86,7 +83,6 @@ export namespace GetDrinkResponse$ {
         ContentType: string;
         Drink?: shared.Drink$.Outbound | undefined;
         Error?: shared.ErrorT$.Outbound | undefined;
-        Headers: { [k: string]: Array<string> };
         StatusCode: number;
         RawResponse: never;
     };
@@ -96,7 +92,6 @@ export namespace GetDrinkResponse$ {
             contentType: z.string(),
             drink: shared.Drink$.outboundSchema.optional(),
             error: shared.ErrorT$.outboundSchema.optional(),
-            headers: z.record(z.array(z.string())),
             statusCode: z.number().int(),
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
@@ -107,7 +102,6 @@ export namespace GetDrinkResponse$ {
                 ContentType: v.contentType,
                 ...(v.drink === undefined ? null : { Drink: v.drink }),
                 ...(v.error === undefined ? null : { Error: v.error }),
-                Headers: v.headers,
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
             };

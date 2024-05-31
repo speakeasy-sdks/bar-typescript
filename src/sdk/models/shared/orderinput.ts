@@ -6,18 +6,9 @@ import { OrderType, OrderType$ } from "./ordertype";
 import * as z from "zod";
 
 /**
- * The status of the order.
- */
-export enum Status {
-    Pending = "pending",
-    Processing = "processing",
-    Complete = "complete",
-}
-
-/**
  * An order for a drink or ingredient.
  */
-export type Order = {
+export type OrderInput = {
     /**
      * The product code of the drink or ingredient.
      */
@@ -27,35 +18,23 @@ export type Order = {
      */
     quantity: number;
     /**
-     * The status of the order.
-     */
-    status: Status;
-    /**
      * The type of order.
      */
     type: OrderType;
 };
 
 /** @internal */
-export namespace Status$ {
-    export const inboundSchema = z.nativeEnum(Status);
-    export const outboundSchema = inboundSchema;
-}
-
-/** @internal */
-export namespace Order$ {
-    export const inboundSchema: z.ZodType<Order, z.ZodTypeDef, unknown> = z
+export namespace OrderInput$ {
+    export const inboundSchema: z.ZodType<OrderInput, z.ZodTypeDef, unknown> = z
         .object({
             productCode: z.string(),
             quantity: z.number().int(),
-            status: Status$.inboundSchema,
             type: OrderType$.inboundSchema,
         })
         .transform((v) => {
             return {
                 productCode: v.productCode,
                 quantity: v.quantity,
-                status: v.status,
                 type: v.type,
             };
         });
@@ -63,22 +42,19 @@ export namespace Order$ {
     export type Outbound = {
         productCode: string;
         quantity: number;
-        status: string;
         type: string;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Order> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, OrderInput> = z
         .object({
             productCode: z.string(),
             quantity: z.number().int(),
-            status: Status$.outboundSchema,
             type: OrderType$.outboundSchema,
         })
         .transform((v) => {
             return {
                 productCode: v.productCode,
                 quantity: v.quantity,
-                status: v.status,
                 type: v.type,
             };
         });

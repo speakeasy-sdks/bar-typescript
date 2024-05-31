@@ -5,7 +5,7 @@
 import { IngredientType, IngredientType$ } from "./ingredienttype";
 import * as z from "zod";
 
-export type Ingredient = {
+export type IngredientInput = {
     /**
      * The name of the ingredient.
      */
@@ -15,29 +15,23 @@ export type Ingredient = {
      */
     productCode?: string | undefined;
     /**
-     * The number of units of the ingredient in stock, only available when authenticated.
-     */
-    stock?: number | undefined;
-    /**
      * The type of ingredient.
      */
     type: IngredientType;
 };
 
 /** @internal */
-export namespace Ingredient$ {
-    export const inboundSchema: z.ZodType<Ingredient, z.ZodTypeDef, unknown> = z
+export namespace IngredientInput$ {
+    export const inboundSchema: z.ZodType<IngredientInput, z.ZodTypeDef, unknown> = z
         .object({
             name: z.string(),
             productCode: z.string().optional(),
-            stock: z.number().int().optional(),
             type: IngredientType$.inboundSchema,
         })
         .transform((v) => {
             return {
                 name: v.name,
                 ...(v.productCode === undefined ? null : { productCode: v.productCode }),
-                ...(v.stock === undefined ? null : { stock: v.stock }),
                 type: v.type,
             };
         });
@@ -45,22 +39,19 @@ export namespace Ingredient$ {
     export type Outbound = {
         name: string;
         productCode?: string | undefined;
-        stock?: number | undefined;
         type: string;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Ingredient> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, IngredientInput> = z
         .object({
             name: z.string(),
             productCode: z.string().optional(),
-            stock: z.number().int().optional(),
             type: IngredientType$.outboundSchema,
         })
         .transform((v) => {
             return {
                 name: v.name,
                 ...(v.productCode === undefined ? null : { productCode: v.productCode }),
-                ...(v.stock === undefined ? null : { stock: v.stock }),
                 type: v.type,
             };
         });

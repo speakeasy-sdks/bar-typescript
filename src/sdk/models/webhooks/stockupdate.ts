@@ -26,7 +26,7 @@ export type StockUpdateResponse = {
 
 export type StockUpdateRequestBody = {
     drink?: shared.DrinkInput | undefined;
-    ingredient?: shared.Ingredient | undefined;
+    ingredient?: shared.IngredientInput | undefined;
 };
 
 /** @internal */
@@ -78,7 +78,7 @@ export namespace StockUpdateRequestBody$ {
     export const inboundSchema: z.ZodType<StockUpdateRequestBody, z.ZodTypeDef, unknown> = z
         .object({
             drink: shared.DrinkInput$.inboundSchema.optional(),
-            ingredient: shared.Ingredient$.inboundSchema.optional(),
+            ingredient: shared.IngredientInput$.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
@@ -89,13 +89,13 @@ export namespace StockUpdateRequestBody$ {
 
     export type Outbound = {
         drink?: shared.DrinkInput$.Outbound | undefined;
-        ingredient?: shared.Ingredient$.Outbound | undefined;
+        ingredient?: shared.IngredientInput$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, StockUpdateRequestBody> = z
         .object({
             drink: shared.DrinkInput$.outboundSchema.optional(),
-            ingredient: shared.Ingredient$.outboundSchema.optional(),
+            ingredient: shared.IngredientInput$.outboundSchema.optional(),
         })
         .transform((v) => {
             return {

@@ -11,27 +11,6 @@ import { ClientSDK, RequestOptions } from "../lib/sdks";
 import * as errors from "./models/errors";
 import * as operations from "./models/operations";
 import * as shared from "./models/shared";
-import { isBlobLike } from "./types";
-
-export enum UpdateDrinkJsonAcceptEnum {
-    applicationJson = "application/json",
-    applicationXml = "application/xml",
-}
-
-export enum UpdateDrinkMultipartAcceptEnum {
-    applicationJson = "application/json",
-    applicationXml = "application/xml",
-}
-
-export enum UpdateDrinkRawAcceptEnum {
-    applicationJson = "application/json",
-    applicationXml = "application/xml",
-}
-
-export enum UpdateDrinkStringAcceptEnum {
-    applicationJson = "application/json",
-    applicationXml = "application/xml",
-}
 
 export class Drinks extends ClientSDK {
     private readonly options$: SDKOptions & { hooks?: SDKHooks };
@@ -61,99 +40,14 @@ export class Drinks extends ClientSDK {
     }
 
     /**
-     * Delete a drink.
-     *
-     * @remarks
-     * Delete a drink. Only available when authenticated.
-     */
-    async deleteDrink(
-        productCode: string,
-        options?: RequestOptions
-    ): Promise<operations.DeleteDrinkResponse> {
-        const input$: operations.DeleteDrinkRequest = {
-            productCode: productCode,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.DeleteDrinkRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = null;
-
-        const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
-
-        const query$ = "";
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "deleteDrink",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "DELETE",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.DeleteDrinkResponse>()
-            .void(200, operations.DeleteDrinkResponse$)
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.DeleteDrinkResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
      * Get a drink.
      *
      * @remarks
-     * Get a drink by product code. Only available when authenticated.
+     * Get a drink by name, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
-    async getDrink(
-        productCode: string,
-        options?: RequestOptions
-    ): Promise<operations.GetDrinkResponse> {
+    async getDrink(name: string, options?: RequestOptions): Promise<operations.GetDrinkResponse> {
         const input$: operations.GetDrinkRequest = {
-            productCode: productCode,
+            name: name,
         };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
@@ -167,12 +61,12 @@ export class Drinks extends ClientSDK {
         const body$ = null;
 
         const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
+            name: enc$.encodeSimple("name", payload$.name, {
                 explode: false,
                 charEncoding: "percent",
             }),
         };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
+        const path$ = this.templateURLComponent("/drink/{name}")(pathParams$);
 
         const query$ = "";
 
@@ -215,7 +109,7 @@ export class Drinks extends ClientSDK {
         };
 
         const [result$] = await this.matcher<operations.GetDrinkResponse>()
-            .json(200, operations.GetDrinkResponse$, { hdrs: true, key: "Drink" })
+            .json(200, operations.GetDrinkResponse$, { key: "Drink" })
             .fail("4XX")
             .json("5XX", errors.APIError$, { err: true })
             .json("default", operations.GetDrinkResponse$, { key: "Error" })
@@ -231,11 +125,11 @@ export class Drinks extends ClientSDK {
      * Get a list of drinks, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
     async listDrinks(
-        type?: shared.DrinkType | undefined,
+        drinkType?: shared.DrinkType | undefined,
         options?: RequestOptions
     ): Promise<operations.ListDrinksResponse> {
         const input$: operations.ListDrinksRequest = {
-            type: type,
+            drinkType: drinkType,
         };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
@@ -251,7 +145,10 @@ export class Drinks extends ClientSDK {
         const path$ = this.templateURLComponent("/drinks")();
 
         const query$ = [
-            enc$.encodeForm("type", payload$.type, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("drinkType", payload$.drinkType, {
+                explode: true,
+                charEncoding: "percent",
+            }),
         ]
             .filter(Boolean)
             .join("&");
@@ -275,459 +172,10 @@ export class Drinks extends ClientSDK {
         };
 
         const [result$] = await this.matcher<operations.ListDrinksResponse>()
-            .json(200, operations.ListDrinksResponse$, { key: "unions" })
+            .json(200, operations.ListDrinksResponse$, { key: "classes" })
             .fail("4XX")
             .json("5XX", errors.APIError$, { err: true })
             .json("default", operations.ListDrinksResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Search for drinks.
-     *
-     * @remarks
-     * Search for drinks, if authenticated this will include stock levels and product codes otherwise it will only include public information.
-     */
-    async searchDrinks(
-        query: string,
-        type?: shared.DrinkType | undefined,
-        options?: RequestOptions
-    ): Promise<operations.SearchDrinksResponse> {
-        const input$: operations.SearchDrinksRequest = {
-            query: query,
-            type: type,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.SearchDrinksRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = null;
-
-        const path$ = this.templateURLComponent("/drinks/search")();
-
-        const query$ = [
-            enc$.encodeForm("query", payload$.query, { explode: true, charEncoding: "percent" }),
-            enc$.encodeForm("type", payload$.type, { explode: true, charEncoding: "percent" }),
-        ]
-            .filter(Boolean)
-            .join("&");
-
-        const context = { operationID: "searchDrinks", oAuth2Scopes: [], securitySource: null };
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            { method: "GET", path: path$, headers: headers$, query: query$, body: body$ },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.SearchDrinksResponse>()
-            .json(200, operations.SearchDrinksResponse$, { key: "classes" })
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.SearchDrinksResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Update a drink.
-     *
-     * @remarks
-     * Update a drink. Only available when authenticated.
-     */
-    async updateDrinkJson(
-        drink: shared.DrinkInput,
-        productCode: string,
-        options?: RequestOptions & { acceptHeaderOverride?: UpdateDrinkJsonAcceptEnum }
-    ): Promise<operations.UpdateDrinkJsonResponse> {
-        const input$: operations.UpdateDrinkJsonRequest = {
-            drink: drink,
-            productCode: productCode,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-
-        const accept = options?.acceptHeaderOverride || "application/json;q=1, application/xml;q=0";
-        headers$.set("Accept", accept);
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateDrinkJsonRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = enc$.encodeJSON("body", payload$.Drink, { explode: true });
-
-        const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
-
-        const query$ = "";
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateDrink_json",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.UpdateDrinkJsonResponse>()
-            .json(200, operations.UpdateDrinkJsonResponse$, { key: "Drink" })
-            .bytes(200, operations.UpdateDrinkJsonResponse$, {
-                ctype: "application/xml",
-                key: "Body",
-            })
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.UpdateDrinkJsonResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Update a drink.
-     *
-     * @remarks
-     * Update a drink. Only available when authenticated.
-     */
-    async updateDrinkMultipart(
-        requestBody: operations.UpdateDrinkMultipartRequestBody,
-        productCode: string,
-        options?: RequestOptions & { acceptHeaderOverride?: UpdateDrinkMultipartAcceptEnum }
-    ): Promise<operations.UpdateDrinkMultipartResponse> {
-        const input$: operations.UpdateDrinkMultipartRequest = {
-            requestBody: requestBody,
-            productCode: productCode,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-
-        const accept = options?.acceptHeaderOverride || "application/json;q=1, application/xml;q=0";
-        headers$.set("Accept", accept);
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateDrinkMultipartRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = new FormData();
-
-        if (payload$.RequestBody.name !== undefined) {
-            body$.append("name", payload$.RequestBody.name);
-        }
-        if (payload$.RequestBody.photo !== undefined) {
-            if (isBlobLike(payload$.RequestBody.photo)) {
-                body$.append("photo", payload$.RequestBody.photo);
-            } else {
-                body$.append(
-                    "photo",
-                    new Blob([payload$.RequestBody.photo.content], {
-                        type: "application/octet-stream",
-                    }),
-                    payload$.RequestBody.photo.fileName
-                );
-            }
-        }
-        if (payload$.RequestBody.price !== undefined) {
-            body$.append("price", String(payload$.RequestBody.price));
-        }
-        if (payload$.RequestBody.type !== undefined) {
-            body$.append("type", payload$.RequestBody.type);
-        }
-
-        const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
-
-        const query$ = "";
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateDrink_multipart",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.UpdateDrinkMultipartResponse>()
-            .json(200, operations.UpdateDrinkMultipartResponse$, { key: "Drink" })
-            .bytes(200, operations.UpdateDrinkMultipartResponse$, {
-                ctype: "application/xml",
-                key: "Body",
-            })
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.UpdateDrinkMultipartResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Update a drink.
-     *
-     * @remarks
-     * Update a drink. Only available when authenticated.
-     */
-    async updateDrinkRaw(
-        requestBody: Uint8Array | string,
-        productCode: string,
-        options?: RequestOptions & { acceptHeaderOverride?: UpdateDrinkRawAcceptEnum }
-    ): Promise<operations.UpdateDrinkRawResponse> {
-        const input$: operations.UpdateDrinkRawRequest = {
-            requestBody: requestBody,
-            productCode: productCode,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "text/csv");
-
-        const accept = options?.acceptHeaderOverride || "application/json;q=1, application/xml;q=0";
-        headers$.set("Accept", accept);
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateDrinkRawRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = payload$.RequestBody;
-
-        const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
-
-        const query$ = "";
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateDrink_raw",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.UpdateDrinkRawResponse>()
-            .json(200, operations.UpdateDrinkRawResponse$, { key: "Drink" })
-            .bytes(200, operations.UpdateDrinkRawResponse$, {
-                ctype: "application/xml",
-                key: "Body",
-            })
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.UpdateDrinkRawResponse$, { key: "Error" })
-            .match(response, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Update a drink.
-     *
-     * @remarks
-     * Update a drink. Only available when authenticated.
-     */
-    async updateDrinkString(
-        requestBody: string,
-        productCode: string,
-        options?: RequestOptions & { acceptHeaderOverride?: UpdateDrinkStringAcceptEnum }
-    ): Promise<operations.UpdateDrinkStringResponse> {
-        const input$: operations.UpdateDrinkStringRequest = {
-            requestBody: requestBody,
-            productCode: productCode,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "text/*");
-
-        const accept = options?.acceptHeaderOverride || "application/json;q=1, application/xml;q=0";
-        headers$.set("Accept", accept);
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateDrinkStringRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = payload$.RequestBody;
-
-        const pathParams$ = {
-            productCode: enc$.encodeSimple("productCode", payload$.productCode, {
-                explode: false,
-                charEncoding: "percent",
-            }),
-        };
-        const path$ = this.templateURLComponent("/drinks/{productCode}")(pathParams$);
-
-        const query$ = "";
-
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateDrink_string",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-            StatusCode: response.status,
-            RawResponse: response,
-            Headers: {},
-        };
-
-        const [result$] = await this.matcher<operations.UpdateDrinkStringResponse>()
-            .json(200, operations.UpdateDrinkStringResponse$, { key: "Drink" })
-            .bytes(200, operations.UpdateDrinkStringResponse$, {
-                ctype: "application/xml",
-                key: "Body",
-            })
-            .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.UpdateDrinkStringResponse$, { key: "Error" })
             .match(response, { extraFields: responseFields$ });
 
         return result$;
