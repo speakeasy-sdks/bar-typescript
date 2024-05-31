@@ -181,6 +181,7 @@ paths:
   /order:
     post:
       operationId: createOrder
+      x-speakeasy-usage-example: true
       summary: Create an order.
       description: Create an order for a drink.
       tags:
