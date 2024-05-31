@@ -25,5 +25,5 @@ typescript:
   inputModelSuffix: input
   maxMethodParams: 4
   outputModelSuffix: output
-  packageName: @speakeasy-sdks/speakeasy-bar
+  packageName: "@speakeasy-sdks/speakeasy-bar"
   templateVersion: v2
