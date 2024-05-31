@@ -268,13 +268,13 @@ run();
 ### NPM
 
 ```bash
-npm add https://github.com/speakeasy-sdks/bar-typescript
+npm add @speakeasy-sdks/speakeasy-bar
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/speakeasy-sdks/bar-typescript
+yarn add @speakeasy-sdks/speakeasy-bar
 ```
 <!-- End SDK Installation [installation] -->
 
