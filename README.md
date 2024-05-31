@@ -1,9 +1,8 @@
-# speakeasy-bar
-
-<div align="left">
-    <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-    <a href="https://github.com/speakeasy-sdks/bar-typescript.git/actions"><img src="https://img.shields.io/github/actions/workflow/status/speakeasy-sdks/bar-typescript/speakeasy_sdk_generation.yml?style=for-the-badge" /></a>
-    
+<div align="center">
+    <img src="https://github.com/speakeasy-sdks/bar-typescript/assets/6267663/f20796b3-05fd-4100-bb13-763e618b1df6" width="300">
+    <h1>Speakeasy Bar Typescript SDKs</h1>
+    <p>Cocktails & Mocktails served via API</p>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
 </div>
 
 ## SDK Installation
