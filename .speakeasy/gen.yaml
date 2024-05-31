@@ -10,9 +10,15 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 typescript:
-  version: 0.8.0
+  version: 0.9.0
+  additionalDependencies:
+    dependencies: {}
+    devDependencies: {}
+    peerDependencies: {}
+  additionalPackageJSON: {}
   author: speakeasy-bar-test
   clientServerStatusCodesAsErrors: true
+  enumFormat: enum
   flattenGlobalSecurity: true
   imports:
     option: openapi
@@ -24,6 +30,8 @@ typescript:
       webhooks: sdk/models/webhooks
   inputModelSuffix: input
   maxMethodParams: 4
+  methodArguments: require-security-and-request
   outputModelSuffix: output
-  packageName: "@speakeasy-sdks/speakeasy-bar"
+  packageName: '@speakeasy-sdks/speakeasy-bar'
+  responseFormat: envelope
   templateVersion: v2

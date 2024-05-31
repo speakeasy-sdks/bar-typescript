@@ -16,21 +16,23 @@ Create an order for a drink.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { OrderType } from "speakeasy-bar/dist/sdk/models/shared";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+import { IngredientOrderOrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
+  const result = await barSDK.orders.createOrder({
+      deliveryAddress: "123 Main St, Anytown, USA",
+      orderType: IngredientOrderOrderType.Ingredient,
+      productCode: "AC-A2DF3",
+      quantity: 282345,
+    }, "<value>");
 
-  const res = await sdk.orders.createOrder({
-    requestBody: "<value>",
-  });
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -38,15 +40,17 @@ run();
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `request`                                                                          | [operations.CreateOrderRequest](../../sdk/models/operations/createorderrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
-| `config`                                                                           | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                       | :heavy_minus_sign:                                                                 | Available config options for making requests.                                      |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `requestBody`                                                                                                                                                                  | *operations.CreateOrderRequestBody*                                                                                                                                            | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `callbackUrl`                                                                                                                                                                  | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | The url to call when the order is updated.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise<[operations.CreateOrderResponse](../../sdk/models/operations/createorderresponse.md)>**
+**Promise\<[operations.CreateOrderResponse](../../sdk/models/operations/createorderresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

@@ -16,21 +16,19 @@ Subscribe to webhooks.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
-import { Webhook } from "speakeasy-bar/dist/sdk/models/operations";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK({
+  apiKey: "<YOUR_API_KEY_HERE>",
+});
 
 async function run() {
-  const sdk = new SpeakeasyBar({
-    apiKey: "<YOUR_API_KEY_HERE>",
-  });
-
-  const res = await sdk.configuration.subscribeToWebhooks([
+  const result = await barSDK.configuration.subscribeToWebhooks([
     {},
   ]);
 
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -38,15 +36,16 @@ run();
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `request`                                                    | [operations.RequestBody[]](../../models/.md)                 | :heavy_check_mark:                                           | The request object to use for the request.                   |
-| `config`                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config) | :heavy_minus_sign:                                           | Available config options for making requests.                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RequestBody[]](../../models/.md)                                                                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise<[operations.SubscribeToWebhooksResponse](../../sdk/models/operations/subscribetowebhooksresponse.md)>**
+**Promise\<[operations.SubscribeToWebhooksResponse](../../sdk/models/operations/subscribetowebhooksresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

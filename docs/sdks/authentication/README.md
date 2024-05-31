@@ -16,16 +16,15 @@ Authenticate with the API by providing a username and password.
 ### Example Usage
 
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK();
 
 async function run() {
-  const sdk = new SpeakeasyBar();
+  const result = await barSDK.authentication.authenticate({});
 
-  const res = await sdk.authentication.authenticate({});
-
-  if (res.statusCode == 200) {
-    // handle response
-  }
+  // Handle the result
+  console.log(result)
 }
 
 run();
@@ -33,15 +32,16 @@ run();
 
 ### Parameters
 
-| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
-| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `request`                                                                                    | [operations.AuthenticateRequestBody](../../sdk/models/operations/authenticaterequestbody.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
-| `config`                                                                                     | [AxiosRequestConfig](https://axios-http.com/docs/req_config)                                 | :heavy_minus_sign:                                                                           | Available config options for making requests.                                                |
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.AuthenticateRequestBody](../../sdk/models/operations/authenticaterequestbody.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise<[operations.AuthenticateResponse](../../sdk/models/operations/authenticateresponse.md)>**
+**Promise\<[operations.AuthenticateResponse](../../sdk/models/operations/authenticateresponse.md)\>**
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

@@ -1,15 +1,14 @@
 <!-- Start SDK Example Usage [usage] -->
 ```typescript
-import { SpeakeasyBar } from "speakeasy-bar";
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const barSDK = new BarSDK();
 
 async function run() {
-    const sdk = new SpeakeasyBar();
+    const result = await barSDK.authentication.authenticate({});
 
-    const res = await sdk.authentication.authenticate({});
-
-    if (res.statusCode == 200) {
-        // handle response
-    }
+    // Handle the result
+    console.log(result);
 }
 
 run();

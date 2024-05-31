@@ -4,6 +4,8 @@ sources:
     bar-api:
         inputs:
             - location: https://raw.githubusercontent.com/speakeasy-api/openapi-reference-documentation/main/example/openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/bar-api
 targets:
     bar-typescript:
         target: typescript

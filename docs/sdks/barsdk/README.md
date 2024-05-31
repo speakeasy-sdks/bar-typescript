@@ -1,4 +1,4 @@
-# SpeakeasyBar SDK
+# BarSDK
 
 
 ## Overview
