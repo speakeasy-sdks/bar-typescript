@@ -12,6 +12,13 @@ export type ListIngredientsRequest = {
     ingredients?: Array<string> | undefined;
 };
 
+/**
+ * A list of ingredients.
+ */
+export type ListIngredientsResponseBody = {
+    resultArray?: Array<shared.Ingredient> | undefined;
+};
+
 export type ListIngredientsResponse = {
     /**
      * HTTP response content type for this operation
@@ -32,7 +39,7 @@ export type ListIngredientsResponse = {
     /**
      * A list of ingredients.
      */
-    classes?: Array<shared.Ingredient> | undefined;
+    object?: ListIngredientsResponseBody | undefined;
 };
 
 /** @internal */
@@ -63,6 +70,33 @@ export namespace ListIngredientsRequest$ {
 }
 
 /** @internal */
+export namespace ListIngredientsResponseBody$ {
+    export const inboundSchema: z.ZodType<ListIngredientsResponseBody, z.ZodTypeDef, unknown> = z
+        .object({
+            resultArray: z.array(shared.Ingredient$.inboundSchema).optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.resultArray === undefined ? null : { resultArray: v.resultArray }),
+            };
+        });
+
+    export type Outbound = {
+        resultArray?: Array<shared.Ingredient$.Outbound> | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponseBody> = z
+        .object({
+            resultArray: z.array(shared.Ingredient$.outboundSchema).optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.resultArray === undefined ? null : { resultArray: v.resultArray }),
+            };
+        });
+}
+
+/** @internal */
 export namespace ListIngredientsResponse$ {
     export const inboundSchema: z.ZodType<ListIngredientsResponse, z.ZodTypeDef, unknown> = z
         .object({
@@ -70,7 +104,7 @@ export namespace ListIngredientsResponse$ {
             Error: shared.ErrorT$.inboundSchema.optional(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            classes: z.array(shared.Ingredient$.inboundSchema).optional(),
+            object: z.lazy(() => ListIngredientsResponseBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -78,7 +112,7 @@ export namespace ListIngredientsResponse$ {
                 ...(v.Error === undefined ? null : { error: v.Error }),
                 statusCode: v.StatusCode,
                 rawResponse: v.RawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.object === undefined ? null : { object: v.object }),
             };
         });
 
@@ -87,7 +121,7 @@ export namespace ListIngredientsResponse$ {
         Error?: shared.ErrorT$.Outbound | undefined;
         StatusCode: number;
         RawResponse: never;
-        classes?: Array<shared.Ingredient$.Outbound> | undefined;
+        object?: ListIngredientsResponseBody$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponse> = z
@@ -98,7 +132,7 @@ export namespace ListIngredientsResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            classes: z.array(shared.Ingredient$.outboundSchema).optional(),
+            object: z.lazy(() => ListIngredientsResponseBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -106,7 +140,7 @@ export namespace ListIngredientsResponse$ {
                 ...(v.error === undefined ? null : { Error: v.error }),
                 StatusCode: v.statusCode,
                 RawResponse: v.rawResponse,
-                ...(v.classes === undefined ? null : { classes: v.classes }),
+                ...(v.object === undefined ? null : { object: v.object }),
             };
         });
 }

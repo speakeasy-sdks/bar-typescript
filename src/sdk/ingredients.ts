@@ -131,7 +131,7 @@ export class Ingredients extends ClientSDK {
         };
 
         const [result$] = await this.matcher<operations.ListIngredientsResponse>()
-            .json(200, operations.ListIngredientsResponse$, { key: "classes" })
+            .json(200, operations.ListIngredientsResponse$, { key: "object" })
             .fail("4XX")
             .json("5XX", errors.APIError$, { err: true })
             .json("default", operations.ListIngredientsResponse$, { key: "Error" })
