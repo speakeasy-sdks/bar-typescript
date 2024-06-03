@@ -46,11 +46,13 @@ export class Ingredients extends ClientSDK {
      * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
     async listIngredients(
+        page: number,
         ingredients?: Array<string> | undefined,
         options?: RequestOptions & { retries?: retries$.RetryConfig }
     ): Promise<operations.ListIngredientsResponse> {
         const input$: operations.ListIngredientsRequest = {
             ingredients: ingredients,
+            page: page,
         };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
@@ -70,6 +72,7 @@ export class Ingredients extends ClientSDK {
                 explode: false,
                 charEncoding: "percent",
             }),
+            enc$.encodeForm("page", payload$.page, { explode: true, charEncoding: "percent" }),
         ]
             .filter(Boolean)
             .join("&");
