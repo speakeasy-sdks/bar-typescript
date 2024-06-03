@@ -205,7 +205,9 @@ paths:
                       resultArray:
                         type: array
                         items:
-                          $ref: "#/components/schemas/Ingredient"
+                          type: integer
+                    required:
+                      - resultArray
                   
         "5XX":
           $ref: "#/components/responses/APIError"
