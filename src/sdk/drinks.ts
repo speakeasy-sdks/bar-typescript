@@ -6,6 +6,7 @@ import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
 import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
+import * as retries$ from "../lib/retries";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
 import * as errors from "./models/errors";
@@ -45,7 +46,10 @@ export class Drinks extends ClientSDK {
      * @remarks
      * Get a drink by name, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
-    async getDrink(name: string, options?: RequestOptions): Promise<operations.GetDrinkResponse> {
+    async getDrink(
+        name: string,
+        options?: RequestOptions & { retries?: retries$.RetryConfig }
+    ): Promise<operations.GetDrinkResponse> {
         const input$: operations.GetDrinkRequest = {
             name: name,
         };
@@ -99,7 +103,25 @@ export class Drinks extends ClientSDK {
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const retryConfig = options?.retries ||
+            this.options$.retryConfig || {
+                strategy: "backoff",
+                backoff: {
+                    initialInterval: 500,
+                    maxInterval: 60000,
+                    exponent: 1.5,
+                    maxElapsedTime: 3600000,
+                },
+                retryConnectionErrors: true,
+            };
+
+        const response = await retries$.retry(
+            () => {
+                const cloned = request$.clone();
+                return this.do$(cloned, doOptions);
+            },
+            { config: retryConfig, statusCodes: ["5XX"] }
+        );
 
         const responseFields$ = {
             ContentType: response.headers.get("content-type") ?? "application/octet-stream",
@@ -126,7 +148,7 @@ export class Drinks extends ClientSDK {
      */
     async listDrinks(
         drinkType?: shared.DrinkType | undefined,
-        options?: RequestOptions
+        options?: RequestOptions & { retries?: retries$.RetryConfig }
     ): Promise<operations.ListDrinksResponse> {
         const input$: operations.ListDrinksRequest = {
             drinkType: drinkType,
@@ -162,7 +184,25 @@ export class Drinks extends ClientSDK {
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const retryConfig = options?.retries ||
+            this.options$.retryConfig || {
+                strategy: "backoff",
+                backoff: {
+                    initialInterval: 500,
+                    maxInterval: 60000,
+                    exponent: 1.5,
+                    maxElapsedTime: 3600000,
+                },
+                retryConnectionErrors: true,
+            };
+
+        const response = await retries$.retry(
+            () => {
+                const cloned = request$.clone();
+                return this.do$(cloned, doOptions);
+            },
+            { config: retryConfig, statusCodes: ["5XX"] }
+        );
 
         const responseFields$ = {
             ContentType: response.headers.get("content-type") ?? "application/octet-stream",

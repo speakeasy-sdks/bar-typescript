@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
-  docChecksum: df07f1659dbc7224abd8310507e51bb9
+  docChecksum: fab38c1a1497782cd907b141c241cd90
   docVersion: 1.0.0
-  speakeasyVersion: 1.299.4
-  generationVersion: 2.338.7
-  releaseVersion: 0.10.1
-  configChecksum: 58abeac190d3b7951125b3bf71f39708
+  speakeasyVersion: 1.299.5
+  generationVersion: 2.338.10
+  releaseVersion: 0.11.0
+  configChecksum: c1045fb4983de64f4e20966a0314340e
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -25,6 +25,7 @@ features:
     globalServerURLs: 2.82.4
     inputOutputModels: 2.82.0
     responseFormat: 0.2.3
+    retries: 2.83.0
     sdkHooks: 0.1.0
     serverIDs: 2.81.2
     webhooks: 1.0.0
@@ -117,6 +118,7 @@ generatedFiles:
   - docs/sdk/models/webhooks/stockupdateresponse.md
   - docs/sdk/models/webhooks/stockupdaterequestbody.md
   - docs/sdks/barsdk/README.md
+  - docs/lib/utils/retryconfig.md
   - docs/sdks/authentication/README.md
   - docs/sdks/drinks/README.md
   - docs/sdks/ingredients/README.md
