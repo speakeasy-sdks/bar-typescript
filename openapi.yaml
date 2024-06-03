@@ -46,6 +46,7 @@ x-speakeasy-retries:
   statusCodes:
     - 5XX
   retryConnectionErrors: true
+  
 x-speakeasy-pagination:
   type: offsetLimit
   inputs:
@@ -53,7 +54,7 @@ x-speakeasy-pagination:
       in: parameters
       type: page
   outputs:
-    results: $.resultArray
+    results: $.data.resultArray
 security:
   - apiKey: []
   - clientCredentials:
@@ -175,6 +176,11 @@ paths:
       tags:
         - ingredients
       parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          required: true
         - name: ingredients
           in: query
           description: A list of ingredients to filter by. If not provided all ingredients will be returned.
@@ -191,11 +197,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
                 properties:
-                  resultArray:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Ingredient"
+                  data:
+                    type: object
+                    properties:
+                      resultArray:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Ingredient"
                   
         "5XX":
           $ref: "#/components/responses/APIError"
