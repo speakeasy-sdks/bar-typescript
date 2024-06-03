@@ -7,7 +7,6 @@ export * from "./drinkinput";
 export * from "./drinktype";
 export * from "./error";
 export * from "./ingredient";
-export * from "./ingredientinput";
 export * from "./ingredienttype";
 export * from "./order";
 export * from "./orderinput";
