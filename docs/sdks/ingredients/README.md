@@ -19,7 +19,9 @@ Get a list of ingredients, if authenticated this will include stock levels and p
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-  apiKey: "<YOUR_API_KEY_HERE>",
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {

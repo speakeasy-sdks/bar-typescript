@@ -15,7 +15,9 @@ Subscribe to webhooks.
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-  apiKey: "<YOUR_API_KEY_HERE>",
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {

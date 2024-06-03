@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
-  docChecksum: 61d5b994e47822f51a16d55d70a5d372
+  docChecksum: db1d0533eff822b87c5a83e84c107a1c
   docVersion: 1.0.0
   speakeasyVersion: 1.299.5
   generationVersion: 2.338.10
-  releaseVersion: 0.11.1
-  configChecksum: 29e880149b478fc3317fffa32a4f6c04
+  releaseVersion: 0.12.0
+  configChecksum: 4afcbc7695790cabde6b8e9ac4d552ce
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -21,9 +21,9 @@ features:
     flattening: 2.81.1
     globalSecurity: 2.82.9
     globalSecurityCallbacks: 0.1.0
-    globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
     inputOutputModels: 2.82.0
+    oauth2ClientCredentials: 0.1.4
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.1.0
@@ -76,6 +76,7 @@ generatedFiles:
   - src/sdk/models/shared/ordertype.ts
   - src/sdk/models/shared/orderinput.ts
   - src/sdk/models/shared/security.ts
+  - src/sdk/models/shared/schemeclientcredentials.ts
   - src/sdk/models/shared/ingredientinput.ts
   - src/sdk/models/shared/drinkinput.ts
   - src/sdk/models/errors/apierror.ts
@@ -111,6 +112,7 @@ generatedFiles:
   - docs/sdk/models/shared/ordertype.md
   - docs/sdk/models/shared/orderinput.md
   - docs/sdk/models/shared/security.md
+  - docs/sdk/models/shared/schemeclientcredentials.md
   - docs/sdk/models/shared/ingredientinput.md
   - docs/sdk/models/shared/drinkinput.md
   - docs/sdk/models/errors/apierror.md
@@ -130,3 +132,4 @@ generatedFiles:
   - src/hooks/hooks.ts
   - src/hooks/types.ts
   - src/hooks/index.ts
+  - src/hooks/clientcredentials.ts

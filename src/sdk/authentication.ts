@@ -63,7 +63,11 @@ export class Authentication extends ClientSDK {
 
         const query$ = "";
 
-        const context = { operationID: "authenticate", oAuth2Scopes: [], securitySource: null };
+        const context = {
+            operationID: "authenticate",
+            oAuth2Scopes: ["read:basic"],
+            securitySource: null,
+        };
 
         const doOptions = { context, errorCodes: ["401", "4XX", "5XX"] };
         const request$ = this.createRequest$(

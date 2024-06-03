@@ -29,7 +29,11 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-const barSDK = new BarSDK();
+const barSDK = new BarSDK({
+    security: {
+        apiKey: "<YOUR_API_KEY_HERE>",
+    },
+});
 
 async function run() {
     const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
@@ -49,7 +53,9 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
-    apiKey: "<YOUR_API_KEY_HERE>",
+    security: {
+        apiKey: "<YOUR_API_KEY_HERE>",
+    },
 });
 
 async function run() {
@@ -265,18 +271,21 @@ const sdk = new BarSDK({ httpClient });
 
 ### Per-Client Security Schemes
 
-This SDK supports the following security scheme globally:
+This SDK supports the following security schemes globally:
 
-| Name     | Type     | Scheme   |
-| -------- | -------- | -------- |
-| `apiKey` | apiKey   | API key  |
+| Name                | Type                | Scheme              |
+| ------------------- | ------------------- | ------------------- |
+| `apiKey`            | apiKey              | API key             |
+| `clientCredentials` | oauth2              | OAuth2 token        |
 
-To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
+You can set the security parameters through the `security` optional parameter when initializing the SDK client instance. The selected scheme will be used by default to authenticate with the API for all operations that support it. For example:
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    apiKey: "<YOUR_API_KEY_HERE>",
+    security: {
+        apiKey: "<YOUR_API_KEY_HERE>",
+    },
 });
 
 async function run() {

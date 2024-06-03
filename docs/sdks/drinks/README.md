@@ -20,7 +20,9 @@ Get a drink by name, if authenticated this will include stock levels and product
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-  apiKey: "<YOUR_API_KEY_HERE>",
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {
@@ -63,7 +65,11 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-const barSDK = new BarSDK();
+const barSDK = new BarSDK({
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
+});
 
 async function run() {
   const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);

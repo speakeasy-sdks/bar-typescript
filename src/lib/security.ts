@@ -67,8 +67,7 @@ type SecurityInputOAuth2 = {
 
 type SecurityInputOAuth2ClientCredentials = {
     type: "oauth2:client_credentials";
-    value: string | null | undefined;
-    fieldName: string;
+    value: { clientID?: string | undefined; clientSecret?: string | undefined } | null | undefined;
 };
 
 export type SecurityInput =
@@ -93,6 +92,8 @@ export function resolveSecurity(...options: SecurityInput[][]): SecurityState | 
                 return false;
             } else if (o.type === "http:basic") {
                 return o.value.username != null || o.value.password != null;
+            } else if (o.type === "oauth2:client_credentials") {
+                return o.value.clientID != null || o.value.clientSecret != null;
             } else if (typeof o.value === "string") {
                 return !!o.value;
             } else {
@@ -172,11 +173,19 @@ function applyBearer(
 export function resolveGlobalSecurity(
     security: Partial<shared.Security> | null | undefined
 ): SecurityState | null {
-    return resolveSecurity([
-        {
-            fieldName: "Authorization",
-            type: "apiKey:header",
-            value: security?.apiKey,
-        },
-    ]);
+    return resolveSecurity(
+        [
+            {
+                fieldName: "Authorization",
+                type: "apiKey:header",
+                value: security?.apiKey,
+            },
+        ],
+        [
+            {
+                type: "oauth2:client_credentials",
+                value: security?.clientCredentials,
+            },
+        ]
+    );
 }
