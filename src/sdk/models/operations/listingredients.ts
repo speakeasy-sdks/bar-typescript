@@ -14,7 +14,7 @@ export type ListIngredientsRequest = {
 };
 
 export type Data = {
-    resultArray?: Array<shared.Ingredient> | undefined;
+    resultArray: Array<number>;
 };
 
 /**
@@ -83,25 +83,25 @@ export namespace ListIngredientsRequest$ {
 export namespace Data$ {
     export const inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
         .object({
-            resultArray: z.array(shared.Ingredient$.inboundSchema).optional(),
+            resultArray: z.array(z.number().int()),
         })
         .transform((v) => {
             return {
-                ...(v.resultArray === undefined ? null : { resultArray: v.resultArray }),
+                resultArray: v.resultArray,
             };
         });
 
     export type Outbound = {
-        resultArray?: Array<shared.Ingredient$.Outbound> | undefined;
+        resultArray: Array<number>;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Data> = z
         .object({
-            resultArray: z.array(shared.Ingredient$.outboundSchema).optional(),
+            resultArray: z.array(z.number().int()),
         })
         .transform((v) => {
             return {
-                ...(v.resultArray === undefined ? null : { resultArray: v.resultArray }),
+                resultArray: v.resultArray,
             };
         });
 }

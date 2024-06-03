@@ -15,10 +15,6 @@ export type Ingredient = {
      */
     productCode?: string | undefined;
     /**
-     * The number of units of the ingredient in stock, only available when authenticated.
-     */
-    stock?: number | undefined;
-    /**
      * The type of ingredient.
      */
     type: IngredientType;
@@ -30,14 +26,12 @@ export namespace Ingredient$ {
         .object({
             name: z.string(),
             productCode: z.string().optional(),
-            stock: z.number().int().optional(),
             type: IngredientType$.inboundSchema,
         })
         .transform((v) => {
             return {
                 name: v.name,
                 ...(v.productCode === undefined ? null : { productCode: v.productCode }),
-                ...(v.stock === undefined ? null : { stock: v.stock }),
                 type: v.type,
             };
         });
@@ -45,7 +39,6 @@ export namespace Ingredient$ {
     export type Outbound = {
         name: string;
         productCode?: string | undefined;
-        stock?: number | undefined;
         type: string;
     };
 
@@ -53,14 +46,12 @@ export namespace Ingredient$ {
         .object({
             name: z.string(),
             productCode: z.string().optional(),
-            stock: z.number().int().optional(),
             type: IngredientType$.outboundSchema,
         })
         .transform((v) => {
             return {
                 name: v.name,
                 ...(v.productCode === undefined ? null : { productCode: v.productCode }),
-                ...(v.stock === undefined ? null : { stock: v.stock }),
                 type: v.type,
             };
         });
