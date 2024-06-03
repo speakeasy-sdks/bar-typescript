@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
-  docChecksum: fab38c1a1497782cd907b141c241cd90
+  docChecksum: 61d5b994e47822f51a16d55d70a5d372
   docVersion: 1.0.0
   speakeasyVersion: 1.299.5
   generationVersion: 2.338.10
-  releaseVersion: 0.11.0
-  configChecksum: c1045fb4983de64f4e20966a0314340e
+  releaseVersion: 0.11.1
+  configChecksum: 29e880149b478fc3317fffa32a4f6c04
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -94,6 +94,7 @@ generatedFiles:
   - docs/sdk/models/operations/listdrinksrequest.md
   - docs/sdk/models/operations/listdrinksresponse.md
   - docs/sdk/models/operations/listingredientsrequest.md
+  - docs/sdk/models/operations/listingredientsresponsebody.md
   - docs/sdk/models/operations/listingredientsresponse.md
   - docs/sdk/models/operations/createorderrequest.md
   - docs/sdk/models/operations/createorderresponse.md
