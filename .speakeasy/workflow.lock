@@ -1,9 +1,9 @@
-speakeasyVersion: 1.299.4
+speakeasyVersion: 1.299.5
 sources:
     bar-api:
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:04b578e1d2f4ddc2701e42c2ba1b44052dc54efa609fb8e9bf7f0a135618b186
-        sourceBlobDigest: sha256:ee45d59cc42036c9f421054d9c48c48bca1398802bbe0d854a3a0a08609f8083
+        sourceRevisionDigest: sha256:3120c462d1c30b38cd1b0ba33d0fa57c2ff9386104f1c11e015921a269499e57
+        sourceBlobDigest: sha256:530552747d874f53b6894e4f59d46a89c671bbcc29b837b570a5feb43e5059c9
         tags:
             - latest
             - main
@@ -11,8 +11,8 @@ targets:
     bar-typescript:
         source: bar-api
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:04b578e1d2f4ddc2701e42c2ba1b44052dc54efa609fb8e9bf7f0a135618b186
-        sourceBlobDigest: sha256:ee45d59cc42036c9f421054d9c48c48bca1398802bbe0d854a3a0a08609f8083
+        sourceRevisionDigest: sha256:3120c462d1c30b38cd1b0ba33d0fa57c2ff9386104f1c11e015921a269499e57
+        sourceBlobDigest: sha256:530552747d874f53b6894e4f59d46a89c671bbcc29b837b570a5feb43e5059c9
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0

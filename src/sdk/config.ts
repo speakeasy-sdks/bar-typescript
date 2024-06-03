@@ -6,6 +6,7 @@ import { SDKHooks } from "../hooks";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config";
 import * as enc$ from "../lib/encodings";
 import { HTTPClient } from "../lib/http";
+import * as retries$ from "../lib/retries";
 import * as schemas$ from "../lib/schemas";
 import { ClientSDK, RequestOptions } from "../lib/sdks";
 import * as errors from "./models/errors";
@@ -47,7 +48,7 @@ export class Config extends ClientSDK {
      */
     async subscribeToWebhooks(
         request: Array<operations.RequestBody>,
-        options?: RequestOptions
+        options?: RequestOptions & { retries?: retries$.RetryConfig }
     ): Promise<operations.SubscribeToWebhooksResponse> {
         const input$ = request;
         const headers$ = new Headers();
@@ -95,7 +96,25 @@ export class Config extends ClientSDK {
             options
         );
 
-        const response = await this.do$(request$, doOptions);
+        const retryConfig = options?.retries ||
+            this.options$.retryConfig || {
+                strategy: "backoff",
+                backoff: {
+                    initialInterval: 500,
+                    maxInterval: 60000,
+                    exponent: 1.5,
+                    maxElapsedTime: 3600000,
+                },
+                retryConnectionErrors: true,
+            };
+
+        const response = await retries$.retry(
+            () => {
+                const cloned = request$.clone();
+                return this.do$(cloned, doOptions);
+            },
+            { config: retryConfig, statusCodes: ["5XX"] }
+        );
 
         const responseFields$ = {
             ContentType: response.headers.get("content-type") ?? "application/octet-stream",
