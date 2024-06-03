@@ -56,6 +56,8 @@ x-speakeasy-pagination:
     results: $.resultArray
 security:
   - apiKey: []
+  - clientCredentials:
+    - read:basic
 tags:
   - name: drinks
     description: The drinks endpoints.
@@ -115,7 +117,8 @@ paths:
       summary: Get a list of drinks.
       description: Get a list of drinks, if authenticated this will include stock levels and product codes otherwise it will only include public information.
       security:
-        - {}
+        - clientCredentials:
+          - read:drinks
       tags:
         - drinks
       parameters:
@@ -452,6 +455,12 @@ components:
       type: apiKey
       name: Authorization
       in: header
+    clientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://speakeasy.bar/oauth2/token/
+          scopes: {}
   responses:
     APIError:
       description: An error occurred interacting with the API.
