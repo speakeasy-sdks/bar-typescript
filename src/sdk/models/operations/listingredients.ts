@@ -10,13 +10,18 @@ export type ListIngredientsRequest = {
      * A list of ingredients to filter by. If not provided all ingredients will be returned.
      */
     ingredients?: Array<string> | undefined;
+    page: number;
+};
+
+export type Data = {
+    resultArray?: Array<shared.Ingredient> | undefined;
 };
 
 /**
  * A list of ingredients.
  */
 export type ListIngredientsResponseBody = {
-    resultArray?: Array<shared.Ingredient> | undefined;
+    data?: Data | undefined;
 };
 
 export type ListIngredientsResponse = {
@@ -47,31 +52,36 @@ export namespace ListIngredientsRequest$ {
     export const inboundSchema: z.ZodType<ListIngredientsRequest, z.ZodTypeDef, unknown> = z
         .object({
             ingredients: z.array(z.string()).optional(),
+            page: z.number().int(),
         })
         .transform((v) => {
             return {
                 ...(v.ingredients === undefined ? null : { ingredients: v.ingredients }),
+                page: v.page,
             };
         });
 
     export type Outbound = {
         ingredients?: Array<string> | undefined;
+        page: number;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsRequest> = z
         .object({
             ingredients: z.array(z.string()).optional(),
+            page: z.number().int(),
         })
         .transform((v) => {
             return {
                 ...(v.ingredients === undefined ? null : { ingredients: v.ingredients }),
+                page: v.page,
             };
         });
 }
 
 /** @internal */
-export namespace ListIngredientsResponseBody$ {
-    export const inboundSchema: z.ZodType<ListIngredientsResponseBody, z.ZodTypeDef, unknown> = z
+export namespace Data$ {
+    export const inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
         .object({
             resultArray: z.array(shared.Ingredient$.inboundSchema).optional(),
         })
@@ -85,13 +95,40 @@ export namespace ListIngredientsResponseBody$ {
         resultArray?: Array<shared.Ingredient$.Outbound> | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponseBody> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Data> = z
         .object({
             resultArray: z.array(shared.Ingredient$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 ...(v.resultArray === undefined ? null : { resultArray: v.resultArray }),
+            };
+        });
+}
+
+/** @internal */
+export namespace ListIngredientsResponseBody$ {
+    export const inboundSchema: z.ZodType<ListIngredientsResponseBody, z.ZodTypeDef, unknown> = z
+        .object({
+            data: z.lazy(() => Data$.inboundSchema).optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.data === undefined ? null : { data: v.data }),
+            };
+        });
+
+    export type Outbound = {
+        data?: Data$.Outbound | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponseBody> = z
+        .object({
+            data: z.lazy(() => Data$.outboundSchema).optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.data === undefined ? null : { data: v.data }),
             };
         });
 }
