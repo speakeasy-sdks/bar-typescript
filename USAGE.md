@@ -3,7 +3,11 @@
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-const barSDK = new BarSDK();
+const barSDK = new BarSDK({
+    security: {
+        apiKey: "<YOUR_API_KEY_HERE>",
+    },
+});
 
 async function run() {
     const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
@@ -21,7 +25,9 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
-    apiKey: "<YOUR_API_KEY_HERE>",
+    security: {
+        apiKey: "<YOUR_API_KEY_HERE>",
+    },
 });
 
 async function run() {

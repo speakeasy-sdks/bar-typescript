@@ -74,18 +74,15 @@ export class Drinks extends ClientSDK {
 
         const query$ = "";
 
-        let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
-        } else {
-            security$ = {};
-        }
+        const security$ =
+            typeof this.options$.security === "function"
+                ? await this.options$.security()
+                : this.options$.security;
+
         const context = {
             operationID: "getDrink",
-            oAuth2Scopes: [],
-            securitySource: this.options$.apiKey,
+            oAuth2Scopes: ["read:basic"],
+            securitySource: this.options$.security,
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
@@ -175,12 +172,29 @@ export class Drinks extends ClientSDK {
             .filter(Boolean)
             .join("&");
 
-        const context = { operationID: "listDrinks", oAuth2Scopes: [], securitySource: null };
+        const security$ =
+            typeof this.options$.security === "function"
+                ? await this.options$.security()
+                : this.options$.security;
+
+        const context = {
+            operationID: "listDrinks",
+            oAuth2Scopes: ["read:basic", "read:drinks"],
+            securitySource: this.options$.security,
+        };
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
         const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
-            { method: "GET", path: path$, headers: headers$, query: query$, body: body$ },
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                query: query$,
+                body: body$,
+            },
             options
         );
 

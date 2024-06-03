@@ -20,7 +20,9 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
-  apiKey: "<YOUR_API_KEY_HERE>",
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {

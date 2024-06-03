@@ -12,4 +12,5 @@ export * from "./ingredienttype";
 export * from "./order";
 export * from "./orderinput";
 export * from "./ordertype";
+export * from "./schemeclientcredentials";
 export * from "./security";

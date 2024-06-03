@@ -2,8 +2,8 @@ speakeasyVersion: 1.299.5
 sources:
     bar-api:
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:52632cfc0ebb82b4124ccc7975ae47f7b767635415bb8a46793116a0be587f07
-        sourceBlobDigest: sha256:e375536d064fb386d229273156fbac5ad6151667f46a20c62341e3f078bff62a
+        sourceRevisionDigest: sha256:74fec11ec3f5cba8f957506a63e0f753552434790282428f3a1e9aecae01288e
+        sourceBlobDigest: sha256:82a26183c39951e69bded5362879f4b8cd61142c01594aaef0992a77572799b5
         tags:
             - latest
             - main
@@ -11,8 +11,8 @@ targets:
     bar-typescript:
         source: bar-api
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:52632cfc0ebb82b4124ccc7975ae47f7b767635415bb8a46793116a0be587f07
-        sourceBlobDigest: sha256:e375536d064fb386d229273156fbac5ad6151667f46a20c62341e3f078bff62a
+        sourceRevisionDigest: sha256:74fec11ec3f5cba8f957506a63e0f753552434790282428f3a1e9aecae01288e
+        sourceBlobDigest: sha256:82a26183c39951e69bded5362879f4b8cd61142c01594aaef0992a77572799b5
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
