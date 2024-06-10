@@ -44,21 +44,12 @@ export namespace Status$ {
 
 /** @internal */
 export namespace Order$ {
-    export const inboundSchema: z.ZodType<Order, z.ZodTypeDef, unknown> = z
-        .object({
-            productCode: z.string(),
-            quantity: z.number().int(),
-            status: Status$.inboundSchema,
-            type: OrderType$.inboundSchema,
-        })
-        .transform((v) => {
-            return {
-                productCode: v.productCode,
-                quantity: v.quantity,
-                status: v.status,
-                type: v.type,
-            };
-        });
+    export const inboundSchema: z.ZodType<Order, z.ZodTypeDef, unknown> = z.object({
+        productCode: z.string(),
+        quantity: z.number().int(),
+        status: Status$.inboundSchema,
+        type: OrderType$.inboundSchema,
+    });
 
     export type Outbound = {
         productCode: string;
@@ -67,19 +58,10 @@ export namespace Order$ {
         type: string;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Order> = z
-        .object({
-            productCode: z.string(),
-            quantity: z.number().int(),
-            status: Status$.outboundSchema,
-            type: OrderType$.outboundSchema,
-        })
-        .transform((v) => {
-            return {
-                productCode: v.productCode,
-                quantity: v.quantity,
-                status: v.status,
-                type: v.type,
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Order> = z.object({
+        productCode: z.string(),
+        quantity: z.number().int(),
+        status: Status$.outboundSchema,
+        type: OrderType$.outboundSchema,
+    });
 }

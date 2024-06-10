@@ -12,36 +12,18 @@ export type Security = {
 
 /** @internal */
 export namespace Security$ {
-    export const inboundSchema: z.ZodType<Security, z.ZodTypeDef, unknown> = z
-        .object({
-            apiKey: z.string().optional(),
-            clientCredentials: SchemeClientCredentials$.inboundSchema.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.apiKey === undefined ? null : { apiKey: v.apiKey }),
-                ...(v.clientCredentials === undefined
-                    ? null
-                    : { clientCredentials: v.clientCredentials }),
-            };
-        });
+    export const inboundSchema: z.ZodType<Security, z.ZodTypeDef, unknown> = z.object({
+        apiKey: z.string().optional(),
+        clientCredentials: SchemeClientCredentials$.inboundSchema.optional(),
+    });
 
     export type Outbound = {
         apiKey?: string | undefined;
         clientCredentials?: SchemeClientCredentials$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Security> = z
-        .object({
-            apiKey: z.string().optional(),
-            clientCredentials: SchemeClientCredentials$.outboundSchema.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.apiKey === undefined ? null : { apiKey: v.apiKey }),
-                ...(v.clientCredentials === undefined
-                    ? null
-                    : { clientCredentials: v.clientCredentials }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Security> = z.object({
+        apiKey: z.string().optional(),
+        clientCredentials: SchemeClientCredentials$.outboundSchema.optional(),
+    });
 }
