@@ -1,6 +1,6 @@
 {
   "name": "@speakeasy-sdks/speakeasy-bar",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "author": "speakeasy-bar-test",  
   "main": "./index.js",
   "sideEffects": false,
