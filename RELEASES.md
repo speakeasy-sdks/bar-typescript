@@ -255,3 +255,13 @@ Based on:
 - [typescript v0.13.0] .
 ### Releases
 - [NPM v0.13.0] https://www.npmjs.com/package/@speakeasy-sdks/speakeasy-bar/v/0.13.0 - .
+
+## 2024-06-28 09:38:59
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.322.1 (2.354.2) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.13.1] .
+### Releases
+- [NPM v0.13.1] https://www.npmjs.com/package/@speakeasy-sdks/speakeasy-bar/v/0.13.1 - .
