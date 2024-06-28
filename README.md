@@ -119,7 +119,7 @@ Validation errors can also occur when either method arguments or data returned f
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import * as errors from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
+import { SDKValidationError } from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
 
 const barSDK = new BarSDK();
 
@@ -129,7 +129,7 @@ async function run() {
         result = await barSDK.authentication.authenticate({});
     } catch (err) {
         switch (true) {
-            case err instanceof errors.SDKValidationError: {
+            case err instanceof SDKValidationError: {
                 // Validation errors can be pretty-printed
                 console.error(err.pretty());
                 // Raw value may also be inspected
@@ -309,10 +309,25 @@ run();
 npm add @speakeasy-sdks/speakeasy-bar
 ```
 
+### PNPM
+
+```bash
+pnpm add @speakeasy-sdks/speakeasy-bar
+```
+
+### Bun
+
+```bash
+bun add @speakeasy-sdks/speakeasy-bar
+```
+
 ### Yarn
 
 ```bash
-yarn add @speakeasy-sdks/speakeasy-bar
+yarn add @speakeasy-sdks/speakeasy-bar zod
+
+# Note that Yarn does not install peer dependencies automatically. You will need
+# to install zod as shown above.
 ```
 <!-- End SDK Installation [installation] -->
 
