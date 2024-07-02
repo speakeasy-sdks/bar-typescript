@@ -1,8 +1,8 @@
-speakeasyVersion: 1.322.1
+speakeasyVersion: 1.326.0
 sources:
     bar-api:
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:664c6e0d58dbf41c306562f14a469cfc5b99912d93059dded8a77ee49ee92a07
+        sourceRevisionDigest: sha256:11967761c34a31388a85f617507d2b3844e00f6fcc2b767bb9cb54d485241902
         sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
         tags:
             - latest
@@ -11,8 +11,10 @@ targets:
     bar-typescript:
         source: bar-api
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:664c6e0d58dbf41c306562f14a469cfc5b99912d93059dded8a77ee49ee92a07
+        sourceRevisionDigest: sha256:11967761c34a31388a85f617507d2b3844e00f6fcc2b767bb9cb54d485241902
         sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
+        codeSamplesNamespace: code-samples-typescript-bar-typescript
+        codeSamplesRevisionDigest: sha256:9d0b4b7a3008ce8f704e2f0496cb3ba7963dc0a1094af6bcf7dfd8d4bc1a40c1
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
@@ -30,3 +32,7 @@ workflow:
             publish:
                 npm:
                     token: $npm_token
+            codeSamples:
+                output: codeSamples.yaml
+                registry:
+                    location: registry.speakeasyapi.dev/speakeasy-bar-test/speakeasy-bar-test/code-samples-typescript-bar-typescript
