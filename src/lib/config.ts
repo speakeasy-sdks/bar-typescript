@@ -3,6 +3,7 @@
  */
 
 import * as shared from "../sdk/models/shared/index.js";
+import { ClosedEnum } from "../sdk/types/enums.js";
 import { HTTPClient } from "./http.js";
 import { RetryConfig } from "./retries.js";
 import { Params, pathToFunc } from "./url.js";
@@ -31,11 +32,15 @@ export const ServerList = {
 /**
  * The environment name. Defaults to the production environment.
  */
-export enum ServerEnvironment {
-    Prod = "prod",
-    Staging = "staging",
-    Dev = "dev",
-}
+export const ServerEnvironment = {
+    Prod: "prod",
+    Staging: "staging",
+    Dev: "dev",
+} as const;
+/**
+ * The environment name. Defaults to the production environment.
+ */
+export type ServerEnvironment = ClosedEnum<typeof ServerEnvironment>;
 
 export type SDKOptions = {
     /**
@@ -64,6 +69,7 @@ export type SDKOptions = {
      * Allows overriding the default retry config used by the SDK
      */
     retryConfig?: RetryConfig;
+    timeoutMs?: number;
 };
 
 export function serverURLFromOptions(options: SDKOptions): URL | null {
@@ -93,7 +99,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
     language: "typescript",
     openapiDocVersion: "1.0.0",
-    sdkVersion: "3.0.0-alpha.1",
-    genVersion: "2.359.0",
-    userAgent: "speakeasy-sdk/typescript 3.0.0-alpha.1 2.359.0 1.0.0 @speakeasy-sdks/speakeasy-bar",
+    sdkVersion: "3.0.0-alpha.2",
+    genVersion: "2.376.2",
+    userAgent: "speakeasy-sdk/typescript 3.0.0-alpha.2 2.376.2 1.0.0 @speakeasy-sdks/speakeasy-bar",
 } as const;

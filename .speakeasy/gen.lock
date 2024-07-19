@@ -3,10 +3,10 @@ id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.326.0
-  generationVersion: 2.359.0
-  releaseVersion: 3.0.0-alpha.1
-  configChecksum: 42feae1ffa826734cadc5912103d6a95
+  speakeasyVersion: 1.344.1
+  generationVersion: 2.376.2
+  releaseVersion: 3.0.0-alpha.2
+  configChecksum: a264e42199c0e691e13d9f93c9442529
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -15,8 +15,9 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     callbacks: 1.0.0
-    core: 3.11.0
-    errors: 2.81.10
+    core: 3.11.7
+    defaultEnabledRetries: 0.1.0
+    errors: 2.81.12
     examples: 2.81.4
     flattening: 2.81.1
     globalSecurity: 2.82.9
@@ -133,3 +134,4 @@ generatedFiles:
   - src/hooks/types.ts
   - src/hooks/index.ts
   - src/hooks/clientcredentials.ts
+  - CONTRIBUTING.md

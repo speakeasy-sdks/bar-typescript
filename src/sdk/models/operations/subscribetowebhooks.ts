@@ -35,69 +35,118 @@ export type SubscribeToWebhooksResponse = {
 };
 
 /** @internal */
+export const Webhook$inboundSchema: z.ZodNativeEnum<typeof Webhook> = z.nativeEnum(Webhook);
+
+/** @internal */
+export const Webhook$outboundSchema: z.ZodNativeEnum<typeof Webhook> = Webhook$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Webhook$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof Webhook> = z.nativeEnum(Webhook);
-    export const outboundSchema: z.ZodNativeEnum<typeof Webhook> = inboundSchema;
+    /** @deprecated use `Webhook$inboundSchema` instead. */
+    export const inboundSchema = Webhook$inboundSchema;
+    /** @deprecated use `Webhook$outboundSchema` instead. */
+    export const outboundSchema = Webhook$outboundSchema;
 }
 
 /** @internal */
+export const RequestBody$inboundSchema: z.ZodType<RequestBody, z.ZodTypeDef, unknown> = z.object({
+    url: z.string().optional(),
+    webhook: Webhook$inboundSchema.optional(),
+});
+
+/** @internal */
+export type RequestBody$Outbound = {
+    url?: string | undefined;
+    webhook?: string | undefined;
+};
+
+/** @internal */
+export const RequestBody$outboundSchema: z.ZodType<
+    RequestBody$Outbound,
+    z.ZodTypeDef,
+    RequestBody
+> = z.object({
+    url: z.string().optional(),
+    webhook: Webhook$outboundSchema.optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace RequestBody$ {
-    export const inboundSchema: z.ZodType<RequestBody, z.ZodTypeDef, unknown> = z.object({
-        url: z.string().optional(),
-        webhook: Webhook$.inboundSchema.optional(),
-    });
-
-    export type Outbound = {
-        url?: string | undefined;
-        webhook?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RequestBody> = z.object({
-        url: z.string().optional(),
-        webhook: Webhook$.outboundSchema.optional(),
-    });
+    /** @deprecated use `RequestBody$inboundSchema` instead. */
+    export const inboundSchema = RequestBody$inboundSchema;
+    /** @deprecated use `RequestBody$outboundSchema` instead. */
+    export const outboundSchema = RequestBody$outboundSchema;
+    /** @deprecated use `RequestBody$Outbound` instead. */
+    export type Outbound = RequestBody$Outbound;
 }
 
 /** @internal */
+export const SubscribeToWebhooksResponse$inboundSchema: z.ZodType<
+    SubscribeToWebhooksResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
+        });
+    });
+
+/** @internal */
+export type SubscribeToWebhooksResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+};
+
+/** @internal */
+export const SubscribeToWebhooksResponse$outboundSchema: z.ZodType<
+    SubscribeToWebhooksResponse$Outbound,
+    z.ZodTypeDef,
+    SubscribeToWebhooksResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace SubscribeToWebhooksResponse$ {
-    export const inboundSchema: z.ZodType<SubscribeToWebhooksResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
-        });
-
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, SubscribeToWebhooksResponse> = z
-        .object({
-            contentType: z.string(),
-            error: shared.ErrorT$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                contentType: "ContentType",
-                error: "Error",
-                statusCode: "StatusCode",
-                rawResponse: "RawResponse",
-            });
-        });
+    /** @deprecated use `SubscribeToWebhooksResponse$inboundSchema` instead. */
+    export const inboundSchema = SubscribeToWebhooksResponse$inboundSchema;
+    /** @deprecated use `SubscribeToWebhooksResponse$outboundSchema` instead. */
+    export const outboundSchema = SubscribeToWebhooksResponse$outboundSchema;
+    /** @deprecated use `SubscribeToWebhooksResponse$Outbound` instead. */
+    export type Outbound = SubscribeToWebhooksResponse$Outbound;
 }

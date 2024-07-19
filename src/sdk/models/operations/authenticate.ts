@@ -42,85 +42,144 @@ export type AuthenticateResponse = {
 };
 
 /** @internal */
+export const AuthenticateRequestBody$inboundSchema: z.ZodType<
+    AuthenticateRequestBody,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    password: z.string().optional(),
+    username: z.string().optional(),
+});
+
+/** @internal */
+export type AuthenticateRequestBody$Outbound = {
+    password?: string | undefined;
+    username?: string | undefined;
+};
+
+/** @internal */
+export const AuthenticateRequestBody$outboundSchema: z.ZodType<
+    AuthenticateRequestBody$Outbound,
+    z.ZodTypeDef,
+    AuthenticateRequestBody
+> = z.object({
+    password: z.string().optional(),
+    username: z.string().optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace AuthenticateRequestBody$ {
-    export const inboundSchema: z.ZodType<AuthenticateRequestBody, z.ZodTypeDef, unknown> =
-        z.object({
-            password: z.string().optional(),
-            username: z.string().optional(),
-        });
-
-    export type Outbound = {
-        password?: string | undefined;
-        username?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AuthenticateRequestBody> =
-        z.object({
-            password: z.string().optional(),
-            username: z.string().optional(),
-        });
+    /** @deprecated use `AuthenticateRequestBody$inboundSchema` instead. */
+    export const inboundSchema = AuthenticateRequestBody$inboundSchema;
+    /** @deprecated use `AuthenticateRequestBody$outboundSchema` instead. */
+    export const outboundSchema = AuthenticateRequestBody$outboundSchema;
+    /** @deprecated use `AuthenticateRequestBody$Outbound` instead. */
+    export type Outbound = AuthenticateRequestBody$Outbound;
 }
 
 /** @internal */
+export const AuthenticateResponseBody$inboundSchema: z.ZodType<
+    AuthenticateResponseBody,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    token: z.string().optional(),
+});
+
+/** @internal */
+export type AuthenticateResponseBody$Outbound = {
+    token?: string | undefined;
+};
+
+/** @internal */
+export const AuthenticateResponseBody$outboundSchema: z.ZodType<
+    AuthenticateResponseBody$Outbound,
+    z.ZodTypeDef,
+    AuthenticateResponseBody
+> = z.object({
+    token: z.string().optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace AuthenticateResponseBody$ {
-    export const inboundSchema: z.ZodType<AuthenticateResponseBody, z.ZodTypeDef, unknown> =
-        z.object({
-            token: z.string().optional(),
-        });
-
-    export type Outbound = {
-        token?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AuthenticateResponseBody> =
-        z.object({
-            token: z.string().optional(),
-        });
+    /** @deprecated use `AuthenticateResponseBody$inboundSchema` instead. */
+    export const inboundSchema = AuthenticateResponseBody$inboundSchema;
+    /** @deprecated use `AuthenticateResponseBody$outboundSchema` instead. */
+    export const outboundSchema = AuthenticateResponseBody$outboundSchema;
+    /** @deprecated use `AuthenticateResponseBody$Outbound` instead. */
+    export type Outbound = AuthenticateResponseBody$Outbound;
 }
 
 /** @internal */
+export const AuthenticateResponse$inboundSchema: z.ZodType<
+    AuthenticateResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+        object: z.lazy(() => AuthenticateResponseBody$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
+        });
+    });
+
+/** @internal */
+export type AuthenticateResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+    object?: AuthenticateResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const AuthenticateResponse$outboundSchema: z.ZodType<
+    AuthenticateResponse$Outbound,
+    z.ZodTypeDef,
+    AuthenticateResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+        object: z.lazy(() => AuthenticateResponseBody$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace AuthenticateResponse$ {
-    export const inboundSchema: z.ZodType<AuthenticateResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            object: z.lazy(() => AuthenticateResponseBody$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
-        });
-
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-        object?: AuthenticateResponseBody$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AuthenticateResponse> = z
-        .object({
-            contentType: z.string(),
-            error: shared.ErrorT$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            object: z.lazy(() => AuthenticateResponseBody$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                contentType: "ContentType",
-                error: "Error",
-                statusCode: "StatusCode",
-                rawResponse: "RawResponse",
-            });
-        });
+    /** @deprecated use `AuthenticateResponse$inboundSchema` instead. */
+    export const inboundSchema = AuthenticateResponse$inboundSchema;
+    /** @deprecated use `AuthenticateResponse$outboundSchema` instead. */
+    export const outboundSchema = AuthenticateResponse$outboundSchema;
+    /** @deprecated use `AuthenticateResponse$Outbound` instead. */
+    export type Outbound = AuthenticateResponse$Outbound;
 }

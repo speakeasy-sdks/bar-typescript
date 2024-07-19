@@ -33,69 +33,102 @@ export type CreateOrderOrderUpdateRequestBody = {
 };
 
 /** @internal */
-export namespace CreateOrderOrderUpdateResponse$ {
-    export const inboundSchema: z.ZodType<CreateOrderOrderUpdateResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
+export const CreateOrderOrderUpdateResponse$inboundSchema: z.ZodType<
+    CreateOrderOrderUpdateResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
         });
+    });
 
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-    };
+/** @internal */
+export type CreateOrderOrderUpdateResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CreateOrderOrderUpdateResponse> =
-        z
-            .object({
-                contentType: z.string(),
-                error: shared.ErrorT$.outboundSchema.optional(),
-                statusCode: z.number().int(),
-                rawResponse: z.instanceof(Response).transform(() => {
-                    throw new Error("Response cannot be serialized");
-                }),
-            })
-            .transform((v) => {
-                return remap$(v, {
-                    contentType: "ContentType",
-                    error: "Error",
-                    statusCode: "StatusCode",
-                    rawResponse: "RawResponse",
-                });
-            });
+/** @internal */
+export const CreateOrderOrderUpdateResponse$outboundSchema: z.ZodType<
+    CreateOrderOrderUpdateResponse$Outbound,
+    z.ZodTypeDef,
+    CreateOrderOrderUpdateResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateOrderOrderUpdateResponse$ {
+    /** @deprecated use `CreateOrderOrderUpdateResponse$inboundSchema` instead. */
+    export const inboundSchema = CreateOrderOrderUpdateResponse$inboundSchema;
+    /** @deprecated use `CreateOrderOrderUpdateResponse$outboundSchema` instead. */
+    export const outboundSchema = CreateOrderOrderUpdateResponse$outboundSchema;
+    /** @deprecated use `CreateOrderOrderUpdateResponse$Outbound` instead. */
+    export type Outbound = CreateOrderOrderUpdateResponse$Outbound;
 }
 
 /** @internal */
+export const CreateOrderOrderUpdateRequestBody$inboundSchema: z.ZodType<
+    CreateOrderOrderUpdateRequestBody,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    order: shared.OrderInput$inboundSchema.optional(),
+});
+
+/** @internal */
+export type CreateOrderOrderUpdateRequestBody$Outbound = {
+    order?: shared.OrderInput$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateOrderOrderUpdateRequestBody$outboundSchema: z.ZodType<
+    CreateOrderOrderUpdateRequestBody$Outbound,
+    z.ZodTypeDef,
+    CreateOrderOrderUpdateRequestBody
+> = z.object({
+    order: shared.OrderInput$outboundSchema.optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace CreateOrderOrderUpdateRequestBody$ {
-    export const inboundSchema: z.ZodType<
-        CreateOrderOrderUpdateRequestBody,
-        z.ZodTypeDef,
-        unknown
-    > = z.object({
-        order: shared.OrderInput$.inboundSchema.optional(),
-    });
-
-    export type Outbound = {
-        order?: shared.OrderInput$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        CreateOrderOrderUpdateRequestBody
-    > = z.object({
-        order: shared.OrderInput$.outboundSchema.optional(),
-    });
+    /** @deprecated use `CreateOrderOrderUpdateRequestBody$inboundSchema` instead. */
+    export const inboundSchema = CreateOrderOrderUpdateRequestBody$inboundSchema;
+    /** @deprecated use `CreateOrderOrderUpdateRequestBody$outboundSchema` instead. */
+    export const outboundSchema = CreateOrderOrderUpdateRequestBody$outboundSchema;
+    /** @deprecated use `CreateOrderOrderUpdateRequestBody$Outbound` instead. */
+    export type Outbound = CreateOrderOrderUpdateRequestBody$Outbound;
 }

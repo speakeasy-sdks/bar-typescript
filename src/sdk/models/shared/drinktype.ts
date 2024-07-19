@@ -17,7 +17,18 @@ export enum DrinkType {
 }
 
 /** @internal */
+export const DrinkType$inboundSchema: z.ZodNativeEnum<typeof DrinkType> = z.nativeEnum(DrinkType);
+
+/** @internal */
+export const DrinkType$outboundSchema: z.ZodNativeEnum<typeof DrinkType> = DrinkType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace DrinkType$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof DrinkType> = z.nativeEnum(DrinkType);
-    export const outboundSchema: z.ZodNativeEnum<typeof DrinkType> = inboundSchema;
+    /** @deprecated use `DrinkType$inboundSchema` instead. */
+    export const inboundSchema = DrinkType$inboundSchema;
+    /** @deprecated use `DrinkType$outboundSchema` instead. */
+    export const outboundSchema = DrinkType$outboundSchema;
 }

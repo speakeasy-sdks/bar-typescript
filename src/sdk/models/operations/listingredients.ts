@@ -49,101 +49,172 @@ export type ListIngredientsResponse = {
 };
 
 /** @internal */
+export const ListIngredientsRequest$inboundSchema: z.ZodType<
+    ListIngredientsRequest,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    ingredients: z.array(z.string()).optional(),
+    page: z.number().int(),
+});
+
+/** @internal */
+export type ListIngredientsRequest$Outbound = {
+    ingredients?: Array<string> | undefined;
+    page: number;
+};
+
+/** @internal */
+export const ListIngredientsRequest$outboundSchema: z.ZodType<
+    ListIngredientsRequest$Outbound,
+    z.ZodTypeDef,
+    ListIngredientsRequest
+> = z.object({
+    ingredients: z.array(z.string()).optional(),
+    page: z.number().int(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListIngredientsRequest$ {
-    export const inboundSchema: z.ZodType<ListIngredientsRequest, z.ZodTypeDef, unknown> = z.object(
-        {
-            ingredients: z.array(z.string()).optional(),
-            page: z.number().int(),
-        }
-    );
-
-    export type Outbound = {
-        ingredients?: Array<string> | undefined;
-        page: number;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsRequest> =
-        z.object({
-            ingredients: z.array(z.string()).optional(),
-            page: z.number().int(),
-        });
+    /** @deprecated use `ListIngredientsRequest$inboundSchema` instead. */
+    export const inboundSchema = ListIngredientsRequest$inboundSchema;
+    /** @deprecated use `ListIngredientsRequest$outboundSchema` instead. */
+    export const outboundSchema = ListIngredientsRequest$outboundSchema;
+    /** @deprecated use `ListIngredientsRequest$Outbound` instead. */
+    export type Outbound = ListIngredientsRequest$Outbound;
 }
 
 /** @internal */
+export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z.object({
+    resultArray: z.array(z.number().int()),
+});
+
+/** @internal */
+export type Data$Outbound = {
+    resultArray: Array<number>;
+};
+
+/** @internal */
+export const Data$outboundSchema: z.ZodType<Data$Outbound, z.ZodTypeDef, Data> = z.object({
+    resultArray: z.array(z.number().int()),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace Data$ {
-    export const inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z.object({
-        resultArray: z.array(z.number().int()),
-    });
-
-    export type Outbound = {
-        resultArray: Array<number>;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Data> = z.object({
-        resultArray: z.array(z.number().int()),
-    });
+    /** @deprecated use `Data$inboundSchema` instead. */
+    export const inboundSchema = Data$inboundSchema;
+    /** @deprecated use `Data$outboundSchema` instead. */
+    export const outboundSchema = Data$outboundSchema;
+    /** @deprecated use `Data$Outbound` instead. */
+    export type Outbound = Data$Outbound;
 }
 
 /** @internal */
+export const ListIngredientsResponseBody$inboundSchema: z.ZodType<
+    ListIngredientsResponseBody,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    data: z.lazy(() => Data$inboundSchema).optional(),
+});
+
+/** @internal */
+export type ListIngredientsResponseBody$Outbound = {
+    data?: Data$Outbound | undefined;
+};
+
+/** @internal */
+export const ListIngredientsResponseBody$outboundSchema: z.ZodType<
+    ListIngredientsResponseBody$Outbound,
+    z.ZodTypeDef,
+    ListIngredientsResponseBody
+> = z.object({
+    data: z.lazy(() => Data$outboundSchema).optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListIngredientsResponseBody$ {
-    export const inboundSchema: z.ZodType<ListIngredientsResponseBody, z.ZodTypeDef, unknown> =
-        z.object({
-            data: z.lazy(() => Data$.inboundSchema).optional(),
-        });
-
-    export type Outbound = {
-        data?: Data$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponseBody> =
-        z.object({
-            data: z.lazy(() => Data$.outboundSchema).optional(),
-        });
+    /** @deprecated use `ListIngredientsResponseBody$inboundSchema` instead. */
+    export const inboundSchema = ListIngredientsResponseBody$inboundSchema;
+    /** @deprecated use `ListIngredientsResponseBody$outboundSchema` instead. */
+    export const outboundSchema = ListIngredientsResponseBody$outboundSchema;
+    /** @deprecated use `ListIngredientsResponseBody$Outbound` instead. */
+    export type Outbound = ListIngredientsResponseBody$Outbound;
 }
 
 /** @internal */
+export const ListIngredientsResponse$inboundSchema: z.ZodType<
+    ListIngredientsResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+        object: z.lazy(() => ListIngredientsResponseBody$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
+        });
+    });
+
+/** @internal */
+export type ListIngredientsResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+    object?: ListIngredientsResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const ListIngredientsResponse$outboundSchema: z.ZodType<
+    ListIngredientsResponse$Outbound,
+    z.ZodTypeDef,
+    ListIngredientsResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+        object: z.lazy(() => ListIngredientsResponseBody$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListIngredientsResponse$ {
-    export const inboundSchema: z.ZodType<ListIngredientsResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            object: z.lazy(() => ListIngredientsResponseBody$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
-        });
-
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-        object?: ListIngredientsResponseBody$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListIngredientsResponse> = z
-        .object({
-            contentType: z.string(),
-            error: shared.ErrorT$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            object: z.lazy(() => ListIngredientsResponseBody$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                contentType: "ContentType",
-                error: "Error",
-                statusCode: "StatusCode",
-                rawResponse: "RawResponse",
-            });
-        });
+    /** @deprecated use `ListIngredientsResponse$inboundSchema` instead. */
+    export const inboundSchema = ListIngredientsResponse$inboundSchema;
+    /** @deprecated use `ListIngredientsResponse$outboundSchema` instead. */
+    export const outboundSchema = ListIngredientsResponse$outboundSchema;
+    /** @deprecated use `ListIngredientsResponse$Outbound` instead. */
+    export type Outbound = ListIngredientsResponse$Outbound;
 }

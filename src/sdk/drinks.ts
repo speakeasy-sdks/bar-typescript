@@ -3,13 +3,12 @@
  */
 
 import { SDKHooks } from "../hooks/hooks.js";
-import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
+import { SDKOptions, serverURLFromOptions } from "../lib/config.js";
 import {
     encodeFormQuery as encodeFormQuery$,
     encodeSimple as encodeSimple$,
 } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
-import * as retries$ from "../lib/retries.js";
 import * as schemas$ from "../lib/schemas.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as errors from "./models/errors/index.js";
@@ -49,20 +48,14 @@ export class Drinks extends ClientSDK {
      * @remarks
      * Get a drink by name, if authenticated this will include stock levels and product codes otherwise it will only include public information.
      */
-    async getDrink(
-        name: string,
-        options?: RequestOptions & { retries?: retries$.RetryConfig }
-    ): Promise<operations.GetDrinkResponse> {
+    async getDrink(name: string, options?: RequestOptions): Promise<operations.GetDrinkResponse> {
         const input$: operations.GetDrinkRequest = {
             name: name,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.GetDrinkRequest$.outboundSchema.parse(value$),
+            (value$) => operations.GetDrinkRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -73,6 +66,10 @@ export class Drinks extends ClientSDK {
         const path$ = this.templateURLComponent("/drink/{name}")(pathParams$);
 
         const query$ = "";
+
+        const headers$ = new Headers({
+            Accept: "application/json",
+        });
 
         const security$ =
             typeof this.options$.security === "function"
@@ -86,7 +83,6 @@ export class Drinks extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -96,29 +92,27 @@ export class Drinks extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const retryConfig = options?.retries ||
-            this.options$.retryConfig || {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 500,
-                    maxInterval: 60000,
-                    exponent: 1.5,
-                    maxElapsedTime: 3600000,
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries ||
+                this.options$.retryConfig || {
+                    strategy: "backoff",
+                    backoff: {
+                        initialInterval: 500,
+                        maxInterval: 60000,
+                        exponent: 1.5,
+                        maxElapsedTime: 3600000,
+                    },
+                    retryConnectionErrors: true,
                 },
-                retryConnectionErrors: true,
-            };
-
-        const response = await retries$.retry(
-            () => {
-                const cloned = request$.clone();
-                return this.do$(cloned, doOptions);
-            },
-            { config: retryConfig, statusCodes: ["5XX"] }
-        );
+            retryCodes: options?.retryCodes || ["5XX"],
+        });
 
         const responseFields$ = {
             ContentType: response.headers.get("content-type") ?? "application/octet-stream",
@@ -128,10 +122,10 @@ export class Drinks extends ClientSDK {
         };
 
         const [result$] = await this.matcher<operations.GetDrinkResponse>()
-            .json(200, operations.GetDrinkResponse$, { key: "Drink" })
+            .json(200, operations.GetDrinkResponse$inboundSchema, { key: "Drink" })
             .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.GetDrinkResponse$, { key: "Error" })
+            .json("5XX", errors.APIError$inboundSchema, { err: true })
+            .json("default", operations.GetDrinkResponse$inboundSchema, { key: "Error" })
             .match(response, { extraFields: responseFields$ });
 
         return result$;
@@ -145,18 +139,15 @@ export class Drinks extends ClientSDK {
      */
     async listDrinks(
         drinkType?: shared.DrinkType | undefined,
-        options?: RequestOptions & { retries?: retries$.RetryConfig }
+        options?: RequestOptions
     ): Promise<operations.ListDrinksResponse> {
         const input$: operations.ListDrinksRequest = {
             drinkType: drinkType,
         };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.ListDrinksRequest$.outboundSchema.parse(value$),
+            (value$) => operations.ListDrinksRequest$outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -165,6 +156,10 @@ export class Drinks extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             drinkType: payload$.drinkType,
+        });
+
+        const headers$ = new Headers({
+            Accept: "application/json",
         });
 
         const security$ =
@@ -179,7 +174,6 @@ export class Drinks extends ClientSDK {
         };
         const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
         const request$ = this.createRequest$(
             context,
             {
@@ -189,29 +183,27 @@ export class Drinks extends ClientSDK {
                 headers: headers$,
                 query: query$,
                 body: body$,
+                timeoutMs: options?.timeoutMs || this.options$.timeoutMs || -1,
             },
             options
         );
 
-        const retryConfig = options?.retries ||
-            this.options$.retryConfig || {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 500,
-                    maxInterval: 60000,
-                    exponent: 1.5,
-                    maxElapsedTime: 3600000,
+        const response = await this.do$(request$, {
+            context,
+            errorCodes: ["4XX", "5XX"],
+            retryConfig: options?.retries ||
+                this.options$.retryConfig || {
+                    strategy: "backoff",
+                    backoff: {
+                        initialInterval: 500,
+                        maxInterval: 60000,
+                        exponent: 1.5,
+                        maxElapsedTime: 3600000,
+                    },
+                    retryConnectionErrors: true,
                 },
-                retryConnectionErrors: true,
-            };
-
-        const response = await retries$.retry(
-            () => {
-                const cloned = request$.clone();
-                return this.do$(cloned, doOptions);
-            },
-            { config: retryConfig, statusCodes: ["5XX"] }
-        );
+            retryCodes: options?.retryCodes || ["5XX"],
+        });
 
         const responseFields$ = {
             ContentType: response.headers.get("content-type") ?? "application/octet-stream",
@@ -221,10 +213,10 @@ export class Drinks extends ClientSDK {
         };
 
         const [result$] = await this.matcher<operations.ListDrinksResponse>()
-            .json(200, operations.ListDrinksResponse$, { key: "classes" })
+            .json(200, operations.ListDrinksResponse$inboundSchema, { key: "classes" })
             .fail("4XX")
-            .json("5XX", errors.APIError$, { err: true })
-            .json("default", operations.ListDrinksResponse$, { key: "Error" })
+            .json("5XX", errors.APIError$inboundSchema, { err: true })
+            .json("default", operations.ListDrinksResponse$inboundSchema, { key: "Error" })
             .match(response, { extraFields: responseFields$ });
 
         return result$;

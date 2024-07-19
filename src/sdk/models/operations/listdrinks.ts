@@ -37,63 +37,102 @@ export type ListDrinksResponse = {
 };
 
 /** @internal */
+export const ListDrinksRequest$inboundSchema: z.ZodType<ListDrinksRequest, z.ZodTypeDef, unknown> =
+    z.object({
+        drinkType: shared.DrinkType$inboundSchema.optional(),
+    });
+
+/** @internal */
+export type ListDrinksRequest$Outbound = {
+    drinkType?: string | undefined;
+};
+
+/** @internal */
+export const ListDrinksRequest$outboundSchema: z.ZodType<
+    ListDrinksRequest$Outbound,
+    z.ZodTypeDef,
+    ListDrinksRequest
+> = z.object({
+    drinkType: shared.DrinkType$outboundSchema.optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListDrinksRequest$ {
-    export const inboundSchema: z.ZodType<ListDrinksRequest, z.ZodTypeDef, unknown> = z.object({
-        drinkType: shared.DrinkType$.inboundSchema.optional(),
-    });
-
-    export type Outbound = {
-        drinkType?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListDrinksRequest> = z.object({
-        drinkType: shared.DrinkType$.outboundSchema.optional(),
-    });
+    /** @deprecated use `ListDrinksRequest$inboundSchema` instead. */
+    export const inboundSchema = ListDrinksRequest$inboundSchema;
+    /** @deprecated use `ListDrinksRequest$outboundSchema` instead. */
+    export const outboundSchema = ListDrinksRequest$outboundSchema;
+    /** @deprecated use `ListDrinksRequest$Outbound` instead. */
+    export type Outbound = ListDrinksRequest$Outbound;
 }
 
 /** @internal */
+export const ListDrinksResponse$inboundSchema: z.ZodType<
+    ListDrinksResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+        classes: z.array(shared.Drink$inboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
+        });
+    });
+
+/** @internal */
+export type ListDrinksResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+    classes?: Array<shared.Drink$Outbound> | undefined;
+};
+
+/** @internal */
+export const ListDrinksResponse$outboundSchema: z.ZodType<
+    ListDrinksResponse$Outbound,
+    z.ZodTypeDef,
+    ListDrinksResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+        classes: z.array(shared.Drink$outboundSchema).optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace ListDrinksResponse$ {
-    export const inboundSchema: z.ZodType<ListDrinksResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-            classes: z.array(shared.Drink$.inboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
-        });
-
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-        classes?: Array<shared.Drink$.Outbound> | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ListDrinksResponse> = z
-        .object({
-            contentType: z.string(),
-            error: shared.ErrorT$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-            classes: z.array(shared.Drink$.outboundSchema).optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                contentType: "ContentType",
-                error: "Error",
-                statusCode: "StatusCode",
-                rawResponse: "RawResponse",
-            });
-        });
+    /** @deprecated use `ListDrinksResponse$inboundSchema` instead. */
+    export const inboundSchema = ListDrinksResponse$inboundSchema;
+    /** @deprecated use `ListDrinksResponse$outboundSchema` instead. */
+    export const outboundSchema = ListDrinksResponse$outboundSchema;
+    /** @deprecated use `ListDrinksResponse$Outbound` instead. */
+    export type Outbound = ListDrinksResponse$Outbound;
 }

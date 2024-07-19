@@ -31,66 +31,105 @@ export type StockUpdateRequestBody = {
 };
 
 /** @internal */
+export const StockUpdateResponse$inboundSchema: z.ZodType<
+    StockUpdateResponse,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ContentType: z.string(),
+        Error: shared.ErrorT$inboundSchema.optional(),
+        StatusCode: z.number().int(),
+        RawResponse: z.instanceof(Response),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ContentType: "contentType",
+            Error: "error",
+            StatusCode: "statusCode",
+            RawResponse: "rawResponse",
+        });
+    });
+
+/** @internal */
+export type StockUpdateResponse$Outbound = {
+    ContentType: string;
+    Error?: shared.ErrorT$Outbound | undefined;
+    StatusCode: number;
+    RawResponse: never;
+};
+
+/** @internal */
+export const StockUpdateResponse$outboundSchema: z.ZodType<
+    StockUpdateResponse$Outbound,
+    z.ZodTypeDef,
+    StockUpdateResponse
+> = z
+    .object({
+        contentType: z.string(),
+        error: shared.ErrorT$outboundSchema.optional(),
+        statusCode: z.number().int(),
+        rawResponse: z.instanceof(Response).transform(() => {
+            throw new Error("Response cannot be serialized");
+        }),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            contentType: "ContentType",
+            error: "Error",
+            statusCode: "StatusCode",
+            rawResponse: "RawResponse",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace StockUpdateResponse$ {
-    export const inboundSchema: z.ZodType<StockUpdateResponse, z.ZodTypeDef, unknown> = z
-        .object({
-            ContentType: z.string(),
-            Error: shared.ErrorT$.inboundSchema.optional(),
-            StatusCode: z.number().int(),
-            RawResponse: z.instanceof(Response),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ContentType: "contentType",
-                Error: "error",
-                StatusCode: "statusCode",
-                RawResponse: "rawResponse",
-            });
-        });
-
-    export type Outbound = {
-        ContentType: string;
-        Error?: shared.ErrorT$.Outbound | undefined;
-        StatusCode: number;
-        RawResponse: never;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, StockUpdateResponse> = z
-        .object({
-            contentType: z.string(),
-            error: shared.ErrorT$.outboundSchema.optional(),
-            statusCode: z.number().int(),
-            rawResponse: z.instanceof(Response).transform(() => {
-                throw new Error("Response cannot be serialized");
-            }),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                contentType: "ContentType",
-                error: "Error",
-                statusCode: "StatusCode",
-                rawResponse: "RawResponse",
-            });
-        });
+    /** @deprecated use `StockUpdateResponse$inboundSchema` instead. */
+    export const inboundSchema = StockUpdateResponse$inboundSchema;
+    /** @deprecated use `StockUpdateResponse$outboundSchema` instead. */
+    export const outboundSchema = StockUpdateResponse$outboundSchema;
+    /** @deprecated use `StockUpdateResponse$Outbound` instead. */
+    export type Outbound = StockUpdateResponse$Outbound;
 }
 
 /** @internal */
+export const StockUpdateRequestBody$inboundSchema: z.ZodType<
+    StockUpdateRequestBody,
+    z.ZodTypeDef,
+    unknown
+> = z.object({
+    drink: shared.DrinkInput$inboundSchema.optional(),
+    ingredient: shared.Ingredient$inboundSchema.optional(),
+});
+
+/** @internal */
+export type StockUpdateRequestBody$Outbound = {
+    drink?: shared.DrinkInput$Outbound | undefined;
+    ingredient?: shared.Ingredient$Outbound | undefined;
+};
+
+/** @internal */
+export const StockUpdateRequestBody$outboundSchema: z.ZodType<
+    StockUpdateRequestBody$Outbound,
+    z.ZodTypeDef,
+    StockUpdateRequestBody
+> = z.object({
+    drink: shared.DrinkInput$outboundSchema.optional(),
+    ingredient: shared.Ingredient$outboundSchema.optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace StockUpdateRequestBody$ {
-    export const inboundSchema: z.ZodType<StockUpdateRequestBody, z.ZodTypeDef, unknown> = z.object(
-        {
-            drink: shared.DrinkInput$.inboundSchema.optional(),
-            ingredient: shared.Ingredient$.inboundSchema.optional(),
-        }
-    );
-
-    export type Outbound = {
-        drink?: shared.DrinkInput$.Outbound | undefined;
-        ingredient?: shared.Ingredient$.Outbound | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, StockUpdateRequestBody> =
-        z.object({
-            drink: shared.DrinkInput$.outboundSchema.optional(),
-            ingredient: shared.Ingredient$.outboundSchema.optional(),
-        });
+    /** @deprecated use `StockUpdateRequestBody$inboundSchema` instead. */
+    export const inboundSchema = StockUpdateRequestBody$inboundSchema;
+    /** @deprecated use `StockUpdateRequestBody$outboundSchema` instead. */
+    export const outboundSchema = StockUpdateRequestBody$outboundSchema;
+    /** @deprecated use `StockUpdateRequestBody$Outbound` instead. */
+    export type Outbound = StockUpdateRequestBody$Outbound;
 }

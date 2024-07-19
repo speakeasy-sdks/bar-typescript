@@ -14,8 +14,20 @@ export enum IngredientType {
 }
 
 /** @internal */
+export const IngredientType$inboundSchema: z.ZodNativeEnum<typeof IngredientType> =
+    z.nativeEnum(IngredientType);
+
+/** @internal */
+export const IngredientType$outboundSchema: z.ZodNativeEnum<typeof IngredientType> =
+    IngredientType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace IngredientType$ {
-    export const inboundSchema: z.ZodNativeEnum<typeof IngredientType> =
-        z.nativeEnum(IngredientType);
-    export const outboundSchema: z.ZodNativeEnum<typeof IngredientType> = inboundSchema;
+    /** @deprecated use `IngredientType$inboundSchema` instead. */
+    export const inboundSchema = IngredientType$inboundSchema;
+    /** @deprecated use `IngredientType$outboundSchema` instead. */
+    export const outboundSchema = IngredientType$outboundSchema;
 }

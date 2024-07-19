@@ -12,40 +12,61 @@ export type SchemeClientCredentials = {
 };
 
 /** @internal */
+export const SchemeClientCredentials$inboundSchema: z.ZodType<
+    SchemeClientCredentials,
+    z.ZodTypeDef,
+    unknown
+> = z
+    .object({
+        ClientID: z.string(),
+        ClientSecret: z.string(),
+        TokenURL: z.literal("https://speakeasy.bar/oauth2/token/").optional(),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            ClientID: "clientID",
+            ClientSecret: "clientSecret",
+            TokenURL: "tokenURL",
+        });
+    });
+
+/** @internal */
+export type SchemeClientCredentials$Outbound = {
+    ClientID: string;
+    ClientSecret: string;
+    TokenURL: "https://speakeasy.bar/oauth2/token/";
+};
+
+/** @internal */
+export const SchemeClientCredentials$outboundSchema: z.ZodType<
+    SchemeClientCredentials$Outbound,
+    z.ZodTypeDef,
+    SchemeClientCredentials
+> = z
+    .object({
+        clientID: z.string(),
+        clientSecret: z.string(),
+        tokenURL: z
+            .literal("https://speakeasy.bar/oauth2/token/")
+            .default("https://speakeasy.bar/oauth2/token/" as const),
+    })
+    .transform((v) => {
+        return remap$(v, {
+            clientID: "ClientID",
+            clientSecret: "ClientSecret",
+            tokenURL: "TokenURL",
+        });
+    });
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
 export namespace SchemeClientCredentials$ {
-    export const inboundSchema: z.ZodType<SchemeClientCredentials, z.ZodTypeDef, unknown> = z
-        .object({
-            ClientID: z.string(),
-            ClientSecret: z.string(),
-            TokenURL: z.literal("https://speakeasy.bar/oauth2/token/").optional(),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                ClientID: "clientID",
-                ClientSecret: "clientSecret",
-                TokenURL: "tokenURL",
-            });
-        });
-
-    export type Outbound = {
-        ClientID: string;
-        ClientSecret: string;
-        TokenURL: "https://speakeasy.bar/oauth2/token/";
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, SchemeClientCredentials> = z
-        .object({
-            clientID: z.string(),
-            clientSecret: z.string(),
-            tokenURL: z
-                .literal("https://speakeasy.bar/oauth2/token/")
-                .default("https://speakeasy.bar/oauth2/token/" as const),
-        })
-        .transform((v) => {
-            return remap$(v, {
-                clientID: "ClientID",
-                clientSecret: "ClientSecret",
-                tokenURL: "TokenURL",
-            });
-        });
+    /** @deprecated use `SchemeClientCredentials$inboundSchema` instead. */
+    export const inboundSchema = SchemeClientCredentials$inboundSchema;
+    /** @deprecated use `SchemeClientCredentials$outboundSchema` instead. */
+    export const outboundSchema = SchemeClientCredentials$outboundSchema;
+    /** @deprecated use `SchemeClientCredentials$Outbound` instead. */
+    export type Outbound = SchemeClientCredentials$Outbound;
 }
