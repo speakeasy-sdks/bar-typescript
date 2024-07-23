@@ -1,8 +1,8 @@
-speakeasyVersion: 1.344.1
+speakeasyVersion: 1.345.1
 sources:
     bar-api:
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:ad6957b669d1f6e4d54e25c3267ae2c87c514bf9dd1d492eae56aa79b7f23dfe
+        sourceRevisionDigest: sha256:c0f425f6e60dd28c12f8bc8b1afe6a571208e4134a68cb18e81d22d36f08c141
         sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
         tags:
             - latest
@@ -11,10 +11,10 @@ targets:
     bar-typescript:
         source: bar-api
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:ad6957b669d1f6e4d54e25c3267ae2c87c514bf9dd1d492eae56aa79b7f23dfe
+        sourceRevisionDigest: sha256:c0f425f6e60dd28c12f8bc8b1afe6a571208e4134a68cb18e81d22d36f08c141
         sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
         codeSamplesNamespace: code-samples-typescript-bar-typescript
-        codeSamplesRevisionDigest: sha256:704b7a36abe4016d58bd5d547939dbf10e58875a9fc5011482e0f57cf36745ac
+        codeSamplesRevisionDigest: sha256:eead1e63d1101fa618f1e0ccf7726f3d8c2231a72b9c35d7d19d68dc034456d0
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
