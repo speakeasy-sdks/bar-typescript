@@ -1,6 +1,8 @@
 # Config
 (*config*)
 
+## Overview
+
 ### Available Operations
 
 * [subscribeToWebhooks](#subscribetowebhooks) - Subscribe to webhooks.
@@ -32,6 +34,40 @@ async function run() {
 run();
 ```
 
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { BarSDKCore } from "@speakeasy-sdks/speakeasy-bar/core.js";
+import { configSubscribeToWebhooks } from "@speakeasy-sdks/speakeasy-bar/funcs/configSubscribeToWebhooks.js";
+
+// Use `BarSDKCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const barSDK = new BarSDKCore({
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
+});
+
+async function run() {
+  const res = await configSubscribeToWebhooks(barSDK, [
+    {},
+  ]);
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result)
+}
+
+run();
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -41,10 +77,10 @@ run();
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
-
 ### Response
 
 **Promise\<[operations.SubscribeToWebhooksResponse](../../sdk/models/operations/subscribetowebhooksresponse.md)\>**
+
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

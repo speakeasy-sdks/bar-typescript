@@ -1,5 +1,18 @@
 # AuthenticateResponse
 
+## Example Usage
+
+```typescript
+import { AuthenticateResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: AuthenticateResponse = {
+    contentType: "<value>",
+    statusCode: 548814,
+    rawResponse: new Response('{"message": "hello world"}', {
+        headers: { "Content-Type": "application/json" },
+    }),
+};
+```
 
 ## Fields
 

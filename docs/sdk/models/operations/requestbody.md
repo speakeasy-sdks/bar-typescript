@@ -1,5 +1,12 @@
 # RequestBody
 
+## Example Usage
+
+```typescript
+import { RequestBody } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: RequestBody = {};
+```
 
 ## Fields
 

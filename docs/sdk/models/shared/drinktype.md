@@ -2,6 +2,13 @@
 
 The type of drink.
 
+## Example Usage
+
+```typescript
+import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: DrinkType = DrinkType.Wine;
+```
 
 ## Values
 

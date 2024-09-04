@@ -1,5 +1,14 @@
 # Data
 
+## Example Usage
+
+```typescript
+import { Data } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: Data = {
+    resultArray: [645894],
+};
+```
 
 ## Fields
 

@@ -2,6 +2,18 @@
 
 An order for a drink or ingredient.
 
+## Example Usage
+
+```typescript
+import { Order, OrderType, Status } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: Order = {
+    productCode: "APM-1F2D3",
+    quantity: 836079,
+    status: Status.Pending,
+    type: OrderType.Drink,
+};
+```
 
 ## Fields
 

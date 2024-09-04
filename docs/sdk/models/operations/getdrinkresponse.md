@@ -1,5 +1,23 @@
 # GetDrinkResponse
 
+## Example Usage
+
+```typescript
+import { GetDrinkResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: GetDrinkResponse = {
+    contentType: "<value>",
+    drink: {
+        name: "Manhattan",
+        price: 1500,
+        productCode: "APM-1F2D3",
+    },
+    statusCode: 602763,
+    rawResponse: new Response('{"message": "hello world"}', {
+        headers: { "Content-Type": "application/json" },
+    }),
+};
+```
 
 ## Fields
 

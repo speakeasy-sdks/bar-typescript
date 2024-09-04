@@ -1,5 +1,18 @@
 # SubscribeToWebhooksResponse
 
+## Example Usage
+
+```typescript
+import { SubscribeToWebhooksResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: SubscribeToWebhooksResponse = {
+    contentType: "<value>",
+    statusCode: 791725,
+    rawResponse: new Response('{"message": "hello world"}', {
+        headers: { "Content-Type": "application/json" },
+    }),
+};
+```
 
 ## Fields
 

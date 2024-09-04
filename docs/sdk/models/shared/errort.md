@@ -1,5 +1,12 @@
 # ErrorT
 
+## Example Usage
+
+```typescript
+import { ErrorT } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: ErrorT = {};
+```
 
 ## Fields
 

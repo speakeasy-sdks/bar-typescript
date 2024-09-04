@@ -1,5 +1,16 @@
 # Ingredient
 
+## Example Usage
+
+```typescript
+import { Ingredient, IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: Ingredient = {
+    name: "Angostura Bitters",
+    productCode: "AC-A2DF3",
+    type: IngredientType.LongLife,
+};
+```
 
 ## Fields
 

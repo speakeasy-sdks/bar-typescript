@@ -1,5 +1,12 @@
 # AuthenticateRequestBody
 
+## Example Usage
+
+```typescript
+import { AuthenticateRequestBody } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: AuthenticateRequestBody = {};
+```
 
 ## Fields
 

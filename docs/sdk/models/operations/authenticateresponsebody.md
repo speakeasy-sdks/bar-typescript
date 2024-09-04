@@ -2,6 +2,13 @@
 
 The api key to use for authenticated endpoints.
 
+## Example Usage
+
+```typescript
+import { AuthenticateResponseBody } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+
+let value: AuthenticateResponseBody = {};
+```
 
 ## Fields
 

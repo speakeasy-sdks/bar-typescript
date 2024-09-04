@@ -3,10 +3,10 @@ id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
   docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
   docVersion: 1.0.0
-  speakeasyVersion: 1.345.1
-  generationVersion: 2.378.1
-  releaseVersion: 3.0.0-alpha.3
-  configChecksum: cebc642ac2f745eea63dbe6ff7652744
+  speakeasyVersion: 1.390.2
+  generationVersion: 2.409.0
+  releaseVersion: 3.0.0-alpha.4
+  configChecksum: 6dade758c80b0089295c521f395a6935
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -15,22 +15,29 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     callbacks: 1.0.0
-    core: 3.11.8
+    core: 3.16.0
     defaultEnabledRetries: 0.1.0
-    errors: 2.81.12
+    envVarSecurityUsage: 0.1.1
+    errors: 2.82.2
     examples: 2.81.4
     flattening: 2.81.1
-    globalSecurity: 2.82.9
+    globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
     globalServerURLs: 2.82.4
     inputOutputModels: 2.82.0
-    oauth2ClientCredentials: 0.1.4
+    oauth2ClientCredentials: 0.2.0
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.1.0
     serverIDs: 2.81.2
     webhooks: 1.0.0
 generatedFiles:
+  - src/funcs/authenticationAuthenticate.ts
+  - src/funcs/drinksGetDrink.ts
+  - src/funcs/drinksListDrinks.ts
+  - src/funcs/ingredientsListIngredients.ts
+  - src/funcs/ordersCreateOrder.ts
+  - src/funcs/configSubscribeToWebhooks.ts
   - src/sdk/authentication.ts
   - src/sdk/drinks.ts
   - src/sdk/ingredients.ts
@@ -39,15 +46,21 @@ generatedFiles:
   - src/sdk/sdk.ts
   - .eslintrc.cjs
   - .npmignore
+  - FUNCTIONS.md
   - RUNTIMES.md
   - jsr.json
   - package.json
+  - src/core.ts
   - src/index.ts
   - src/lib/base64.ts
   - src/lib/config.ts
+  - src/lib/dlv.ts
   - src/lib/encodings.ts
+  - src/lib/files.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
   - src/lib/primitives.ts
   - src/lib/retries.ts
   - src/lib/schemas.ts
@@ -55,13 +68,17 @@ generatedFiles:
   - src/lib/security.ts
   - src/lib/url.ts
   - src/sdk/index.ts
+  - src/sdk/models/errors/httpclienterrors.ts
   - src/sdk/models/errors/sdkerror.ts
   - src/sdk/models/errors/sdkvalidationerror.ts
   - src/sdk/types/blobs.ts
+  - src/sdk/types/constdatetime.ts
   - src/sdk/types/enums.ts
+  - src/sdk/types/fp.ts
   - src/sdk/types/index.ts
   - src/sdk/types/operations.ts
   - src/sdk/types/rfcdate.ts
+  - src/sdk/types/streams.ts
   - tsconfig.json
   - src/sdk/models/operations/authenticate.ts
   - src/sdk/models/operations/getdrink.ts
@@ -110,12 +127,10 @@ generatedFiles:
   - docs/sdk/models/shared/status.md
   - docs/sdk/models/shared/order.md
   - docs/sdk/models/shared/ordertype.md
-  - docs/sdk/models/shared/orderinput.md
   - docs/sdk/models/shared/security.md
   - docs/sdk/models/shared/schemeclientcredentials.md
   - docs/sdk/models/shared/ingredient.md
   - docs/sdk/models/shared/ingredienttype.md
-  - docs/sdk/models/shared/drinkinput.md
   - docs/sdk/models/errors/apierror.md
   - docs/sdk/models/callbacks/createorderorderupdateresponse.md
   - docs/sdk/models/callbacks/createorderorderupdaterequestbody.md

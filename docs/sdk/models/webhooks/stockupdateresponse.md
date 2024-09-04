@@ -1,5 +1,18 @@
 # StockUpdateResponse
 
+## Example Usage
+
+```typescript
+import { StockUpdateResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/webhooks";
+
+let value: StockUpdateResponse = {
+    contentType: "<value>",
+    statusCode: 870088,
+    rawResponse: new Response('{"message": "hello world"}', {
+        headers: { "Content-Type": "application/json" },
+    }),
+};
+```
 
 ## Fields
 

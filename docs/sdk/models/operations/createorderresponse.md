@@ -1,5 +1,25 @@
 # CreateOrderResponse
 
+## Example Usage
+
+```typescript
+import { CreateOrderResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+import { OrderType, Status } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: CreateOrderResponse = {
+    contentType: "<value>",
+    order: {
+        productCode: "AC-A2DF3",
+        quantity: 963663,
+        status: Status.Pending,
+        type: OrderType.Drink,
+    },
+    statusCode: 477665,
+    rawResponse: new Response('{"message": "hello world"}', {
+        headers: { "Content-Type": "application/json" },
+    }),
+};
+```
 
 ## Fields
 

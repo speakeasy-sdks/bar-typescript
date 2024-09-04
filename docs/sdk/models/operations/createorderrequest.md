@@ -1,5 +1,21 @@
 # CreateOrderRequest
 
+## Example Usage
+
+```typescript
+import { CreateOrderRequest } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
+import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+let value: CreateOrderRequest = {
+    requestBody: [
+        {
+            productCode: "NAC-3F2D1",
+            quantity: 297534,
+            type: OrderType.Ingredient,
+        },
+    ],
+};
+```
 
 ## Fields
 

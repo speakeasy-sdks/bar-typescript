@@ -35,6 +35,38 @@ async function run() {
 run();
 ```
 
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { BarSDKCore } from "@speakeasy-sdks/speakeasy-bar/core.js";
+import { drinksGetDrink } from "@speakeasy-sdks/speakeasy-bar/funcs/drinksGetDrink.js";
+
+// Use `BarSDKCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const barSDK = new BarSDKCore({
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
+});
+
+async function run() {
+  const res = await drinksGetDrink(barSDK, "<value>");
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result)
+}
+
+run();
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -44,16 +76,17 @@ run();
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
-
 ### Response
 
 **Promise\<[operations.GetDrinkResponse](../../sdk/models/operations/getdrinkresponse.md)\>**
+
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.APIError  | 5XX              | application/json |
 | errors.SDKError  | 4xx-5xx          | */*              |
+
 
 ## listDrinks
 
@@ -63,7 +96,6 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
   security: {
@@ -72,7 +104,39 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
+  const result = await barSDK.drinks.listDrinks();
+
+  // Handle the result
+  console.log(result)
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { BarSDKCore } from "@speakeasy-sdks/speakeasy-bar/core.js";
+import { drinksListDrinks } from "@speakeasy-sdks/speakeasy-bar/funcs/drinksListDrinks.js";
+
+// Use `BarSDKCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const barSDK = new BarSDKCore({
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
+});
+
+async function run() {
+  const res = await drinksListDrinks(barSDK);
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
 
   // Handle the result
   console.log(result)
@@ -90,10 +154,10 @@ run();
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
-
 ### Response
 
 **Promise\<[operations.ListDrinksResponse](../../sdk/models/operations/listdrinksresponse.md)\>**
+
 ### Errors
 
 | Error Object     | Status Code      | Content Type     |

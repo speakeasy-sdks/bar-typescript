@@ -27,7 +27,6 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
     security: {
@@ -36,7 +35,7 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-    const result = await barSDK.drinks.listDrinks(DrinkType.Spirit);
+    const result = await barSDK.drinks.listDrinks();
 
     // Handle the result
     console.log(result);
@@ -59,16 +58,13 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-    const result = await barSDK.orders.createOrder(
-        [
-            {
-                productCode: "APM-1F2D3",
-                quantity: 26535,
-                type: OrderType.Drink,
-            },
-        ],
-        "<value>"
-    );
+    const result = await barSDK.orders.createOrder([
+        {
+            productCode: "APM-1F2D3",
+            quantity: 26535,
+            type: OrderType.Drink,
+        },
+    ]);
 
     // Handle the result
     console.log(result);
@@ -119,7 +115,7 @@ Validation errors can also occur when either method arguments or data returned f
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { SDKValidationError } from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
+import { APIError, SDKValidationError } from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
 
 const barSDK = new BarSDK();
 
@@ -136,8 +132,9 @@ async function run() {
                 console.error(err.rawValue);
                 return;
             }
-            case err instanceof errors.APIError: {
-                console.error(err); // handle exception
+            case err instanceof APIError: {
+                // Handle err.data$: APIErrorData
+                console.error(err);
                 return;
             }
             default: {
@@ -300,8 +297,36 @@ run();
 ```
 <!-- End Authentication [security] -->
 
+<!-- Start Summary [summary] -->
+## Summary
+
+The Speakeasy Bar: A bar that serves drinks.
+
+A secret underground bar that serves drinks to those in the know.
+
+For more information about the API: [The Speakeasy Bar Documentation.](https://docs.speakeasy.bar)
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [Requirements](#requirements)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Standalone functions](#standalone-functions)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Debugging](#debugging)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
+
+The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
 
 ### NPM
 
@@ -336,6 +361,32 @@ yarn add @speakeasy-sdks/speakeasy-bar zod
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 <!-- End Requirements [requirements] -->
+
+<!-- Start Standalone functions [standalone-funcs] -->
+## Standalone functions
+
+All the methods listed above are available as standalone functions. These
+functions are ideal for use in applications running in the browser, serverless
+runtimes or other environments where application bundle size is a primary
+concern. When using a bundler to build your application, all unused
+functionality will be either excluded from the final bundle or tree-shaken away.
+
+To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
+
+<details>
+
+<summary>Available standalone functions</summary>
+
+- [authenticationAuthenticate](docs/sdks/authentication/README.md#authenticate)
+- [configSubscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks)
+- [drinksGetDrink](docs/sdks/drinks/README.md#getdrink)
+- [drinksListDrinks](docs/sdks/drinks/README.md#listdrinks)
+- [ingredientsListIngredients](docs/sdks/ingredients/README.md#listingredients)
+- [ordersCreateOrder](docs/sdks/orders/README.md#createorder)
+
+
+</details>
+<!-- End Standalone functions [standalone-funcs] -->
 
 <!-- Start Retries [retries] -->
 ## Retries
@@ -401,6 +452,23 @@ run();
 
 ```
 <!-- End Retries [retries] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+You can setup your SDK to emit debug logs for SDK requests and responses.
+
+You can pass a logger that matches `console`'s interface as an SDK option.
+
+> [!WARNING]
+> Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
+
+```typescript
+import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+const sdk = new BarSDK({ debugLogger: console });
+```
+<!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

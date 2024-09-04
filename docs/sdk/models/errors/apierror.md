@@ -2,6 +2,13 @@
 
 An error occurred interacting with the API.
 
+## Example Usage
+
+```typescript
+import { APIError } from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
+
+// No examples available for this model
+```
 
 ## Fields
 
