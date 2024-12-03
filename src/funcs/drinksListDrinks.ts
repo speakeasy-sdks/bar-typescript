@@ -3,18 +3,18 @@
  */
 
 import { BarSDKCore } from "../core.js";
-import { encodeFormQuery as encodeFormQuery$ } from "../lib/encodings.js";
-import * as m$ from "../lib/matchers.js";
-import * as schemas$ from "../lib/schemas.js";
+import { encodeFormQuery } from "../lib/encodings.js";
+import * as M from "../lib/matchers.js";
+import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import {
-    ConnectionError,
-    InvalidRequestError,
-    RequestAbortedError,
-    RequestTimeoutError,
-    UnexpectedClientError,
+  ConnectionError,
+  InvalidRequestError,
+  RequestAbortedError,
+  RequestTimeoutError,
+  UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
 import { SDKError } from "../sdk/models/errors/sdkerror.js";
@@ -30,120 +30,129 @@ import { Result } from "../sdk/types/fp.js";
  * Get a list of drinks, if authenticated this will include stock levels and product codes otherwise it will only include public information.
  */
 export async function drinksListDrinks(
-    client$: BarSDKCore,
-    drinkType?: shared.DrinkType | undefined,
-    options?: RequestOptions
+  client: BarSDKCore,
+  drinkType?: shared.DrinkType | undefined,
+  options?: RequestOptions,
 ): Promise<
-    Result<
-        operations.ListDrinksResponse,
-        | errors.APIError
-        | SDKError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | ConnectionError
-    >
+  Result<
+    operations.ListDrinksResponse,
+    | errors.APIError
+    | SDKError
+    | SDKValidationError
+    | UnexpectedClientError
+    | InvalidRequestError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | ConnectionError
+  >
 > {
-    const input$: operations.ListDrinksRequest = {
-        drinkType: drinkType,
-    };
+  const input: operations.ListDrinksRequest = {
+    drinkType: drinkType,
+  };
 
-    const parsed$ = schemas$.safeParse(
-        input$,
-        (value$) => operations.ListDrinksRequest$outboundSchema.parse(value$),
-        "Input validation failed"
-    );
-    if (!parsed$.ok) {
-        return parsed$;
-    }
-    const payload$ = parsed$.value;
-    const body$ = null;
+  const parsed = safeParse(
+    input,
+    (value) => operations.ListDrinksRequest$outboundSchema.parse(value),
+    "Input validation failed",
+  );
+  if (!parsed.ok) {
+    return parsed;
+  }
+  const payload = parsed.value;
+  const body = null;
 
-    const path$ = pathToFunc("/drinks")();
+  const path = pathToFunc("/drinks")();
 
-    const query$ = encodeFormQuery$({
-        drinkType: payload$.drinkType,
-    });
+  const query = encodeFormQuery({
+    "drinkType": payload.drinkType,
+  });
 
-    const headers$ = new Headers({
-        Accept: "application/json",
-    });
+  const headers = new Headers({
+    Accept: "application/json",
+  });
 
-    const security$ = await extractSecurity(client$.options$.security);
-    const context = {
-        operationID: "listDrinks",
-        oAuth2Scopes: ["read:basic", "read:drinks"],
-        securitySource: client$.options$.security,
-    };
-    const securitySettings$ = resolveGlobalSecurity(security$);
+  const securityInput = await extractSecurity(client._options.security);
+  const requestSecurity = resolveGlobalSecurity(securityInput);
 
-    const requestRes = client$.createRequest$(
-        context,
-        {
-            security: securitySettings$,
-            method: "GET",
-            path: path$,
-            headers: headers$,
-            query: query$,
-            body: body$,
-            timeoutMs: options?.timeoutMs || client$.options$.timeoutMs || -1,
+  const context = {
+    operationID: "listDrinks",
+    oAuth2Scopes: ["read:basic", "read:drinks"],
+
+    resolvedSecurity: requestSecurity,
+
+    securitySource: client._options.security,
+    retryConfig: options?.retries
+      || client._options.retryConfig
+      || {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 500,
+          maxInterval: 60000,
+          exponent: 1.5,
+          maxElapsedTime: 3600000,
         },
-        options
-    );
-    if (!requestRes.ok) {
-        return requestRes;
-    }
-    const request$ = requestRes.value;
+        retryConnectionErrors: true,
+      }
+      || { strategy: "none" },
+    retryCodes: options?.retryCodes || ["5XX"],
+  };
 
-    const doResult = await client$.do$(request$, {
-        context,
-        errorCodes: ["4XX", "5XX"],
-        retryConfig: options?.retries ||
-            client$.options$.retryConfig || {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 500,
-                    maxInterval: 60000,
-                    exponent: 1.5,
-                    maxElapsedTime: 3600000,
-                },
-                retryConnectionErrors: true,
-            },
-        retryCodes: options?.retryCodes || ["5XX"],
-    });
-    if (!doResult.ok) {
-        return doResult;
-    }
-    const response = doResult.value;
+  const requestRes = client._createRequest(context, {
+    security: requestSecurity,
+    method: "GET",
+    path: path,
+    headers: headers,
+    query: query,
+    body: body,
+    timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
+  }, options);
+  if (!requestRes.ok) {
+    return requestRes;
+  }
+  const req = requestRes.value;
 
-    const responseFields$ = {
-        ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-        StatusCode: response.status,
-        RawResponse: response,
-        Headers: {},
-    };
+  const doResult = await client._do(req, {
+    context,
+    errorCodes: ["4XX", "5XX"],
+    retryConfig: context.retryConfig,
+    retryCodes: context.retryCodes,
+  });
+  if (!doResult.ok) {
+    return doResult;
+  }
+  const response = doResult.value;
 
-    const [result$] = await m$.match<
-        operations.ListDrinksResponse,
-        | errors.APIError
-        | SDKError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | ConnectionError
-    >(
-        m$.json(200, operations.ListDrinksResponse$inboundSchema, { key: "classes" }),
-        m$.fail("4XX"),
-        m$.jsonErr("5XX", errors.APIError$inboundSchema),
-        m$.json("default", operations.ListDrinksResponse$inboundSchema, { key: "Error" })
-    )(response, { extraFields: responseFields$ });
-    if (!result$.ok) {
-        return result$;
-    }
+  const responseFields = {
+    ContentType: response.headers.get("content-type")
+      ?? "application/octet-stream",
+    StatusCode: response.status,
+    RawResponse: response,
+    Headers: {},
+  };
 
-    return result$;
+  const [result] = await M.match<
+    operations.ListDrinksResponse,
+    | errors.APIError
+    | SDKError
+    | SDKValidationError
+    | UnexpectedClientError
+    | InvalidRequestError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | ConnectionError
+  >(
+    M.json(200, operations.ListDrinksResponse$inboundSchema, {
+      key: "classes",
+    }),
+    M.fail("4XX"),
+    M.jsonErr("5XX", errors.APIError$inboundSchema),
+    M.json("default", operations.ListDrinksResponse$inboundSchema, {
+      key: "Error",
+    }),
+  )(response, { extraFields: responseFields });
+  if (!result.ok) {
+    return result;
+  }
+
+  return result;
 }

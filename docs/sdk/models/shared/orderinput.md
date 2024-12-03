@@ -1,17 +1,16 @@
-# Order
+# OrderInput
 
 An order for a drink or ingredient.
 
 ## Example Usage
 
 ```typescript
-import { Order, OrderType, Status } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+import { OrderInput, OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-let value: Order = {
+let value: OrderInput = {
   productCode: "APM-1F2D3",
-  quantity: 359508,
-  status: Status.Processing,
-  type: OrderType.Ingredient,
+  quantity: 670638,
+  type: OrderType.Drink,
 };
 ```
 
@@ -21,5 +20,4 @@ let value: Order = {
 | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
 | `productCode`                                               | *string*                                                    | :heavy_check_mark:                                          | The product code of the drink or ingredient.                | AC-A2DF3                                                    |
 | `quantity`                                                  | *number*                                                    | :heavy_check_mark:                                          | The number of units of the drink or ingredient to order.    |                                                             |
-| `status`                                                    | [shared.Status](../../../sdk/models/shared/status.md)       | :heavy_check_mark:                                          | The status of the order.                                    |                                                             |
 | `type`                                                      | [shared.OrderType](../../../sdk/models/shared/ordertype.md) | :heavy_check_mark:                                          | The type of order.                                          |                                                             |

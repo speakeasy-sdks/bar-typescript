@@ -7,7 +7,7 @@ The type of drink.
 ```typescript
 import { DrinkType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-let value: DrinkType = DrinkType.Wine;
+let value: DrinkType = DrinkType.NonAlcoholic;
 ```
 
 ## Values

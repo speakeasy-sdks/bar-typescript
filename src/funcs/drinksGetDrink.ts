@@ -3,18 +3,18 @@
  */
 
 import { BarSDKCore } from "../core.js";
-import { encodeSimple as encodeSimple$ } from "../lib/encodings.js";
-import * as m$ from "../lib/matchers.js";
-import * as schemas$ from "../lib/schemas.js";
+import { encodeSimple } from "../lib/encodings.js";
+import * as M from "../lib/matchers.js";
+import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import {
-    ConnectionError,
-    InvalidRequestError,
-    RequestAbortedError,
-    RequestTimeoutError,
-    UnexpectedClientError,
+  ConnectionError,
+  InvalidRequestError,
+  RequestAbortedError,
+  RequestTimeoutError,
+  UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
 import { SDKError } from "../sdk/models/errors/sdkerror.js";
@@ -29,119 +29,129 @@ import { Result } from "../sdk/types/fp.js";
  * Get a drink by name, if authenticated this will include stock levels and product codes otherwise it will only include public information.
  */
 export async function drinksGetDrink(
-    client$: BarSDKCore,
-    name: string,
-    options?: RequestOptions
+  client: BarSDKCore,
+  name: string,
+  options?: RequestOptions,
 ): Promise<
-    Result<
-        operations.GetDrinkResponse,
-        | errors.APIError
-        | SDKError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | ConnectionError
-    >
+  Result<
+    operations.GetDrinkResponse,
+    | errors.APIError
+    | SDKError
+    | SDKValidationError
+    | UnexpectedClientError
+    | InvalidRequestError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | ConnectionError
+  >
 > {
-    const input$: operations.GetDrinkRequest = {
-        name: name,
-    };
+  const input: operations.GetDrinkRequest = {
+    name: name,
+  };
 
-    const parsed$ = schemas$.safeParse(
-        input$,
-        (value$) => operations.GetDrinkRequest$outboundSchema.parse(value$),
-        "Input validation failed"
-    );
-    if (!parsed$.ok) {
-        return parsed$;
-    }
-    const payload$ = parsed$.value;
-    const body$ = null;
+  const parsed = safeParse(
+    input,
+    (value) => operations.GetDrinkRequest$outboundSchema.parse(value),
+    "Input validation failed",
+  );
+  if (!parsed.ok) {
+    return parsed;
+  }
+  const payload = parsed.value;
+  const body = null;
 
-    const pathParams$ = {
-        name: encodeSimple$("name", payload$.name, { explode: false, charEncoding: "percent" }),
-    };
+  const pathParams = {
+    name: encodeSimple("name", payload.name, {
+      explode: false,
+      charEncoding: "percent",
+    }),
+  };
 
-    const path$ = pathToFunc("/drink/{name}")(pathParams$);
+  const path = pathToFunc("/drink/{name}")(pathParams);
 
-    const headers$ = new Headers({
-        Accept: "application/json",
-    });
+  const headers = new Headers({
+    Accept: "application/json",
+  });
 
-    const security$ = await extractSecurity(client$.options$.security);
-    const context = {
-        operationID: "getDrink",
-        oAuth2Scopes: ["read:basic"],
-        securitySource: client$.options$.security,
-    };
-    const securitySettings$ = resolveGlobalSecurity(security$);
+  const securityInput = await extractSecurity(client._options.security);
+  const requestSecurity = resolveGlobalSecurity(securityInput);
 
-    const requestRes = client$.createRequest$(
-        context,
-        {
-            security: securitySettings$,
-            method: "GET",
-            path: path$,
-            headers: headers$,
-            body: body$,
-            timeoutMs: options?.timeoutMs || client$.options$.timeoutMs || -1,
+  const context = {
+    operationID: "getDrink",
+    oAuth2Scopes: ["read:basic"],
+
+    resolvedSecurity: requestSecurity,
+
+    securitySource: client._options.security,
+    retryConfig: options?.retries
+      || client._options.retryConfig
+      || {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 500,
+          maxInterval: 60000,
+          exponent: 1.5,
+          maxElapsedTime: 3600000,
         },
-        options
-    );
-    if (!requestRes.ok) {
-        return requestRes;
-    }
-    const request$ = requestRes.value;
+        retryConnectionErrors: true,
+      }
+      || { strategy: "none" },
+    retryCodes: options?.retryCodes || ["5XX"],
+  };
 
-    const doResult = await client$.do$(request$, {
-        context,
-        errorCodes: ["4XX", "5XX"],
-        retryConfig: options?.retries ||
-            client$.options$.retryConfig || {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 500,
-                    maxInterval: 60000,
-                    exponent: 1.5,
-                    maxElapsedTime: 3600000,
-                },
-                retryConnectionErrors: true,
-            },
-        retryCodes: options?.retryCodes || ["5XX"],
-    });
-    if (!doResult.ok) {
-        return doResult;
-    }
-    const response = doResult.value;
+  const requestRes = client._createRequest(context, {
+    security: requestSecurity,
+    method: "GET",
+    path: path,
+    headers: headers,
+    body: body,
+    timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
+  }, options);
+  if (!requestRes.ok) {
+    return requestRes;
+  }
+  const req = requestRes.value;
 
-    const responseFields$ = {
-        ContentType: response.headers.get("content-type") ?? "application/octet-stream",
-        StatusCode: response.status,
-        RawResponse: response,
-        Headers: {},
-    };
+  const doResult = await client._do(req, {
+    context,
+    errorCodes: ["4XX", "5XX"],
+    retryConfig: context.retryConfig,
+    retryCodes: context.retryCodes,
+  });
+  if (!doResult.ok) {
+    return doResult;
+  }
+  const response = doResult.value;
 
-    const [result$] = await m$.match<
-        operations.GetDrinkResponse,
-        | errors.APIError
-        | SDKError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | ConnectionError
-    >(
-        m$.json(200, operations.GetDrinkResponse$inboundSchema, { key: "Drink" }),
-        m$.fail("4XX"),
-        m$.jsonErr("5XX", errors.APIError$inboundSchema),
-        m$.json("default", operations.GetDrinkResponse$inboundSchema, { key: "Error" })
-    )(response, { extraFields: responseFields$ });
-    if (!result$.ok) {
-        return result$;
-    }
+  const responseFields = {
+    ContentType: response.headers.get("content-type")
+      ?? "application/octet-stream",
+    StatusCode: response.status,
+    RawResponse: response,
+    Headers: {},
+  };
 
-    return result$;
+  const [result] = await M.match<
+    operations.GetDrinkResponse,
+    | errors.APIError
+    | SDKError
+    | SDKValidationError
+    | UnexpectedClientError
+    | InvalidRequestError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | ConnectionError
+  >(
+    M.json(200, operations.GetDrinkResponse$inboundSchema, { key: "Drink" }),
+    M.fail("4XX"),
+    M.jsonErr("5XX", errors.APIError$inboundSchema),
+    M.json("default", operations.GetDrinkResponse$inboundSchema, {
+      key: "Error",
+    }),
+  )(response, { extraFields: responseFields });
+  if (!result.ok) {
+    return result;
+  }
+
+  return result;
 }

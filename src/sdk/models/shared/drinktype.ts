@@ -8,27 +8,29 @@ import * as z from "zod";
  * The type of drink.
  */
 export enum DrinkType {
-    Cocktail = "cocktail",
-    NonAlcoholic = "non-alcoholic",
-    Beer = "beer",
-    Wine = "wine",
-    Spirit = "spirit",
-    Other = "other",
+  Cocktail = "cocktail",
+  NonAlcoholic = "non-alcoholic",
+  Beer = "beer",
+  Wine = "wine",
+  Spirit = "spirit",
+  Other = "other",
 }
 
 /** @internal */
-export const DrinkType$inboundSchema: z.ZodNativeEnum<typeof DrinkType> = z.nativeEnum(DrinkType);
+export const DrinkType$inboundSchema: z.ZodNativeEnum<typeof DrinkType> = z
+  .nativeEnum(DrinkType);
 
 /** @internal */
-export const DrinkType$outboundSchema: z.ZodNativeEnum<typeof DrinkType> = DrinkType$inboundSchema;
+export const DrinkType$outboundSchema: z.ZodNativeEnum<typeof DrinkType> =
+  DrinkType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
 export namespace DrinkType$ {
-    /** @deprecated use `DrinkType$inboundSchema` instead. */
-    export const inboundSchema = DrinkType$inboundSchema;
-    /** @deprecated use `DrinkType$outboundSchema` instead. */
-    export const outboundSchema = DrinkType$outboundSchema;
+  /** @deprecated use `DrinkType$inboundSchema` instead. */
+  export const inboundSchema = DrinkType$inboundSchema;
+  /** @deprecated use `DrinkType$outboundSchema` instead. */
+  export const outboundSchema = DrinkType$outboundSchema;
 }

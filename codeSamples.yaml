@@ -3,6 +3,68 @@ info:
   title: CodeSamples overlay for typescript target
   version: 0.0.0
 actions:
+  - target: $["paths"]["/authenticate"]["post"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: authenticate
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+            const barSDK = new BarSDK();
+
+            async function run() {
+              const result = await barSDK.authentication.authenticate({});
+
+              // Handle the result
+              console.log(result);
+            }
+
+            run();
+  - target: $["paths"]["/drink/{name}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: getDrink
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+            const barSDK = new BarSDK({
+              security: {
+                apiKey: "<YOUR_API_KEY_HERE>",
+              },
+            });
+
+            async function run() {
+              const result = await barSDK.drinks.getDrink("<value>");
+
+              // Handle the result
+              console.log(result);
+            }
+
+            run();
+  - target: $["paths"]["/drinks"]["get"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: listDrinks
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+            const barSDK = new BarSDK({
+              security: {
+                apiKey: "<YOUR_API_KEY_HERE>",
+              },
+            });
+
+            async function run() {
+              const result = await barSDK.drinks.listDrinks();
+
+              // Handle the result
+              console.log(result);
+            }
+
+            run();
   - target: $["paths"]["/ingredients"]["get"]
     update:
       x-codeSamples:
@@ -21,7 +83,41 @@ actions:
               const result = await barSDK.ingredients.listIngredients(347327);
 
               // Handle the result
-              console.log(result)
+              console.log(result);
+            }
+
+            run();
+  - target: $["paths"]["/order"]["post"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: createOrder
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+            import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
+
+            const barSDK = new BarSDK({
+              security: {
+                apiKey: "<YOUR_API_KEY_HERE>",
+              },
+            });
+
+            async function run() {
+              const result = await barSDK.orders.createOrder([
+                {
+                  type: OrderType.Drink,
+                  productCode: "NAC-3F2D1",
+                  quantity: 837978,
+                },
+                {
+                  type: OrderType.Drink,
+                  productCode: "NAC-3F2D1",
+                  quantity: 589796,
+                },
+              ]);
+
+              // Handle the result
+              console.log(result);
             }
 
             run();
@@ -45,98 +141,64 @@ actions:
               ]);
 
               // Handle the result
-              console.log(result)
+              console.log(result);
             }
 
             run();
-  - target: $["paths"]["/drinks"]["get"]
+  - target: $["paths"]["stockUpdate"]["post"]
     update:
       x-codeSamples:
         - lang: typescript
-          label: listDrinks
+          label: stockUpdate
           source: |-
             import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-
-            const barSDK = new BarSDK({
-              security: {
-                apiKey: "<YOUR_API_KEY_HERE>",
-              },
-            });
-
-            async function run() {
-              const result = await barSDK.drinks.listDrinks();
-
-              // Handle the result
-              console.log(result)
-            }
-
-            run();
-  - target: $["paths"]["/order"]["post"]
-    update:
-      x-codeSamples:
-        - lang: typescript
-          label: createOrder
-          source: |-
-            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-            import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
-
-            const barSDK = new BarSDK({
-              security: {
-                apiKey: "<YOUR_API_KEY_HERE>",
-              },
-            });
-
-            async function run() {
-              const result = await barSDK.orders.createOrder([
-                {
-                  type: OrderType.Ingredient,
-                  productCode: "AC-A2DF3",
-                  quantity: 138554,
-                },
-              ]);
-
-              // Handle the result
-              console.log(result)
-            }
-
-            run();
-  - target: $["paths"]["/authenticate"]["post"]
-    update:
-      x-codeSamples:
-        - lang: typescript
-          label: authenticate
-          source: |-
-            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+            import { IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
             const barSDK = new BarSDK();
 
             async function run() {
-              const result = await barSDK.authentication.authenticate({});
+              const result = await barSDK.drinks.stockUpdate({
+                drink: {
+                  name: "Negroni",
+                  price: 1200,
+                  productCode: "NAC-3F2D1",
+                },
+                ingredient: {
+                  name: "Angostura Bitters",
+                  type: IngredientType.Fresh,
+                  productCode: "AC-A2DF3",
+                },
+              });
 
               // Handle the result
-              console.log(result)
+              console.log(result);
             }
 
             run();
-  - target: $["paths"]["/drink/{name}"]["get"]
-    update:
-      x-codeSamples:
         - lang: typescript
-          label: getDrink
+          label: stockUpdate
           source: |-
             import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+            import { IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-            const barSDK = new BarSDK({
-              security: {
-                apiKey: "<YOUR_API_KEY_HERE>",
-              },
-            });
+            const barSDK = new BarSDK();
 
             async function run() {
-              const result = await barSDK.drinks.getDrink("<value>");
+              const result = await barSDK.ingredients.stockUpdate({
+                drink: {
+                  name: "Negroni",
+                  price: 1200,
+                  productCode: "NAC-3F2D1",
+                },
+                ingredient: {
+                  name: "Angostura Bitters",
+                  type: IngredientType.Fresh,
+                  productCode: "AC-A2DF3",
+                },
+              });
 
               // Handle the result
-              console.log(result)
+              console.log(result);
             }
 
             run();

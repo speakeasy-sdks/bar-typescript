@@ -7,7 +7,7 @@ The type of ingredient.
 ```typescript
 import { IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-let value: IngredientType = IngredientType.Packaged;
+let value: IngredientType = IngredientType.Fresh;
 ```
 
 ## Values

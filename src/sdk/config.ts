@@ -8,16 +8,20 @@ import * as operations from "./models/operations/index.js";
 import { unwrapAsync } from "./types/fp.js";
 
 export class Config extends ClientSDK {
-    /**
-     * Subscribe to webhooks.
-     *
-     * @remarks
-     * Subscribe to webhooks.
-     */
-    async subscribeToWebhooks(
-        request: Array<operations.RequestBody>,
-        options?: RequestOptions
-    ): Promise<operations.SubscribeToWebhooksResponse> {
-        return unwrapAsync(configSubscribeToWebhooks(this, request, options));
-    }
+  /**
+   * Subscribe to webhooks.
+   *
+   * @remarks
+   * Subscribe to webhooks.
+   */
+  async subscribeToWebhooks(
+    request: Array<operations.RequestBody>,
+    options?: RequestOptions,
+  ): Promise<operations.SubscribeToWebhooksResponse> {
+    return unwrapAsync(configSubscribeToWebhooks(
+      this,
+      request,
+      options,
+    ));
+  }
 }

@@ -8,13 +8,17 @@ import * as operations from "./models/operations/index.js";
 import { unwrapAsync } from "./types/fp.js";
 
 export class Authentication extends ClientSDK {
-    /**
-     * Authenticate with the API by providing a username and password.
-     */
-    async authenticate(
-        request: operations.AuthenticateRequestBody,
-        options?: RequestOptions
-    ): Promise<operations.AuthenticateResponse> {
-        return unwrapAsync(authenticationAuthenticate(this, request, options));
-    }
+  /**
+   * Authenticate with the API by providing a username and password.
+   */
+  async authenticate(
+    request: operations.AuthenticateRequestBody,
+    options?: RequestOptions,
+  ): Promise<operations.AuthenticateResponse> {
+    return unwrapAsync(authenticationAuthenticate(
+      this,
+      request,
+      options,
+    ));
+  }
 }

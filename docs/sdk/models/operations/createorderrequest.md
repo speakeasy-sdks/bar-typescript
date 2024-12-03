@@ -7,13 +7,13 @@ import { CreateOrderRequest } from "@speakeasy-sdks/speakeasy-bar/sdk/models/ope
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: CreateOrderRequest = {
-    requestBody: [
-        {
-            productCode: "NAC-3F2D1",
-            quantity: 297534,
-            type: OrderType.Ingredient,
-        },
-    ],
+  requestBody: [
+    {
+      productCode: "AC-A2DF3",
+      quantity: 832620,
+      type: OrderType.Ingredient,
+    },
+  ],
 };
 ```
 

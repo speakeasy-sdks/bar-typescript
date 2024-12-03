@@ -6,9 +6,9 @@
 import { Drink } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: Drink = {
-    name: "Negroni",
-    price: 1200,
-    productCode: "NAC-3F2D1",
+  name: "Negroni",
+  price: 1200,
+  productCode: "NAC-3F2D1",
 };
 ```
 

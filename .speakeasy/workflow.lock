@@ -1,21 +1,21 @@
-speakeasyVersion: 1.390.2
+speakeasyVersion: 1.451.1
 sources:
     bar-api:
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:4c6416e76a74c28ffc1e8b232db51bc8f97b856f43e92fdc4ea1b02819c2f87a
-        sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
+        sourceRevisionDigest: sha256:49e10f0e5cbed7dcaf69e334c26e95ee77159c64aff37198ba80cbc237e205ac
+        sourceBlobDigest: sha256:f5d6201a22e286fa7f44a7e833ab695f65d74ef3f6b4e11673bc2db868483f90
         tags:
             - latest
-            - main
+            - speakeasy-sdk-regen-1733269151
+            - 1.0.0
 targets:
     bar-typescript:
         source: bar-api
         sourceNamespace: bar-api
-        sourceRevisionDigest: sha256:4c6416e76a74c28ffc1e8b232db51bc8f97b856f43e92fdc4ea1b02819c2f87a
-        sourceBlobDigest: sha256:2b4f4ee668d9bf6ba862927bef3aeabcdb101f163915ec8a1736b274d3152a5f
+        sourceRevisionDigest: sha256:49e10f0e5cbed7dcaf69e334c26e95ee77159c64aff37198ba80cbc237e205ac
+        sourceBlobDigest: sha256:f5d6201a22e286fa7f44a7e833ab695f65d74ef3f6b4e11673bc2db868483f90
         codeSamplesNamespace: code-samples-typescript-bar-typescript
-        codeSamplesRevisionDigest: sha256:b47c99f1d5ca3c8f0d44477b5ba55c2064cf073e568e83cdd80563f768624b8e
-        outLocation: /github/workspace/repo
+        codeSamplesRevisionDigest: sha256:c8d2da60f0a772fda306c1934fee479eff9b65193183b331335c377138b47219
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

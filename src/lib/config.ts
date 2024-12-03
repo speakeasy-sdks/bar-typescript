@@ -25,18 +25,18 @@ export const ServerCustomer = "customer";
  * Contains the list of servers available to the SDK
  */
 export const ServerList = {
-    [ServerProd]: "https://speakeasy.bar",
-    [ServerStaging]: "https://staging.speakeasy.bar",
-    [ServerCustomer]: "https://{organization}.{environment}.speakeasy.bar",
+  [ServerProd]: "https://speakeasy.bar",
+  [ServerStaging]: "https://staging.speakeasy.bar",
+  [ServerCustomer]: "https://{organization}.{environment}.speakeasy.bar",
 } as const;
 
 /**
  * The environment name. Defaults to the production environment.
  */
 export const ServerEnvironment = {
-    Prod: "prod",
-    Staging: "staging",
-    Dev: "dev",
+  Prod: "prod",
+  Staging: "staging",
+  Dev: "dev",
 } as const;
 /**
  * The environment name. Defaults to the production environment.
@@ -44,64 +44,65 @@ export const ServerEnvironment = {
 export type ServerEnvironment = ClosedEnum<typeof ServerEnvironment>;
 
 export type SDKOptions = {
-    /**
-     * The security details required to authenticate the SDK
-     */
-    security?: shared.Security | (() => Promise<shared.Security>);
+  /**
+   * The security details required to authenticate the SDK
+   */
+  security?: shared.Security | (() => Promise<shared.Security>);
 
-    httpClient?: HTTPClient;
-    /**
-     * Allows overriding the default server used by the SDK
-     */
-    server?: keyof typeof ServerList;
-    /**
-     * Sets the environment variable for url substitution
-     */
-    environment?: ServerEnvironment;
-    /**
-     * Sets the organization variable for url substitution
-     */
-    organization?: string;
-    /**
-     * Allows overriding the default server URL used by the SDK
-     */
-    serverURL?: string;
-    /**
-     * Allows overriding the default retry config used by the SDK
-     */
-    retryConfig?: RetryConfig;
-    timeoutMs?: number;
-    debugLogger?: Logger;
+  httpClient?: HTTPClient;
+  /**
+   * Allows overriding the default server used by the SDK
+   */
+  server?: keyof typeof ServerList;
+  /**
+   * Sets the environment variable for url substitution
+   */
+  environment?: ServerEnvironment;
+  /**
+   * Sets the organization variable for url substitution
+   */
+  organization?: string;
+  /**
+   * Allows overriding the default server URL used by the SDK
+   */
+  serverURL?: string;
+  /**
+   * Allows overriding the default retry config used by the SDK
+   */
+  retryConfig?: RetryConfig;
+  timeoutMs?: number;
+  debugLogger?: Logger;
 };
 
 export function serverURLFromOptions(options: SDKOptions): URL | null {
-    let serverURL = options.serverURL;
+  let serverURL = options.serverURL;
 
-    const serverParams: Record<string, Params> = {
-        prod: {},
-        staging: {},
-        customer: {
-            environment: options.environment ?? "prod",
-            organization: options.organization ?? "api",
-        },
-    };
+  const serverParams: Record<string, Params> = {
+    "prod": {},
+    "staging": {},
+    "customer": {
+      "environment": options.environment ?? "prod",
+      "organization": options.organization ?? "api",
+    },
+  };
 
-    let params: Params = {};
+  let params: Params = {};
 
-    if (!serverURL) {
-        const server = options.server ?? ServerProd;
-        serverURL = ServerList[server] || "";
-        params = serverParams[server] || {};
-    }
+  if (!serverURL) {
+    const server = options.server ?? ServerProd;
+    serverURL = ServerList[server] || "";
+    params = serverParams[server] || {};
+  }
 
-    const u = pathToFunc(serverURL)(params);
-    return new URL(u);
+  const u = pathToFunc(serverURL)(params);
+  return new URL(u);
 }
 
 export const SDK_METADATA = {
-    language: "typescript",
-    openapiDocVersion: "1.0.0",
-    sdkVersion: "3.0.0-alpha.4",
-    genVersion: "2.409.0",
-    userAgent: "speakeasy-sdk/typescript 3.0.0-alpha.4 2.409.0 1.0.0 @speakeasy-sdks/speakeasy-bar",
+  language: "typescript",
+  openapiDocVersion: "1.0.0",
+  sdkVersion: "3.0.0-alpha.5",
+  genVersion: "2.470.1",
+  userAgent:
+    "speakeasy-sdk/typescript 3.0.0-alpha.5 2.470.1 1.0.0 @speakeasy-sdks/speakeasy-bar",
 } as const;

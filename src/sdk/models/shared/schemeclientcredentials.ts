@@ -3,40 +3,43 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type SchemeClientCredentials = {
-    clientID: string;
-    clientSecret: string;
-    tokenURL?: string | undefined;
+  clientID: string;
+  clientSecret: string;
+  tokenURL?: string | undefined;
 };
 
 /** @internal */
 export const SchemeClientCredentials$inboundSchema: z.ZodType<
-    SchemeClientCredentials,
-    z.ZodTypeDef,
-    unknown
+  SchemeClientCredentials,
+  z.ZodTypeDef,
+  unknown
 > = z.object({
-    clientID: z.string(),
-    clientSecret: z.string(),
-    tokenURL: z.string().default("https://speakeasy.bar/oauth2/token/"),
+  clientID: z.string(),
+  clientSecret: z.string(),
+  tokenURL: z.string().default("https://speakeasy.bar/oauth2/token/"),
 });
 
 /** @internal */
 export type SchemeClientCredentials$Outbound = {
-    clientID: string;
-    clientSecret: string;
-    tokenURL: string;
+  clientID: string;
+  clientSecret: string;
+  tokenURL: string;
 };
 
 /** @internal */
 export const SchemeClientCredentials$outboundSchema: z.ZodType<
-    SchemeClientCredentials$Outbound,
-    z.ZodTypeDef,
-    SchemeClientCredentials
+  SchemeClientCredentials$Outbound,
+  z.ZodTypeDef,
+  SchemeClientCredentials
 > = z.object({
-    clientID: z.string(),
-    clientSecret: z.string(),
-    tokenURL: z.string().default("https://speakeasy.bar/oauth2/token/"),
+  clientID: z.string(),
+  clientSecret: z.string(),
+  tokenURL: z.string().default("https://speakeasy.bar/oauth2/token/"),
 });
 
 /**
@@ -44,10 +47,28 @@ export const SchemeClientCredentials$outboundSchema: z.ZodType<
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
 export namespace SchemeClientCredentials$ {
-    /** @deprecated use `SchemeClientCredentials$inboundSchema` instead. */
-    export const inboundSchema = SchemeClientCredentials$inboundSchema;
-    /** @deprecated use `SchemeClientCredentials$outboundSchema` instead. */
-    export const outboundSchema = SchemeClientCredentials$outboundSchema;
-    /** @deprecated use `SchemeClientCredentials$Outbound` instead. */
-    export type Outbound = SchemeClientCredentials$Outbound;
+  /** @deprecated use `SchemeClientCredentials$inboundSchema` instead. */
+  export const inboundSchema = SchemeClientCredentials$inboundSchema;
+  /** @deprecated use `SchemeClientCredentials$outboundSchema` instead. */
+  export const outboundSchema = SchemeClientCredentials$outboundSchema;
+  /** @deprecated use `SchemeClientCredentials$Outbound` instead. */
+  export type Outbound = SchemeClientCredentials$Outbound;
+}
+
+export function schemeClientCredentialsToJSON(
+  schemeClientCredentials: SchemeClientCredentials,
+): string {
+  return JSON.stringify(
+    SchemeClientCredentials$outboundSchema.parse(schemeClientCredentials),
+  );
+}
+
+export function schemeClientCredentialsFromJSON(
+  jsonString: string,
+): SafeParseResult<SchemeClientCredentials, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SchemeClientCredentials$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SchemeClientCredentials' from JSON`,
+  );
 }

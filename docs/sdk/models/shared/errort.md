@@ -1,5 +1,7 @@
 # ErrorT
 
+An unknown error occurred interacting with the API.
+
 ## Example Usage
 
 ```typescript

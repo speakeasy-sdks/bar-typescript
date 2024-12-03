@@ -6,11 +6,11 @@
 import { CreateOrderOrderUpdateResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/callbacks";
 
 let value: CreateOrderOrderUpdateResponse = {
-    contentType: "<value>",
-    statusCode: 957156,
-    rawResponse: new Response('{"message": "hello world"}', {
-        headers: { "Content-Type": "application/json" },
-    }),
+  contentType: "<value>",
+  statusCode: 102,
+  rawResponse: new Response("{\"message\": \"hello world\"}", {
+    headers: { "Content-Type": "application/json" },
+  }),
 };
 ```
 

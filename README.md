@@ -29,16 +29,16 @@ yarn add https://github.com/speakeasy-sdks/bar-typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    security: {
-        apiKey: "<YOUR_API_KEY_HERE>",
-    },
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {
-    const result = await barSDK.drinks.listDrinks();
+  const result = await barSDK.drinks.listDrinks();
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -52,22 +52,27 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
-    security: {
-        apiKey: "<YOUR_API_KEY_HERE>",
-    },
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {
-    const result = await barSDK.orders.createOrder([
-        {
-            productCode: "APM-1F2D3",
-            quantity: 26535,
-            type: OrderType.Drink,
-        },
-    ]);
+  const result = await barSDK.orders.createOrder([
+    {
+      productCode: "AC-A2DF3",
+      quantity: 567805,
+      type: OrderType.Ingredient,
+    },
+    {
+      productCode: "NAC-3F2D1",
+      quantity: 618237,
+      type: OrderType.Ingredient,
+    },
+  ]);
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -78,9 +83,17 @@ run();
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
+<details open>
+<summary>Available methods</summary>
+
 ### [authentication](docs/sdks/authentication/README.md)
 
 * [authenticate](docs/sdks/authentication/README.md#authenticate) - Authenticate with the API by providing a username and password.
+
+
+### [config](docs/sdks/config/README.md)
+
+* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
 
 ### [drinks](docs/sdks/drinks/README.md)
 
@@ -95,61 +108,73 @@ run();
 
 * [createOrder](docs/sdks/orders/README.md#createorder) - Create an order.
 
-### [config](docs/sdks/config/README.md)
-
-* [subscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-All SDK methods return a response object or throw an error. If Error objects are specified in your OpenAPI Spec, the SDK will throw the appropriate Error type.
+All SDK methods return a response object or throw an error. By default, an API error will throw a `errors.SDKError`.
 
-| Error Object     | Status Code      | Content Type     |
-| ---------------- | ---------------- | ---------------- |
-| errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+If a HTTP request fails, an operation my also throw an error from the `sdk/models/errors/httpclienterrors.ts` module:
 
-Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted string since validation errors can list many issues and the plain error string may be difficult read when debugging. 
+| HTTP Client Error                                    | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| RequestAbortedError                                  | HTTP request was aborted by the client               |
+| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
+| ConnectionError                                      | HTTP client was unable to make a request to a server |
+| InvalidRequestError                                  | Any input used to create a request is invalid        |
+| UnexpectedClientError                                | Unrecognised or unexpected error                     |
 
+In addition, when custom error responses are specified for an operation, the SDK may throw their associated Error type. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation. For example, the `authenticate` method may throw the following errors:
+
+| Error Type      | Status Code | Content Type     |
+| --------------- | ----------- | ---------------- |
+| errors.APIError | 5XX         | application/json |
+| errors.SDKError | 4XX         | \*/\*            |
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { APIError, SDKValidationError } from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
+import {
+  APIError,
+  SDKValidationError,
+} from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
 
 const barSDK = new BarSDK();
 
 async function run() {
-    let result;
-    try {
-        result = await barSDK.authentication.authenticate({});
-    } catch (err) {
-        switch (true) {
-            case err instanceof SDKValidationError: {
-                // Validation errors can be pretty-printed
-                console.error(err.pretty());
-                // Raw value may also be inspected
-                console.error(err.rawValue);
-                return;
-            }
-            case err instanceof APIError: {
-                // Handle err.data$: APIErrorData
-                console.error(err);
-                return;
-            }
-            default: {
-                throw err;
-            }
-        }
-    }
+  let result;
+  try {
+    result = await barSDK.authentication.authenticate({});
 
     // Handle the result
     console.log(result);
+  } catch (err) {
+    switch (true) {
+      case (err instanceof SDKValidationError): {
+        // Validation errors can be pretty-printed
+        console.error(err.pretty());
+        // Raw value may also be inspected
+        console.error(err.rawValue);
+        return;
+      }
+      case (err instanceof APIError): {
+        // Handle err.data$: APIErrorData
+        console.error(err);
+        return;
+      }
+      default: {
+        throw err;
+      }
+    }
+  }
 }
 
 run();
 
 ```
+
+Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted string since validation errors can list many issues and the plain error string may be difficult read when debugging.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -157,54 +182,51 @@ run();
 
 ### Select Server by Name
 
-You can override the default server globally by passing a server name to the `server` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
+You can override the default server globally by passing a server name to the `server: keyof typeof ServerList` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name | Server | Variables |
-| ----- | ------ | --------- |
-| `prod` | `https://speakeasy.bar` | None |
-| `staging` | `https://staging.speakeasy.bar` | None |
-| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment` (default is `prod`), `organization` (default is `api`) |
+| Name       | Server                                               | Variables                                                          | Default values       |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------------ | -------------------- |
+| `prod`     | `https://speakeasy.bar`                              |                                                                    |                      |
+| `staging`  | `https://staging.speakeasy.bar`                      |                                                                    |                      |
+| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment: models.ServerEnvironment`<br/>`organization: string` | `"prod"`<br/>`"api"` |
+
+If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
+
+#### Example
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    server: "customer",
+  server: "customer",
 });
 
 async function run() {
-    const result = await barSDK.authentication.authenticate({});
+  const result = await barSDK.authentication.authenticate({});
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
 
 ```
 
-#### Variables
-
-Some of the server options above contain variables. If you want to set the values of those variables, the following optional parameters are available when initializing the SDK client instance:
- * `environment: models.ServerEnvironment`
- * `organization: string`
-
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally by passing a URL to the `serverURL` optional parameter when initializing the SDK client instance. For example:
-
+The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    serverURL: "https://speakeasy.bar",
+  serverURL: "https://speakeasy.bar",
 });
 
 async function run() {
-    const result = await barSDK.authentication.authenticate({});
+  const result = await barSDK.authentication.authenticate({});
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -270,26 +292,26 @@ const sdk = new BarSDK({ httpClient });
 
 This SDK supports the following security schemes globally:
 
-| Name                | Type                | Scheme              |
-| ------------------- | ------------------- | ------------------- |
-| `apiKey`            | apiKey              | API key             |
-| `clientCredentials` | oauth2              | OAuth2 token        |
+| Name                | Type   | Scheme       |
+| ------------------- | ------ | ------------ |
+| `apiKey`            | apiKey | API key      |
+| `clientCredentials` | oauth2 | OAuth2 token |
 
 You can set the security parameters through the `security` optional parameter when initializing the SDK client instance. The selected scheme will be used by default to authenticate with the API for all operations that support it. For example:
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    security: {
-        apiKey: "<YOUR_API_KEY_HERE>",
-    },
+  security: {
+    apiKey: "<YOUR_API_KEY_HERE>",
+  },
 });
 
 async function run() {
-    const result = await barSDK.authentication.authenticate({});
+  const result = await barSDK.authentication.authenticate({});
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -309,18 +331,23 @@ For more information about the API: [The Speakeasy Bar Documentation.](https://d
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+  * [SDK Installation](#sdk-installation)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Authentication](#authentication)
+  * [SDK Installation](#sdk-installation-1)
+  * [Requirements](#requirements)
+  * [Standalone functions](#standalone-functions)
+  * [Retries](#retries)
+  * [Debugging](#debugging)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
 
-* [SDK Installation](#sdk-installation)
-* [Requirements](#requirements)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Standalone functions](#standalone-functions)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
-* [Debugging](#debugging)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -377,13 +404,12 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [authenticationAuthenticate](docs/sdks/authentication/README.md#authenticate)
-- [configSubscribeToWebhooks](docs/sdks/config/README.md#subscribetowebhooks)
-- [drinksGetDrink](docs/sdks/drinks/README.md#getdrink)
-- [drinksListDrinks](docs/sdks/drinks/README.md#listdrinks)
-- [ingredientsListIngredients](docs/sdks/ingredients/README.md#listingredients)
-- [ordersCreateOrder](docs/sdks/orders/README.md#createorder)
-
+- [`authenticationAuthenticate`](docs/sdks/authentication/README.md#authenticate) - Authenticate with the API by providing a username and password.
+- [`configSubscribeToWebhooks`](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
+- [`drinksGetDrink`](docs/sdks/drinks/README.md#getdrink) - Get a drink.
+- [`drinksListDrinks`](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
+- [`ingredientsListIngredients`](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
+- [`ordersCreateOrder`](docs/sdks/orders/README.md#createorder) - Create an order.
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -400,24 +426,21 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 const barSDK = new BarSDK();
 
 async function run() {
-    const result = await barSDK.authentication.authenticate(
-        {},
-        {
-            retries: {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 1,
-                    maxInterval: 50,
-                    exponent: 1.1,
-                    maxElapsedTime: 100,
-                },
-                retryConnectionErrors: false,
-            },
-        }
-    );
+  const result = await barSDK.authentication.authenticate({}, {
+    retries: {
+      strategy: "backoff",
+      backoff: {
+        initialInterval: 1,
+        maxInterval: 50,
+        exponent: 1.1,
+        maxElapsedTime: 100,
+      },
+      retryConnectionErrors: false,
+    },
+  });
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -429,23 +452,23 @@ If you'd like to override the default retry strategy for all operations that sup
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
-    retryConfig: {
-        strategy: "backoff",
-        backoff: {
-            initialInterval: 1,
-            maxInterval: 50,
-            exponent: 1.1,
-            maxElapsedTime: 100,
-        },
-        retryConnectionErrors: false,
+  retryConfig: {
+    strategy: "backoff",
+    backoff: {
+      initialInterval: 1,
+      maxInterval: 50,
+      exponent: 1.1,
+      maxElapsedTime: 100,
     },
+    retryConnectionErrors: false,
+  },
 });
 
 async function run() {
-    const result = await barSDK.authentication.authenticate({});
+  const result = await barSDK.authentication.authenticate({});
 
-    // Handle the result
-    console.log(result);
+  // Handle the result
+  console.log(result);
 }
 
 run();

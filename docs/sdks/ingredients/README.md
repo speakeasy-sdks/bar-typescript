@@ -28,7 +28,7 @@ async function run() {
   const result = await barSDK.ingredients.listIngredients(347327);
 
   // Handle the result
-  console.log(result)
+  console.log(result);
 }
 
 run();
@@ -51,7 +51,7 @@ const barSDK = new BarSDKCore({
 });
 
 async function run() {
-  const res = await ingredientsListIngredients(barSDK, 425897);
+  const res = await ingredientsListIngredients(barSDK, 347327);
 
   if (!res.ok) {
     throw res.error;
@@ -60,7 +60,7 @@ async function run() {
   const { value: result } = res;
 
   // Handle the result
-  console.log(result)
+  console.log(result);
 }
 
 run();
@@ -82,7 +82,7 @@ run();
 
 ### Errors
 
-| Error Object     | Status Code      | Content Type     |
+| Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+| errors.SDKError  | 4XX              | \*/\*            |

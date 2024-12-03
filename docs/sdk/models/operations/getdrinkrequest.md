@@ -6,7 +6,7 @@
 import { GetDrinkRequest } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
 
 let value: GetDrinkRequest = {
-    name: "<value>",
+  name: "<value>",
 };
 ```
 

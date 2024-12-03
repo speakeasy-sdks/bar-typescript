@@ -7,16 +7,16 @@ import { IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared"
 import { StockUpdateRequestBody } from "@speakeasy-sdks/speakeasy-bar/sdk/models/webhooks";
 
 let value: StockUpdateRequestBody = {
-    drink: {
-        name: "Negroni",
-        price: 1200,
-        productCode: "APM-1F2D3",
-    },
-    ingredient: {
-        name: "Orange Peel",
-        productCode: "NAC-3F2D1",
-        type: IngredientType.LongLife,
-    },
+  drink: {
+    name: "Old Fashioned",
+    price: 1000,
+    productCode: "NAC-3F2D1",
+  },
+  ingredient: {
+    name: "Angostura Bitters",
+    productCode: "NAC-3F2D1",
+    type: IngredientType.Packaged,
+  },
 };
 ```
 

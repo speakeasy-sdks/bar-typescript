@@ -8,17 +8,22 @@ import * as operations from "./models/operations/index.js";
 import { unwrapAsync } from "./types/fp.js";
 
 export class Ingredients extends ClientSDK {
-    /**
-     * Get a list of ingredients.
-     *
-     * @remarks
-     * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
-     */
-    async listIngredients(
-        page: number,
-        ingredients?: Array<string> | undefined,
-        options?: RequestOptions
-    ): Promise<operations.ListIngredientsResponse> {
-        return unwrapAsync(ingredientsListIngredients(this, page, ingredients, options));
-    }
+  /**
+   * Get a list of ingredients.
+   *
+   * @remarks
+   * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
+   */
+  async listIngredients(
+    page: number,
+    ingredients?: Array<string> | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListIngredientsResponse> {
+    return unwrapAsync(ingredientsListIngredients(
+      this,
+      page,
+      ingredients,
+      options,
+    ));
+  }
 }

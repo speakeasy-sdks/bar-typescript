@@ -28,14 +28,19 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.orders.createOrder([
     {
-      productCode: "APM-1F2D3",
-      quantity: 26535,
-      type: OrderType.Drink,
+      productCode: "AC-A2DF3",
+      quantity: 567805,
+      type: OrderType.Ingredient,
+    },
+    {
+      productCode: "NAC-3F2D1",
+      quantity: 618237,
+      type: OrderType.Ingredient,
     },
   ]);
 
   // Handle the result
-  console.log(result)
+  console.log(result);
 }
 
 run();
@@ -61,9 +66,14 @@ const barSDK = new BarSDKCore({
 async function run() {
   const res = await ordersCreateOrder(barSDK, [
     {
-      productCode: "APM-1F2D3",
-      quantity: 738316,
-      type: OrderType.Drink,
+      productCode: "AC-A2DF3",
+      quantity: 567805,
+      type: OrderType.Ingredient,
+    },
+    {
+      productCode: "NAC-3F2D1",
+      quantity: 618237,
+      type: OrderType.Ingredient,
     },
   ]);
 
@@ -74,7 +84,7 @@ async function run() {
   const { value: result } = res;
 
   // Handle the result
-  console.log(result)
+  console.log(result);
 }
 
 run();
@@ -96,7 +106,7 @@ run();
 
 ### Errors
 
-| Error Object     | Status Code      | Content Type     |
+| Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.APIError  | 5XX              | application/json |
-| errors.SDKError  | 4xx-5xx          | */*              |
+| errors.SDKError  | 4XX              | \*/\*            |
