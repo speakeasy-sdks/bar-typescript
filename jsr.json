@@ -2,7 +2,7 @@
 
 {
   "name": "@speakeasy-sdks/speakeasy-bar",
-  "version": "4",
+  "version": "4.0",
   "exports": {
     ".": "./src/index.ts",    
     "./sdk/models/errors": "./src/sdk/models/errors/index.ts",    
