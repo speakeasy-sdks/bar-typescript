@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.451.1
   generationVersion: 2.470.1
-  releaseVersion: 3.0.0-alpha.5
-  configChecksum: af9df2f25e3cb59466d5046c9373d04e
+  releaseVersion: 3.0.0-alpha.6
+  configChecksum: 90e56f26b02649cc377c44376e7bd63c
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -170,7 +170,7 @@ examples:
     speakeasy-default-list-drinks:
       responses:
         "200":
-          application/json: [{"name": "Negroni", "price": 1200, "productCode": "AC-A2DF3"}, {"name": "Old Fashioned", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Manhattan", "price": 1500, "productCode": "AC-A2DF3"}]
+          application/json: [{"name": "Negroni", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Old Fashioned", "price": 1000, "productCode": "APM-1F2D3"}, {"name": "Manhattan", "price": 1200, "productCode": "APM-1F2D3"}]
         5XX: {}
         default: {}
   stockUpdate:
@@ -185,10 +185,10 @@ examples:
   createOrder:
     speakeasy-default-create-order:
       requestBody:
-        application/json: [{"productCode": "AC-A2DF3", "quantity": 567805, "type": "ingredient"}, {"productCode": "NAC-3F2D1", "quantity": 618237, "type": "ingredient"}]
+        application/json: [{"productCode": "APM-1F2D3", "quantity": 567805, "type": "ingredient"}, {"productCode": "AC-A2DF3", "quantity": 618237, "type": "ingredient"}]
       responses:
         "200":
-          application/json: {"productCode": "APM-1F2D3", "quantity": 78073, "status": "pending", "type": "drink"}
+          application/json: {"productCode": "NAC-3F2D1", "quantity": 78073, "status": "pending", "type": "drink"}
         5XX: {}
         default: {}
   subscribeToWebhooks: {}

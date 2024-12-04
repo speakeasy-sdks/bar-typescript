@@ -28,12 +28,12 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.orders.createOrder([
     {
-      productCode: "AC-A2DF3",
+      productCode: "APM-1F2D3",
       quantity: 567805,
       type: OrderType.Ingredient,
     },
     {
-      productCode: "NAC-3F2D1",
+      productCode: "AC-A2DF3",
       quantity: 618237,
       type: OrderType.Ingredient,
     },
@@ -66,12 +66,12 @@ const barSDK = new BarSDKCore({
 async function run() {
   const res = await ordersCreateOrder(barSDK, [
     {
-      productCode: "AC-A2DF3",
+      productCode: "APM-1F2D3",
       quantity: 567805,
       type: OrderType.Ingredient,
     },
     {
-      productCode: "NAC-3F2D1",
+      productCode: "AC-A2DF3",
       quantity: 618237,
       type: OrderType.Ingredient,
     },
