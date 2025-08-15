@@ -7,15 +7,7 @@ import { GetDrinkResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/opera
 
 let value: GetDrinkResponse = {
   contentType: "<value>",
-  drink: {
-    name: "Manhattan",
-    price: 1200,
-    productCode: "NAC-3F2D1",
-  },
-  statusCode: 412,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
+  statusCode: 464862,
 };
 ```
 

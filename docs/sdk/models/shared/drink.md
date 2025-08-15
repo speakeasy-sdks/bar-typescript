@@ -6,9 +6,10 @@
 import { Drink } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: Drink = {
-  name: "Negroni",
-  price: 1200,
-  productCode: "NAC-3F2D1",
+  name: "Old Fashioned",
+  price: 1000,
+  productCode: "AC-A2DF3",
+  volume: 100,
 };
 ```
 
@@ -21,3 +22,4 @@ let value: Drink = {
 | `productCode`                                                                 | *string*                                                                      | :heavy_minus_sign:                                                            | The product code of the drink, only available when authenticated.             | AC-A2DF3                                                                      |
 | `stock`                                                                       | *number*                                                                      | :heavy_minus_sign:                                                            | The number of units of the drink in stock, only available when authenticated. |                                                                               |
 | `type`                                                                        | [shared.DrinkType](../../../sdk/models/shared/drinktype.md)                   | :heavy_minus_sign:                                                            | The type of drink.                                                            |                                                                               |
+| `volume`                                                                      | *number*                                                                      | :heavy_minus_sign:                                                            | The volume of the drink in milliliters.                                       | 100                                                                           |

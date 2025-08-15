@@ -7,7 +7,8 @@ import { Data } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
 
 let value: Data = {
   resultArray: [
-    925597,
+    662299,
+    742335,
   ],
 };
 ```

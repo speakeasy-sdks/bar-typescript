@@ -5,10 +5,12 @@
 import { BarSDKCore } from "../core.js";
 import { encodeFormQuery, queryJoin } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import { BarSDKError } from "../sdk/models/errors/barsdkerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -17,9 +19,10 @@ import {
   UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
-import { SDKError } from "../sdk/models/errors/sdkerror.js";
+import { ResponseValidationError } from "../sdk/models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../sdk/models/errors/sdkvalidationerror.js";
 import * as operations from "../sdk/models/operations/index.js";
+import { APICall, APIPromise } from "../sdk/types/async.js";
 import { Result } from "../sdk/types/fp.js";
 
 /**
@@ -28,23 +31,54 @@ import { Result } from "../sdk/types/fp.js";
  * @remarks
  * Get a list of ingredients, if authenticated this will include stock levels and product codes otherwise it will only include public information.
  */
-export async function ingredientsListIngredients(
+export function ingredientsListIngredients(
+  client: BarSDKCore,
+  page: number,
+  ingredients?: Array<string> | undefined,
+  options?: RequestOptions,
+): APIPromise<
+  Result<
+    operations.ListIngredientsResponse,
+    | errors.APIError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    page,
+    ingredients,
+    options,
+  ));
+}
+
+async function $do(
   client: BarSDKCore,
   page: number,
   ingredients?: Array<string> | undefined,
   options?: RequestOptions,
 ): Promise<
-  Result<
-    operations.ListIngredientsResponse,
-    | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | ConnectionError
-  >
+  [
+    Result<
+      operations.ListIngredientsResponse,
+      | errors.APIError
+      | BarSDKError
+      | ResponseValidationError
+      | ConnectionError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
+    >,
+    APICall,
+  ]
 > {
   const input: operations.ListIngredientsRequest = {
     page: page,
@@ -57,7 +91,7 @@ export async function ingredientsListIngredients(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
@@ -73,14 +107,16 @@ export async function ingredientsListIngredients(
     }),
   );
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     Accept: "application/json",
-  });
+  }));
 
   const securityInput = await extractSecurity(client._options.security);
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    options: client._options,
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "listIngredients",
     oAuth2Scopes: ["read:basic"],
 
@@ -106,14 +142,16 @@ export async function ingredientsListIngredients(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
+    baseURL: options?.serverURL,
     path: path,
     headers: headers,
     query: query,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -124,7 +162,7 @@ export async function ingredientsListIngredients(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -139,13 +177,14 @@ export async function ingredientsListIngredients(
   const [result] = await M.match<
     operations.ListIngredientsResponse,
     | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.json(200, operations.ListIngredientsResponse$inboundSchema, {
       key: "object",
@@ -155,10 +194,10 @@ export async function ingredientsListIngredients(
     M.json("default", operations.ListIngredientsResponse$inboundSchema, {
       key: "Error",
     }),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

@@ -9,7 +9,7 @@ import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 let value: CreateOrderOrderUpdateRequestBody = {
   order: {
     productCode: "AC-A2DF3",
-    quantity: 466311,
+    quantity: 527810,
     type: OrderType.Drink,
   },
 };

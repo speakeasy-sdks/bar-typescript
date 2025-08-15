@@ -10,12 +10,13 @@ let value: StockUpdateRequestBody = {
   drink: {
     name: "Old Fashioned",
     price: 1000,
-    productCode: "NAC-3F2D1",
+    productCode: "AC-A2DF3",
+    volume: 100,
   },
   ingredient: {
-    name: "Angostura Bitters",
-    productCode: "NAC-3F2D1",
-    type: IngredientType.Packaged,
+    name: "Sugar Syrup",
+    productCode: "AC-A2DF3",
+    type: IngredientType.LongLife,
   },
 };
 ```

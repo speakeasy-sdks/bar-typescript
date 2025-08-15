@@ -7,10 +7,7 @@ import { ListIngredientsResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/model
 
 let value: ListIngredientsResponse = {
   contentType: "<value>",
-  statusCode: 100,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
+  statusCode: 642253,
 };
 ```
 

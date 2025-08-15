@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
-  docChecksum: 936f0ff0f6ac9e56df38e51b2591854f
+  docChecksum: 1635e5b89252324e589174337edd2cfe
   docVersion: 1.0.0
-  speakeasyVersion: 1.451.5
-  generationVersion: 2.471.2
-  releaseVersion: 4.0.1
-  configChecksum: ab9d01291ac64b74732de7cca2d2d701
+  speakeasyVersion: 1.605.0
+  generationVersion: 2.684.0
+  releaseVersion: 4.1.0
+  configChecksum: d2560db9f904573d647b9dc538796843
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
@@ -15,28 +15,26 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     callbacks: 1.0.0
-    core: 3.18.8
+    core: 3.21.20
     defaultEnabledRetries: 0.1.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
-    errors: 2.84.0
-    examples: 2.81.4
-    flattening: 2.82.0
-    globalSecurity: 2.82.11
+    errors: 2.86.0
+    examples: 2.82.3
+    flattening: 2.82.1
+    globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
-    globalServerURLs: 2.82.4
+    globalServerURLs: 2.82.5
     inputOutputModels: 2.82.0
-    oauth2ClientCredentials: 0.2.0
+    oauth2ClientCredentials: 0.5.0
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.2.0
+    sdkHooks: 0.3.0
     serverIDs: 2.81.2
-    webhooks: 1.1.0
+    webhooks: 1.5.0
 generatedFiles:
-  - .eslintrc.cjs
   - .gitattributes
   - .npmignore
-  - CONTRIBUTING.md
   - FUNCTIONS.md
   - RUNTIMES.md
   - USAGE.md
@@ -52,8 +50,13 @@ generatedFiles:
   - docs/sdk/models/operations/data.md
   - docs/sdk/models/operations/getdrinkrequest.md
   - docs/sdk/models/operations/getdrinkresponse.md
+  - docs/sdk/models/operations/getfoodrequest.md
+  - docs/sdk/models/operations/getfoodresponse.md
+  - docs/sdk/models/operations/getfoodresponsebody.md
   - docs/sdk/models/operations/listdrinksrequest.md
   - docs/sdk/models/operations/listdrinksresponse.md
+  - docs/sdk/models/operations/listfoodsresponse.md
+  - docs/sdk/models/operations/listfoodsresponsebody.md
   - docs/sdk/models/operations/listingredientsrequest.md
   - docs/sdk/models/operations/listingredientsresponse.md
   - docs/sdk/models/operations/listingredientsresponsebody.md
@@ -78,8 +81,14 @@ generatedFiles:
   - docs/sdks/barsdk/README.md
   - docs/sdks/config/README.md
   - docs/sdks/drinks/README.md
+  - docs/sdks/food/README.md
   - docs/sdks/ingredients/README.md
   - docs/sdks/orders/README.md
+  - eslint.config.mjs
+  - examples/.env.template
+  - examples/README.md
+  - examples/drinksListDrinks.example.ts
+  - examples/package.json
   - jsr.json
   - package.json
   - src/core.ts
@@ -87,6 +96,8 @@ generatedFiles:
   - src/funcs/configSubscribeToWebhooks.ts
   - src/funcs/drinksGetDrink.ts
   - src/funcs/drinksListDrinks.ts
+  - src/funcs/foodGetFood.ts
+  - src/funcs/foodListFoods.ts
   - src/funcs/ingredientsListIngredients.ts
   - src/funcs/ordersCreateOrder.ts
   - src/hooks/clientcredentials.ts
@@ -112,20 +123,25 @@ generatedFiles:
   - src/sdk/authentication.ts
   - src/sdk/config.ts
   - src/sdk/drinks.ts
+  - src/sdk/food.ts
   - src/sdk/index.ts
   - src/sdk/ingredients.ts
   - src/sdk/models/callbacks/createorder.ts
   - src/sdk/models/callbacks/index.ts
   - src/sdk/models/errors/apierror.ts
+  - src/sdk/models/errors/barsdkerror.ts
   - src/sdk/models/errors/httpclienterrors.ts
   - src/sdk/models/errors/index.ts
+  - src/sdk/models/errors/responsevalidationerror.ts
   - src/sdk/models/errors/sdkerror.ts
   - src/sdk/models/errors/sdkvalidationerror.ts
   - src/sdk/models/operations/authenticate.ts
   - src/sdk/models/operations/createorder.ts
   - src/sdk/models/operations/getdrink.ts
+  - src/sdk/models/operations/getfood.ts
   - src/sdk/models/operations/index.ts
   - src/sdk/models/operations/listdrinks.ts
+  - src/sdk/models/operations/listfoods.ts
   - src/sdk/models/operations/listingredients.ts
   - src/sdk/models/operations/subscribetowebhooks.ts
   - src/sdk/models/shared/drink.ts
@@ -144,6 +160,7 @@ generatedFiles:
   - src/sdk/models/webhooks/stockupdate.ts
   - src/sdk/orders.ts
   - src/sdk/sdk.ts
+  - src/sdk/types/async.ts
   - src/sdk/types/blobs.ts
   - src/sdk/types/constdatetime.ts
   - src/sdk/types/enums.ts
@@ -155,7 +172,17 @@ generatedFiles:
   - src/sdk/types/webhooks.ts
   - tsconfig.json
 examples:
-  authenticate: {}
+  authenticate:
+    speakeasy-default-authenticate:
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
   getDrink:
     speakeasy-default-get-drink:
       parameters:
@@ -163,33 +190,89 @@ examples:
           name: "<value>"
       responses:
         "200":
-          application/json: {"name": "Manhattan", "price": 1000, "productCode": "NAC-3F2D1"}
-        5XX: {}
-        default: {}
+          application/json: {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
   listDrinks:
     speakeasy-default-list-drinks:
       responses:
         "200":
-          application/json: [{"name": "Negroni", "price": 1500, "productCode": "NAC-3F2D1"}, {"name": "Old Fashioned", "price": 1000, "productCode": "APM-1F2D3"}, {"name": "Manhattan", "price": 1200, "productCode": "APM-1F2D3"}]
-        5XX: {}
-        default: {}
+          application/json: [{"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}]
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
   stockUpdate:
     speakeasy-default-stock-update:
       requestBody:
-        application/json: {"drink": {"name": "Negroni", "price": 1200, "productCode": "NAC-3F2D1"}, "ingredient": {"name": "Angostura Bitters", "productCode": "AC-A2DF3", "type": "fresh"}}
+        application/json: {"drink": {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}, "ingredient": {"name": "Sugar Syrup", "productCode": "AC-A2DF3", "type": "fresh"}}
+      responses:
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  getFood:
+    speakeasy-default-get-food:
+      parameters:
+        path:
+          name: "<value>"
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  listFoods:
+    speakeasy-default-list-foods:
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
   listIngredients:
     speakeasy-default-list-ingredients:
       parameters:
         query:
-          page: 347327
+          page: 982293
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
   createOrder:
     speakeasy-default-create-order:
       requestBody:
-        application/json: [{"productCode": "APM-1F2D3", "quantity": 567805, "type": "ingredient"}, {"productCode": "AC-A2DF3", "quantity": 618237, "type": "ingredient"}]
+        application/json: []
       responses:
         "200":
-          application/json: {"productCode": "NAC-3F2D1", "quantity": 78073, "status": "pending", "type": "drink"}
-        5XX: {}
-        default: {}
-  subscribeToWebhooks: {}
+          application/json: {"productCode": "AC-A2DF3", "quantity": 185162, "status": "complete", "type": "ingredient"}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  subscribeToWebhooks:
+    speakeasy-default-subscribe-to-webhooks:
+      requestBody:
+        application/json: []
+      responses:
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: |
+  ## SDK Changes Detected:
+  This is a custom message added in the release Notes.
+  I can Add whatever here
+  * `barsdk.food.getFood()`: **Added**
+  * `barsdk.food.listFoods()`: **Added**
+  * `barsdk.drinks.getDrink()`:  `response.volume` **Added**
+  * `barsdk.drinks.listDrinks()`:  `response.[].volume` **Added**

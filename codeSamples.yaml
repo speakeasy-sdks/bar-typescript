@@ -16,7 +16,6 @@ actions:
             async function run() {
               const result = await barSDK.authentication.authenticate({});
 
-              // Handle the result
               console.log(result);
             }
 
@@ -38,7 +37,6 @@ actions:
             async function run() {
               const result = await barSDK.drinks.getDrink("<value>");
 
-              // Handle the result
               console.log(result);
             }
 
@@ -60,7 +58,48 @@ actions:
             async function run() {
               const result = await barSDK.drinks.listDrinks();
 
-              // Handle the result
+              console.log(result);
+            }
+
+            run();
+  - target: $["paths"]["/food/{name}"]["get"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: getFood
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+            const barSDK = new BarSDK({
+              security: {
+                apiKey: "<YOUR_API_KEY_HERE>",
+              },
+            });
+
+            async function run() {
+              const result = await barSDK.food.getFood("<value>");
+
+              console.log(result);
+            }
+
+            run();
+  - target: $["paths"]["/foods"]["get"]
+    update:
+      x-codeSamples:
+        - lang: typescript
+          label: listFoods
+          source: |-
+            import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
+
+            const barSDK = new BarSDK({
+              security: {
+                apiKey: "<YOUR_API_KEY_HERE>",
+              },
+            });
+
+            async function run() {
+              const result = await barSDK.food.listFoods();
+
               console.log(result);
             }
 
@@ -80,9 +119,8 @@ actions:
             });
 
             async function run() {
-              const result = await barSDK.ingredients.listIngredients(347327);
+              const result = await barSDK.ingredients.listIngredients(982293);
 
-              // Handle the result
               console.log(result);
             }
 
@@ -94,7 +132,6 @@ actions:
           label: createOrder
           source: |-
             import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-            import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
             const barSDK = new BarSDK({
               security: {
@@ -103,20 +140,8 @@ actions:
             });
 
             async function run() {
-              const result = await barSDK.orders.createOrder([
-                {
-                  type: OrderType.Drink,
-                  productCode: "NAC-3F2D1",
-                  quantity: 837978,
-                },
-                {
-                  type: OrderType.Drink,
-                  productCode: "NAC-3F2D1",
-                  quantity: 589796,
-                },
-              ]);
+              const result = await barSDK.orders.createOrder([]);
 
-              // Handle the result
               console.log(result);
             }
 
@@ -136,11 +161,8 @@ actions:
             });
 
             async function run() {
-              const result = await barSDK.config.subscribeToWebhooks([
-                {},
-              ]);
+              const result = await barSDK.config.subscribeToWebhooks([]);
 
-              // Handle the result
               console.log(result);
             }
 
@@ -159,18 +181,18 @@ actions:
             async function run() {
               const result = await barSDK.drinks.stockUpdate({
                 drink: {
-                  name: "Negroni",
-                  price: 1200,
-                  productCode: "NAC-3F2D1",
+                  name: "Old Fashioned",
+                  volume: 100,
+                  price: 1000,
+                  productCode: "AC-A2DF3",
                 },
                 ingredient: {
-                  name: "Angostura Bitters",
+                  name: "Sugar Syrup",
                   type: IngredientType.Fresh,
                   productCode: "AC-A2DF3",
                 },
               });
 
-              // Handle the result
               console.log(result);
             }
 
@@ -186,18 +208,18 @@ actions:
             async function run() {
               const result = await barSDK.ingredients.stockUpdate({
                 drink: {
-                  name: "Negroni",
-                  price: 1200,
-                  productCode: "NAC-3F2D1",
+                  name: "Old Fashioned",
+                  volume: 100,
+                  price: 1000,
+                  productCode: "AC-A2DF3",
                 },
                 ingredient: {
-                  name: "Angostura Bitters",
+                  name: "Sugar Syrup",
                   type: IngredientType.Fresh,
                   productCode: "AC-A2DF3",
                 },
               });
 
-              // Handle the result
               console.log(result);
             }
 

@@ -6,7 +6,7 @@
 import { ListIngredientsRequest } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
 
 let value: ListIngredientsRequest = {
-  page: 568045,
+  page: 412261,
 };
 ```
 

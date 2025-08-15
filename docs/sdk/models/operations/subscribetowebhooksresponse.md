@@ -7,10 +7,7 @@ import { SubscribeToWebhooksResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/m
 
 let value: SubscribeToWebhooksResponse = {
   contentType: "<value>",
-  statusCode: 404,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
+  statusCode: 663392,
 };
 ```
 

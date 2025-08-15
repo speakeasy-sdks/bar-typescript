@@ -13,6 +13,7 @@ Subscribe to webhooks.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="subscribeToWebhooks" method="post" path="/webhooks/subscribe" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
@@ -23,11 +24,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.config.subscribeToWebhooks([
-    {},
-  ]);
+  const result = await barSDK.config.subscribeToWebhooks([]);
 
-  // Handle the result
   console.log(result);
 }
 
@@ -51,18 +49,13 @@ const barSDK = new BarSDKCore({
 });
 
 async function run() {
-  const res = await configSubscribeToWebhooks(barSDK, [
-    {},
-  ]);
-
-  if (!res.ok) {
-    throw res.error;
+  const res = await configSubscribeToWebhooks(barSDK, []);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("configSubscribeToWebhooks failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

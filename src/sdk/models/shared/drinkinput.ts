@@ -29,6 +29,10 @@ export type DrinkInput = {
    * The type of drink.
    */
   type?: DrinkType | undefined;
+  /**
+   * The volume of the drink in milliliters.
+   */
+  volume?: number | undefined;
 };
 
 /** @internal */
@@ -41,6 +45,7 @@ export const DrinkInput$inboundSchema: z.ZodType<
   price: z.number(),
   productCode: z.string().optional(),
   type: DrinkType$inboundSchema.optional(),
+  volume: z.number().int().optional(),
 });
 
 /** @internal */
@@ -49,6 +54,7 @@ export type DrinkInput$Outbound = {
   price: number;
   productCode?: string | undefined;
   type?: string | undefined;
+  volume?: number | undefined;
 };
 
 /** @internal */
@@ -61,6 +67,7 @@ export const DrinkInput$outboundSchema: z.ZodType<
   price: z.number(),
   productCode: z.string().optional(),
   type: DrinkType$outboundSchema.optional(),
+  volume: z.number().int().optional(),
 });
 
 /**

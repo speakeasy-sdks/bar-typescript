@@ -8,9 +8,9 @@ An order for a drink or ingredient.
 import { OrderInput, OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: OrderInput = {
-  productCode: "APM-1F2D3",
-  quantity: 670638,
-  type: OrderType.Drink,
+  productCode: "AC-A2DF3",
+  quantity: 235456,
+  type: OrderType.Ingredient,
 };
 ```
 

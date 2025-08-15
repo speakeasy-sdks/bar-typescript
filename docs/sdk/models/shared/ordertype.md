@@ -7,7 +7,7 @@ The type of order.
 ```typescript
 import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
-let value: OrderType = OrderType.Drink;
+let value: OrderType = OrderType.Ingredient;
 ```
 
 ## Values

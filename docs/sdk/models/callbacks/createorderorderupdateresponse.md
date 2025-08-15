@@ -7,10 +7,7 @@ import { CreateOrderOrderUpdateResponse } from "@speakeasy-sdks/speakeasy-bar/sd
 
 let value: CreateOrderOrderUpdateResponse = {
   contentType: "<value>",
-  statusCode: 102,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
+  statusCode: 362789,
 };
 ```
 

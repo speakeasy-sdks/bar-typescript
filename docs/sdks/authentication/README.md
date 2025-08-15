@@ -15,6 +15,7 @@ Authenticate with the API by providing a username and password.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="authenticate" method="post" path="/authenticate" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
@@ -23,7 +24,6 @@ const barSDK = new BarSDK();
 async function run() {
   const result = await barSDK.authentication.authenticate({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -44,15 +44,12 @@ const barSDK = new BarSDKCore();
 
 async function run() {
   const res = await authenticationAuthenticate(barSDK, {});
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("authenticationAuthenticate failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

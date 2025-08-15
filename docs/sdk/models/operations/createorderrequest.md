@@ -10,7 +10,7 @@ let value: CreateOrderRequest = {
   requestBody: [
     {
       productCode: "AC-A2DF3",
-      quantity: 832620,
+      quantity: 903466,
       type: OrderType.Ingredient,
     },
   ],

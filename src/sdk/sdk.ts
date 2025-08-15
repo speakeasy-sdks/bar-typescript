@@ -6,6 +6,7 @@ import { ClientSDK } from "../lib/sdks.js";
 import { Authentication } from "./authentication.js";
 import { Config } from "./config.js";
 import { Drinks } from "./drinks.js";
+import { Food } from "./food.js";
 import { Ingredients } from "./ingredients.js";
 import { Orders } from "./orders.js";
 
@@ -18,6 +19,11 @@ export class BarSDK extends ClientSDK {
   private _drinks?: Drinks;
   get drinks(): Drinks {
     return (this._drinks ??= new Drinks(this._options));
+  }
+
+  private _food?: Food;
+  get food(): Food {
+    return (this._food ??= new Food(this._options));
   }
 
   private _ingredients?: Ingredients;
