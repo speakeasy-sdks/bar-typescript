@@ -270,6 +270,8 @@ examplesVersion: 1.0.2
 generatedTests: {}
 releaseNotes: |
   ## SDK Changes Detected:
+  This is a custom message added in the release Notes.
+  I can Add whatever here
   * `barsdk.food.getFood()`: **Added**
   * `barsdk.food.listFoods()`: **Added**
   * `barsdk.drinks.getDrink()`:  `response.volume` **Added**
