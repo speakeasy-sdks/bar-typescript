@@ -7,17 +7,7 @@ import { ListDrinksResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/ope
 
 let value: ListDrinksResponse = {
   contentType: "<value>",
-  statusCode: 511,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
-  classes: [
-    {
-      name: "Manhattan",
-      price: 1500,
-      productCode: "NAC-3F2D1",
-    },
-  ],
+  statusCode: 645743,
 };
 ```
 

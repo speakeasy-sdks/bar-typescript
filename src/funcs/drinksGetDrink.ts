@@ -5,10 +5,12 @@
 import { BarSDKCore } from "../core.js";
 import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import { BarSDKError } from "../sdk/models/errors/barsdkerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -17,9 +19,10 @@ import {
   UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
-import { SDKError } from "../sdk/models/errors/sdkerror.js";
+import { ResponseValidationError } from "../sdk/models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../sdk/models/errors/sdkvalidationerror.js";
 import * as operations from "../sdk/models/operations/index.js";
+import { APICall, APIPromise } from "../sdk/types/async.js";
 import { Result } from "../sdk/types/fp.js";
 
 /**
@@ -28,22 +31,51 @@ import { Result } from "../sdk/types/fp.js";
  * @remarks
  * Get a drink by name, if authenticated this will include stock levels and product codes otherwise it will only include public information.
  */
-export async function drinksGetDrink(
+export function drinksGetDrink(
+  client: BarSDKCore,
+  name: string,
+  options?: RequestOptions,
+): APIPromise<
+  Result<
+    operations.GetDrinkResponse,
+    | errors.APIError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    name,
+    options,
+  ));
+}
+
+async function $do(
   client: BarSDKCore,
   name: string,
   options?: RequestOptions,
 ): Promise<
-  Result<
-    operations.GetDrinkResponse,
-    | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | ConnectionError
-  >
+  [
+    Result<
+      operations.GetDrinkResponse,
+      | errors.APIError
+      | BarSDKError
+      | ResponseValidationError
+      | ConnectionError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
+    >,
+    APICall,
+  ]
 > {
   const input: operations.GetDrinkRequest = {
     name: name,
@@ -55,7 +87,7 @@ export async function drinksGetDrink(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
@@ -69,14 +101,16 @@ export async function drinksGetDrink(
 
   const path = pathToFunc("/drink/{name}")(pathParams);
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     Accept: "application/json",
-  });
+  }));
 
   const securityInput = await extractSecurity(client._options.security);
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    options: client._options,
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "getDrink",
     oAuth2Scopes: ["read:basic"],
 
@@ -102,13 +136,15 @@ export async function drinksGetDrink(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
+    baseURL: options?.serverURL,
     path: path,
     headers: headers,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -119,7 +155,7 @@ export async function drinksGetDrink(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -134,13 +170,14 @@ export async function drinksGetDrink(
   const [result] = await M.match<
     operations.GetDrinkResponse,
     | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.json(200, operations.GetDrinkResponse$inboundSchema, { key: "Drink" }),
     M.fail("4XX"),
@@ -148,10 +185,10 @@ export async function drinksGetDrink(
     M.json("default", operations.GetDrinkResponse$inboundSchema, {
       key: "Error",
     }),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

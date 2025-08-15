@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod";
+import { BarSDKError } from "./barsdkerror.js";
 
 /**
  * An error occurred interacting with the API.
@@ -16,20 +17,20 @@ export type APIErrorData = {
 /**
  * An error occurred interacting with the API.
  */
-export class APIError extends Error {
+export class APIError extends BarSDKError {
   code?: string | undefined;
   details?: { [k: string]: any } | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: APIErrorData;
 
-  constructor(err: APIErrorData) {
-    const message = "message" in err && typeof err.message === "string"
-      ? err.message
-      : `API error occurred: ${JSON.stringify(err)}`;
-    super(message);
+  constructor(
+    err: APIErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
+    const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
+    super(message, httpMeta);
     this.data$ = err;
-
     if (err.code != null) this.code = err.code;
     if (err.details != null) this.details = err.details;
 
@@ -46,9 +47,16 @@ export const APIError$inboundSchema: z.ZodType<
   code: z.string().optional(),
   details: z.record(z.any()).optional(),
   message: z.string().optional(),
+  request$: z.instanceof(Request),
+  response$: z.instanceof(Response),
+  body$: z.string(),
 })
   .transform((v) => {
-    return new APIError(v);
+    return new APIError(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
   });
 
 /** @internal */

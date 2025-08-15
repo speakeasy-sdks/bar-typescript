@@ -5,10 +5,12 @@
 import { BarSDKCore } from "../core.js";
 import { encodeFormQuery } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import { BarSDKError } from "../sdk/models/errors/barsdkerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -17,10 +19,11 @@ import {
   UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
-import { SDKError } from "../sdk/models/errors/sdkerror.js";
+import { ResponseValidationError } from "../sdk/models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../sdk/models/errors/sdkvalidationerror.js";
 import * as operations from "../sdk/models/operations/index.js";
 import * as shared from "../sdk/models/shared/index.js";
+import { APICall, APIPromise } from "../sdk/types/async.js";
 import { Result } from "../sdk/types/fp.js";
 
 /**
@@ -29,22 +32,51 @@ import { Result } from "../sdk/types/fp.js";
  * @remarks
  * Get a list of drinks, if authenticated this will include stock levels and product codes otherwise it will only include public information.
  */
-export async function drinksListDrinks(
+export function drinksListDrinks(
+  client: BarSDKCore,
+  drinkType?: shared.DrinkType | undefined,
+  options?: RequestOptions,
+): APIPromise<
+  Result<
+    operations.ListDrinksResponse,
+    | errors.APIError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    drinkType,
+    options,
+  ));
+}
+
+async function $do(
   client: BarSDKCore,
   drinkType?: shared.DrinkType | undefined,
   options?: RequestOptions,
 ): Promise<
-  Result<
-    operations.ListDrinksResponse,
-    | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | ConnectionError
-  >
+  [
+    Result<
+      operations.ListDrinksResponse,
+      | errors.APIError
+      | BarSDKError
+      | ResponseValidationError
+      | ConnectionError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
+    >,
+    APICall,
+  ]
 > {
   const input: operations.ListDrinksRequest = {
     drinkType: drinkType,
@@ -56,7 +88,7 @@ export async function drinksListDrinks(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
@@ -67,14 +99,16 @@ export async function drinksListDrinks(
     "drinkType": payload.drinkType,
   });
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     Accept: "application/json",
-  });
+  }));
 
   const securityInput = await extractSecurity(client._options.security);
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    options: client._options,
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "listDrinks",
     oAuth2Scopes: ["read:basic", "read:drinks"],
 
@@ -100,14 +134,16 @@ export async function drinksListDrinks(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
+    baseURL: options?.serverURL,
     path: path,
     headers: headers,
     query: query,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -118,7 +154,7 @@ export async function drinksListDrinks(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -133,13 +169,14 @@ export async function drinksListDrinks(
   const [result] = await M.match<
     operations.ListDrinksResponse,
     | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.json(200, operations.ListDrinksResponse$inboundSchema, {
       key: "classes",
@@ -149,10 +186,10 @@ export async function drinksListDrinks(
     M.json("default", operations.ListDrinksResponse$inboundSchema, {
       key: "Error",
     }),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

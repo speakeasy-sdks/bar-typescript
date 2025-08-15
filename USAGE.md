@@ -11,7 +11,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.drinks.listDrinks();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -21,7 +20,6 @@ run();
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
   security: {
@@ -30,20 +28,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.orders.createOrder([
-    {
-      productCode: "APM-1F2D3",
-      quantity: 567805,
-      type: OrderType.Ingredient,
-    },
-    {
-      productCode: "AC-A2DF3",
-      quantity: 618237,
-      type: OrderType.Ingredient,
-    },
-  ]);
+  const result = await barSDK.orders.createOrder([]);
 
-  // Handle the result
   console.log(result);
 }
 

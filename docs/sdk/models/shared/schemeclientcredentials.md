@@ -8,7 +8,6 @@ import { SchemeClientCredentials } from "@speakeasy-sdks/speakeasy-bar/sdk/model
 let value: SchemeClientCredentials = {
   clientID: "<id>",
   clientSecret: "<value>",
-  tokenURL: "https://speakeasy.bar/oauth2/token/",
 };
 ```
 

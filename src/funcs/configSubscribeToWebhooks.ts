@@ -6,10 +6,12 @@ import * as z from "zod";
 import { BarSDKCore } from "../core.js";
 import { encodeJSON } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
+import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import { BarSDKError } from "../sdk/models/errors/barsdkerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -18,9 +20,10 @@ import {
   UnexpectedClientError,
 } from "../sdk/models/errors/httpclienterrors.js";
 import * as errors from "../sdk/models/errors/index.js";
-import { SDKError } from "../sdk/models/errors/sdkerror.js";
+import { ResponseValidationError } from "../sdk/models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../sdk/models/errors/sdkvalidationerror.js";
 import * as operations from "../sdk/models/operations/index.js";
+import { APICall, APIPromise } from "../sdk/types/async.js";
 import { Result } from "../sdk/types/fp.js";
 
 /**
@@ -29,22 +32,51 @@ import { Result } from "../sdk/types/fp.js";
  * @remarks
  * Subscribe to webhooks.
  */
-export async function configSubscribeToWebhooks(
+export function configSubscribeToWebhooks(
+  client: BarSDKCore,
+  request: Array<operations.RequestBody>,
+  options?: RequestOptions,
+): APIPromise<
+  Result<
+    operations.SubscribeToWebhooksResponse,
+    | errors.APIError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
   client: BarSDKCore,
   request: Array<operations.RequestBody>,
   options?: RequestOptions,
 ): Promise<
-  Result<
-    operations.SubscribeToWebhooksResponse,
-    | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | ConnectionError
-  >
+  [
+    Result<
+      operations.SubscribeToWebhooksResponse,
+      | errors.APIError
+      | BarSDKError
+      | ResponseValidationError
+      | ConnectionError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
+    >,
+    APICall,
+  ]
 > {
   const parsed = safeParse(
     request,
@@ -52,22 +84,24 @@ export async function configSubscribeToWebhooks(
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = encodeJSON("body", payload, { explode: true });
 
   const path = pathToFunc("/webhooks/subscribe")();
 
-  const headers = new Headers({
+  const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
-  });
+  }));
 
   const securityInput = await extractSecurity(client._options.security);
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    options: client._options,
+    baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "subscribeToWebhooks",
     oAuth2Scopes: ["read:basic"],
 
@@ -93,13 +127,15 @@ export async function configSubscribeToWebhooks(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "POST",
+    baseURL: options?.serverURL,
     path: path,
     headers: headers,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -110,7 +146,7 @@ export async function configSubscribeToWebhooks(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -125,13 +161,14 @@ export async function configSubscribeToWebhooks(
   const [result] = await M.match<
     operations.SubscribeToWebhooksResponse,
     | errors.APIError
-    | SDKError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | BarSDKError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.nil(200, operations.SubscribeToWebhooksResponse$inboundSchema),
     M.fail("4XX"),
@@ -139,10 +176,10 @@ export async function configSubscribeToWebhooks(
     M.json("default", operations.SubscribeToWebhooksResponse$inboundSchema, {
       key: "Error",
     }),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

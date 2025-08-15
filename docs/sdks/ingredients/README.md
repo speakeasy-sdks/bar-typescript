@@ -15,6 +15,7 @@ Get a list of ingredients, if authenticated this will include stock levels and p
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listIngredients" method="get" path="/ingredients" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
@@ -25,9 +26,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.ingredients.listIngredients(347327);
+  const result = await barSDK.ingredients.listIngredients(982293);
 
-  // Handle the result
   console.log(result);
 }
 
@@ -51,16 +51,13 @@ const barSDK = new BarSDKCore({
 });
 
 async function run() {
-  const res = await ingredientsListIngredients(barSDK, 347327);
-
-  if (!res.ok) {
-    throw res.error;
+  const res = await ingredientsListIngredients(barSDK, 982293);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ingredientsListIngredients failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

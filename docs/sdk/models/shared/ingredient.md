@@ -6,9 +6,9 @@
 import { Ingredient, IngredientType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: Ingredient = {
-  name: "Orange Peel",
-  productCode: "NAC-3F2D1",
-  type: IngredientType.LongLife,
+  name: "Sugar Syrup",
+  productCode: "AC-A2DF3",
+  type: IngredientType.Fresh,
 };
 ```
 

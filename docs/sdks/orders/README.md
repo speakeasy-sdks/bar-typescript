@@ -15,9 +15,9 @@ Create an order for a drink.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="createOrder" method="post" path="/order" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
   security: {
@@ -26,20 +26,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.orders.createOrder([
-    {
-      productCode: "APM-1F2D3",
-      quantity: 567805,
-      type: OrderType.Ingredient,
-    },
-    {
-      productCode: "AC-A2DF3",
-      quantity: 618237,
-      type: OrderType.Ingredient,
-    },
-  ]);
+  const result = await barSDK.orders.createOrder([]);
 
-  // Handle the result
   console.log(result);
 }
 
@@ -53,7 +41,6 @@ The standalone function version of this method:
 ```typescript
 import { BarSDKCore } from "@speakeasy-sdks/speakeasy-bar/core.js";
 import { ordersCreateOrder } from "@speakeasy-sdks/speakeasy-bar/funcs/ordersCreateOrder.js";
-import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 // Use `BarSDKCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -64,27 +51,13 @@ const barSDK = new BarSDKCore({
 });
 
 async function run() {
-  const res = await ordersCreateOrder(barSDK, [
-    {
-      productCode: "APM-1F2D3",
-      quantity: 567805,
-      type: OrderType.Ingredient,
-    },
-    {
-      productCode: "AC-A2DF3",
-      quantity: 618237,
-      type: OrderType.Ingredient,
-    },
-  ]);
-
-  if (!res.ok) {
-    throw res.error;
+  const res = await ordersCreateOrder(barSDK, []);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ordersCreateOrder failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

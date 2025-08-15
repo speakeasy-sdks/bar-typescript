@@ -4,20 +4,10 @@
 
 ```typescript
 import { CreateOrderResponse } from "@speakeasy-sdks/speakeasy-bar/sdk/models/operations";
-import { OrderType, Status } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 let value: CreateOrderResponse = {
   contentType: "<value>",
-  order: {
-    productCode: "APM-1F2D3",
-    quantity: 978619,
-    status: Status.Complete,
-    type: OrderType.Drink,
-  },
-  statusCode: 403,
-  rawResponse: new Response("{\"message\": \"hello world\"}", {
-    headers: { "Content-Type": "application/json" },
-  }),
+  statusCode: 931161,
 };
 ```
 

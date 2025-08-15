@@ -37,7 +37,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.drinks.listDrinks();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -49,7 +48,6 @@ run();
 
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import { OrderType } from "@speakeasy-sdks/speakeasy-bar/sdk/models/shared";
 
 const barSDK = new BarSDK({
   security: {
@@ -58,20 +56,8 @@ const barSDK = new BarSDK({
 });
 
 async function run() {
-  const result = await barSDK.orders.createOrder([
-    {
-      productCode: "APM-1F2D3",
-      quantity: 567805,
-      type: OrderType.Ingredient,
-    },
-    {
-      productCode: "AC-A2DF3",
-      quantity: 618237,
-      type: OrderType.Ingredient,
-    },
-  ]);
+  const result = await barSDK.orders.createOrder([]);
 
-  // Handle the result
   console.log(result);
 }
 
@@ -100,6 +86,11 @@ run();
 * [getDrink](docs/sdks/drinks/README.md#getdrink) - Get a drink.
 * [listDrinks](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
 
+### [food](docs/sdks/food/README.md)
+
+* [getFood](docs/sdks/food/README.md#getfood) - Get a food item.
+* [listFoods](docs/sdks/food/README.md#listfoods) - Get a list of food items.
+
 ### [ingredients](docs/sdks/ingredients/README.md)
 
 * [listIngredients](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
@@ -114,57 +105,42 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-All SDK methods return a response object or throw an error. By default, an API error will throw a `errors.SDKError`.
+[`BarSDKError`](./src/sdk/models/errors/barsdkerror.ts) is the base class for all HTTP error responses. It has the following properties:
 
-If a HTTP request fails, an operation my also throw an error from the `sdk/models/errors/httpclienterrors.ts` module:
+| Property            | Type       | Description                                                                             |
+| ------------------- | ---------- | --------------------------------------------------------------------------------------- |
+| `error.message`     | `string`   | Error message                                                                           |
+| `error.statusCode`  | `number`   | HTTP response status code eg `404`                                                      |
+| `error.headers`     | `Headers`  | HTTP response headers                                                                   |
+| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned.                                  |
+| `error.rawResponse` | `Response` | Raw HTTP response                                                                       |
+| `error.data$`       |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
-| HTTP Client Error                                    | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| RequestAbortedError                                  | HTTP request was aborted by the client               |
-| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
-| ConnectionError                                      | HTTP client was unable to make a request to a server |
-| InvalidRequestError                                  | Any input used to create a request is invalid        |
-| UnexpectedClientError                                | Unrecognised or unexpected error                     |
-
-In addition, when custom error responses are specified for an operation, the SDK may throw their associated Error type. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation. For example, the `authenticate` method may throw the following errors:
-
-| Error Type      | Status Code | Content Type     |
-| --------------- | ----------- | ---------------- |
-| errors.APIError | 5XX         | application/json |
-| errors.SDKError | 4XX         | \*/\*            |
-
+### Example
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
-import {
-  APIError,
-  SDKValidationError,
-} from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
+import * as errors from "@speakeasy-sdks/speakeasy-bar/sdk/models/errors";
 
 const barSDK = new BarSDK();
 
 async function run() {
-  let result;
   try {
-    result = await barSDK.authentication.authenticate({});
+    const result = await barSDK.authentication.authenticate({});
 
-    // Handle the result
     console.log(result);
-  } catch (err) {
-    switch (true) {
-      case (err instanceof SDKValidationError): {
-        // Validation errors can be pretty-printed
-        console.error(err.pretty());
-        // Raw value may also be inspected
-        console.error(err.rawValue);
-        return;
-      }
-      case (err instanceof APIError): {
-        // Handle err.data$: APIErrorData
-        console.error(err);
-        return;
-      }
-      default: {
-        throw err;
+  } catch (error) {
+    // The base class for HTTP error responses
+    if (error instanceof errors.BarSDKError) {
+      console.log(error.message);
+      console.log(error.statusCode);
+      console.log(error.body);
+      console.log(error.headers);
+
+      // Depending on the method different errors may be thrown
+      if (error instanceof errors.APIError) {
+        console.log(error.data$.code); // string
+        console.log(error.data$.details); // { [k: string]: any }
+        console.log(error.data$.message); // string
       }
     }
   }
@@ -174,7 +150,27 @@ run();
 
 ```
 
-Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted string since validation errors can list many issues and the plain error string may be difficult read when debugging.
+### Error Classes
+**Primary errors:**
+* [`BarSDKError`](./src/sdk/models/errors/barsdkerror.ts): The base class for HTTP error responses.
+  * [`APIError`](./src/sdk/models/errors/apierror.ts): An error occurred interacting with the API. Status code `5XX`.
+
+<details><summary>Less common errors (6)</summary>
+
+<br />
+
+**Network errors:**
+* [`ConnectionError`](./src/sdk/models/errors/httpclienterrors.ts): HTTP client was unable to make a request to a server.
+* [`RequestTimeoutError`](./src/sdk/models/errors/httpclienterrors.ts): HTTP request timed out due to an AbortSignal signal.
+* [`RequestAbortedError`](./src/sdk/models/errors/httpclienterrors.ts): HTTP request was aborted by the client.
+* [`InvalidRequestError`](./src/sdk/models/errors/httpclienterrors.ts): Any input used to create a request is invalid.
+* [`UnexpectedClientError`](./src/sdk/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
+
+
+**Inherit from [`BarSDKError`](./src/sdk/models/errors/barsdkerror.ts)**:
+* [`ResponseValidationError`](./src/sdk/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
+
+</details>
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -184,13 +180,18 @@ Validation errors can also occur when either method arguments or data returned f
 
 You can override the default server globally by passing a server name to the `server: keyof typeof ServerList` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name       | Server                                               | Variables                                                          | Default values       |
-| ---------- | ---------------------------------------------------- | ------------------------------------------------------------------ | -------------------- |
-| `prod`     | `https://speakeasy.bar`                              |                                                                    |                      |
-| `staging`  | `https://staging.speakeasy.bar`                      |                                                                    |                      |
-| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment: models.ServerEnvironment`<br/>`organization: string` | `"prod"`<br/>`"api"` |
+| Name       | Server                                               | Variables                        | Description                                 |
+| ---------- | ---------------------------------------------------- | -------------------------------- | ------------------------------------------- |
+| `prod`     | `https://speakeasy.bar`                              |                                  | The production server.                      |
+| `staging`  | `https://staging.speakeasy.bar`                      |                                  | The staging server.                         |
+| `customer` | `https://{organization}.{environment}.speakeasy.bar` | `environment`<br/>`organization` | A per-organization and per-environment API. |
 
-If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
+If the selected server has variables, you may override its default values through the additional parameters made available in the SDK constructor:
+
+| Variable       | Parameter                               | Supported Values                           | Default  | Description                                                   |
+| -------------- | --------------------------------------- | ------------------------------------------ | -------- | ------------------------------------------------------------- |
+| `environment`  | `environment: models.ServerEnvironment` | - `"prod"`<br/>- `"staging"`<br/>- `"dev"` | `"prod"` | The environment name. Defaults to the production environment. |
+| `organization` | `organization: string`                  | string                                     | `"api"`  | The organization name. Defaults to a generic organization.    |
 
 #### Example
 
@@ -199,12 +200,13 @@ import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
 const barSDK = new BarSDK({
   server: "customer",
+  environment: "dev",
+  organization: "<value>",
 });
 
 async function run() {
   const result = await barSDK.authentication.authenticate({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -225,7 +227,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.authentication.authenticate({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -310,7 +311,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.authentication.authenticate({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -408,6 +408,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`configSubscribeToWebhooks`](docs/sdks/config/README.md#subscribetowebhooks) - Subscribe to webhooks.
 - [`drinksGetDrink`](docs/sdks/drinks/README.md#getdrink) - Get a drink.
 - [`drinksListDrinks`](docs/sdks/drinks/README.md#listdrinks) - Get a list of drinks.
+- [`foodGetFood`](docs/sdks/food/README.md#getfood) - Get a food item.
+- [`foodListFoods`](docs/sdks/food/README.md#listfoods) - Get a list of food items.
 - [`ingredientsListIngredients`](docs/sdks/ingredients/README.md#listingredients) - Get a list of ingredients.
 - [`ordersCreateOrder`](docs/sdks/orders/README.md#createorder) - Create an order.
 
@@ -439,7 +441,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -467,7 +468,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.authentication.authenticate({});
 
-  // Handle the result
   console.log(result);
 }
 

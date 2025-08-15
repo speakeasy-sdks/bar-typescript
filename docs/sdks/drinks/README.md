@@ -16,6 +16,7 @@ Get a drink by name, if authenticated this will include stock levels and product
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getDrink" method="get" path="/drink/{name}" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
@@ -28,7 +29,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.drinks.getDrink("<value>");
 
-  // Handle the result
   console.log(result);
 }
 
@@ -53,15 +53,12 @@ const barSDK = new BarSDKCore({
 
 async function run() {
   const res = await drinksGetDrink(barSDK, "<value>");
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("drinksGetDrink failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -93,6 +90,7 @@ Get a list of drinks, if authenticated this will include stock levels and produc
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listDrinks" method="get" path="/drinks" -->
 ```typescript
 import { BarSDK } from "@speakeasy-sdks/speakeasy-bar";
 
@@ -105,7 +103,6 @@ const barSDK = new BarSDK({
 async function run() {
   const result = await barSDK.drinks.listDrinks();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -130,15 +127,12 @@ const barSDK = new BarSDKCore({
 
 async function run() {
   const res = await drinksListDrinks(barSDK);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("drinksListDrinks failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
