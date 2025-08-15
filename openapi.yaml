@@ -69,6 +69,8 @@ tags:
   - name: authentication
     description: The authentication endpoints.
   - name: config
+  - name: food
+    description: The food endpoints.
 
 paths:
 
@@ -301,6 +303,55 @@ paths:
           $ref: "#/components/responses/APIError"
         default:
           $ref: "#/components/responses/UnknownError"
+  /food/{name}:
+    get:
+      operationId: getFood
+      summary: Get a food item.
+      description: Get a food item by name.
+      tags:
+        - food
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A food item.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+        "5XX":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/UnknownError"
+  /foods:
+    get:
+      operationId: listFoods
+      summary: Get a list of food items.
+      description: Get a list of food items.
+      tags:
+        - food
+      responses:
+        "200":
+          description: A list of food items.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    examples: "roti, naan, pizza"
+        "5XX":
+          $ref: "#/components/responses/APIError"
+        default:
+          $ref: "#/components/responses/UnknownError"
 webhooks:
   stockUpdate:
     post:
@@ -356,6 +407,13 @@ components:
             - Old Fashioned
             - Manhattan
             - Negroni
+        volume:
+          description: The volume of the drink in milliliters.
+          type: integer
+          examples:
+            - 100
+            - 200
+            - 300
         type:
           $ref: "#/components/schemas/DrinkType"
         price:
