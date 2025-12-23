@@ -20,7 +20,7 @@ const barSDK = new BarSDK({
 });
 
 async function main() {
-  const result = await barSDK.listDrinks();
+  const result = await barSDK.drinks.listDrinks();
 
   console.log(result);
 }
