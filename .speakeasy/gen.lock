@@ -3,35 +3,697 @@ id: 906577a1-c369-4ae0-9074-3e1b5123889d
 management:
   docChecksum: 1635e5b89252324e589174337edd2cfe
   docVersion: 1.0.0
-  speakeasyVersion: 1.605.0
-  generationVersion: 2.684.0
-  releaseVersion: 4.1.0
-  configChecksum: d2560db9f904573d647b9dc538796843
+  speakeasyVersion: 1.680.4
+  generationVersion: 2.788.7
+  releaseVersion: 5.0.0
+  configChecksum: ae54571f6df5c4d9cd8c756c7ba7bb87
   repoURL: https://github.com/speakeasy-sdks/bar-typescript.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/bar-typescript
   published: true
+persistentEdits:
+  generation_id: a6b2081c-0709-41ca-9acc-05c56181e235
+  pristine_commit_hash: d5fc895f9e9da3b9ce819f7b0b2bded8fe4701db
+  pristine_tree_hash: 7d103a4675d13f2ea8212f2d860b394af6a42e9d
 features:
   typescript:
     additionalDependencies: 0.1.0
-    callbacks: 1.0.0
-    core: 3.21.20
+    callbacks: 1.0.1
+    core: 3.26.17
     defaultEnabledRetries: 0.1.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
-    errors: 2.86.0
+    errors: 2.86.2
     examples: 2.82.3
     flattening: 2.82.1
-    globalSecurity: 2.82.13
+    globalSecurity: 2.82.14
     globalSecurityCallbacks: 0.1.0
-    globalServerURLs: 2.82.5
+    globalServerURLs: 2.83.0
     inputOutputModels: 2.82.0
-    oauth2ClientCredentials: 0.5.0
+    oauth2ClientCredentials: 1.1.1
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.3.0
+    sdkHooks: 0.4.0
     serverIDs: 2.81.2
-    webhooks: 1.5.0
+    webhooks: 1.5.1
+trackedFiles:
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:26d16d8297b104945139da8c25bd38feeaad3e25
+    pristine_git_object: 113eead5093c17d43a46159132885318f281a68a
+  .npmignore:
+    id: aa70c1f807c3
+    last_write_checksum: sha1:3d5eb92f81539175db1ff0280e0aefbdd701f200
+    pristine_git_object: cf98a6bf092538eb10ff0edc915102682ce9a6e6
+  FUNCTIONS.md:
+    id: 21b9df02aaeb
+    last_write_checksum: sha1:8771aa1dacf880ea3cfb1743301e3b5963e257d4
+    pristine_git_object: fd9df37897474246e8bc1f976ad723d8f2332e2c
+  RUNTIMES.md:
+    id: 620c490847b6
+    last_write_checksum: sha1:e45b854f02c357cbcfdb8c3663000e8339e16505
+    pristine_git_object: 27731c3b5ace66bedc454ed5acbe15075aacd3dc
+  USAGE.md:
+    id: 3aed33ce6e6f
+    last_write_checksum: sha1:27945346dd8412429dea86aa89ff61b40f98941a
+    pristine_git_object: db321c0709eaa0ef541876cedfa9a66346406074
+  docs/lib/utils/retryconfig.md:
+    id: 0ce9707cb848
+    last_write_checksum: sha1:bc4454e196fcd219f5a78da690375a884f5ed07b
+    pristine_git_object: 08f95f4552349360b2c0b01802aa71ec3a55d2c2
+  docs/sdk/models/callbacks/createorderorderupdaterequestbody.md:
+    id: cd830cb9e3bd
+    last_write_checksum: sha1:fd23f147e5fe941f6a2c48e53cf5a242424fae8d
+    pristine_git_object: 513cdf8882b20ba5d87c65a2d35982d3bf0c841e
+  docs/sdk/models/callbacks/createorderorderupdateresponse.md:
+    id: 264caec9a32a
+    last_write_checksum: sha1:b3c610a1d2856b2660ff23d39b52d77af05b7650
+    pristine_git_object: fb19bb29a72b7f5306fcc866ac96c4fef02193e7
+  docs/sdk/models/errors/apierror.md:
+    id: 531fa26ea9f2
+    last_write_checksum: sha1:dfb9b2038c7ef4d266527834dfc26ea9099bad2f
+    pristine_git_object: 20470844349733afc8273f982b0a2be2447ef7d1
+  docs/sdk/models/operations/authenticaterequestbody.md:
+    id: 60077920f13e
+    last_write_checksum: sha1:080b8aa8268da7497cc316e35c44e1528ce17d8b
+    pristine_git_object: 60c4f6d59bb21a53c5efe406a76efe721db276f5
+  docs/sdk/models/operations/authenticateresponse.md:
+    id: 38c5fe1d3702
+    last_write_checksum: sha1:7d7c8341112bae67a8c9761240ab1ba5cc8ca369
+    pristine_git_object: 6e2ff7a6fe150052dc0ba39c7c59026642ac7e1f
+  docs/sdk/models/operations/authenticateresponsebody.md:
+    id: cee5f7d83720
+    last_write_checksum: sha1:c51bc086c0b1db05dab89eb644389332039ecf8c
+    pristine_git_object: 26e1db4379de861965cdc3c874330fe1157bc615
+  docs/sdk/models/operations/createorderrequest.md:
+    id: 6bc91092c39c
+    last_write_checksum: sha1:8e42bcf46e7efe2f560e8cf45e3b6709cb37d604
+    pristine_git_object: 4257430e0d8eaefc3e20a3251a990f12979d2a02
+  docs/sdk/models/operations/createorderresponse.md:
+    id: 3fe50ae732ed
+    last_write_checksum: sha1:9f23d1e80c12f4381e8b056aef03ea141b953046
+    pristine_git_object: 582039875b4d32196ca1dcfd1576535de99da6b5
+  docs/sdk/models/operations/data.md:
+    id: dae198ce7e44
+    last_write_checksum: sha1:abe12f13c568b51304911c5edd4d6c0070de2cd8
+    pristine_git_object: b6d132c8b1405e54f39d9f061996b3489b766e44
+  docs/sdk/models/operations/getdrinkrequest.md:
+    id: 9f15f5c16d95
+    last_write_checksum: sha1:1a55c0ae9f3502e8d67a2c3e854c52799bbcb940
+    pristine_git_object: f4e61401766181830cc6553f93fb012ad57454e1
+  docs/sdk/models/operations/getdrinkresponse.md:
+    id: 85069dcfa035
+    last_write_checksum: sha1:4b6ef5a2133648907a0adde76174d5697ad90be7
+    pristine_git_object: 95820e41dcad2cee03ade4bcdd6484cb5aa369ef
+  docs/sdk/models/operations/getfoodrequest.md:
+    id: 06f359a4dc6f
+    last_write_checksum: sha1:875bc726b04ec784db520a250065dd0c044f1fd2
+    pristine_git_object: dddb3122efbc6681c7ce52c0f64e4ebe76546f10
+  docs/sdk/models/operations/getfoodresponse.md:
+    id: 97814e6134de
+    last_write_checksum: sha1:96d0339b9387060aa09d99b593019cf6c23799c2
+    pristine_git_object: df75af3738039a07b051b9d892b41dddbe9a2d91
+  docs/sdk/models/operations/getfoodresponsebody.md:
+    id: 21c3339bbe23
+    last_write_checksum: sha1:e8e5ca22f435defae35a8806e16818c504044844
+    pristine_git_object: 01cdb1ebde74699100532b7e8dbb783bd0531c68
+  docs/sdk/models/operations/listdrinksrequest.md:
+    id: 567efc9ae281
+    last_write_checksum: sha1:43c192456c449e9fad09cd8c8d50efe98453583d
+    pristine_git_object: 6c45701bae64b128ee1d5b000f0953374c25f6c6
+  docs/sdk/models/operations/listdrinksresponse.md:
+    id: 2aeb97a1804c
+    last_write_checksum: sha1:24645c064c0283f42a0746aa65110522fd5cc570
+    pristine_git_object: 5ffa1bcecd2de7e2f5b5602fd34d01b61fa00bee
+  docs/sdk/models/operations/listfoodsresponse.md:
+    id: ee8e34d5ac76
+    last_write_checksum: sha1:050f4e060482029c21ce19d892324b5ccc5c7cd9
+    pristine_git_object: ab1efd1949bc9e43b712e7a48fb25abb93ed89a3
+  docs/sdk/models/operations/listfoodsresponsebody.md:
+    id: 42a62abd6f1d
+    last_write_checksum: sha1:54ec3a84fde17a04a7007397613180bd87e2eda7
+    pristine_git_object: 08c072d5376503b64a63248e01500a0489eec73f
+  docs/sdk/models/operations/listingredientsrequest.md:
+    id: f3c068a3bca6
+    last_write_checksum: sha1:e6746982c86c11af101bfb51578937782cc48e18
+    pristine_git_object: 601d601d3ac36efe17e82528f7c3d1ced0a30f90
+  docs/sdk/models/operations/listingredientsresponse.md:
+    id: 1af69030627f
+    last_write_checksum: sha1:0693ff1f613f2eb55a47e714c12a6b461f3f49d7
+    pristine_git_object: c95e0305be2906299bdbaef5994f5044873d4120
+  docs/sdk/models/operations/listingredientsresponsebody.md:
+    id: 2f0ea8cd6f39
+    last_write_checksum: sha1:12dbb8df95a4d5148bbcf99d6ec0e8fb6998c868
+    pristine_git_object: 6449e1f616e6c155c700fe37cc4a1a58b1a97d46
+  docs/sdk/models/operations/requestbody.md:
+    id: 12761381ce83
+    last_write_checksum: sha1:add3c833f671a7a4de986833836dd3831ea6fbfb
+    pristine_git_object: cb9d6772929964b78733276f1f5b460da732de33
+  docs/sdk/models/operations/subscribetowebhooksresponse.md:
+    id: 0df2eae7dcde
+    last_write_checksum: sha1:e6ef0991df4fc1b91a89231095a58353e4bac558
+    pristine_git_object: 3b3303b5d6b8aefcb5ad31b55f98be265acee37b
+  docs/sdk/models/operations/webhook.md:
+    id: 4e0737af093c
+    last_write_checksum: sha1:bc644156fd68426f8ed72968d6469c8547f67807
+    pristine_git_object: a160ed6c60718f48b9fce339fbbaaa8e31a32ff8
+  docs/sdk/models/shared/drink.md:
+    id: e736e5d6f361
+    last_write_checksum: sha1:9e16a7e8f54bf6de396ef57cab33bc34fb232478
+    pristine_git_object: 814e99618d9ca2b6fed0a21e8e4d4f519d081c1f
+  docs/sdk/models/shared/drinkinput.md:
+    id: d12b15155ba9
+    last_write_checksum: sha1:12b8b055db465fac282f3c19c3c1571b502bd18b
+    pristine_git_object: 50e4b288250a9a2f340bb43480a064ed1e7f411a
+  docs/sdk/models/shared/drinktype.md:
+    id: 541082f44b10
+    last_write_checksum: sha1:36410b344d5968800edead1c86005bb2fcc6603b
+    pristine_git_object: 07bd292ce36c29a0604d822182daef182fdfbb90
+  docs/sdk/models/shared/errort.md:
+    id: 0b95532b92dd
+    last_write_checksum: sha1:a65493ee48231c80524d3bb5c230f78a62d682ff
+    pristine_git_object: 79f91916e09c02b5fcc52c70549f65b1f7e3881c
+  docs/sdk/models/shared/ingredient.md:
+    id: 38ffe91253b3
+    last_write_checksum: sha1:69694e08a82dbf08c9143a9d881bea8be3b3de79
+    pristine_git_object: 1d34260e27ed000079e12239066eadc72532f43a
+  docs/sdk/models/shared/ingredienttype.md:
+    id: b1e37ff1326b
+    last_write_checksum: sha1:8c9052b3ee3a7e8e93e154a515669e0a4d15d198
+    pristine_git_object: 0577f4c7d4fc71c4cf56d75b36ce118af9c01c5f
+  docs/sdk/models/shared/order.md:
+    id: 197b77454c8c
+    last_write_checksum: sha1:b083c2d2d45c4bd7aaec8bf06ee2019789eb8dd8
+    pristine_git_object: df63e25249e8c17e223e40c4a3264c0bd7d2073a
+  docs/sdk/models/shared/orderinput.md:
+    id: f08c9895ee9d
+    last_write_checksum: sha1:591fd3ecda02c320111b59f3f54c487cc4391bb4
+    pristine_git_object: 53f7de3e0d6b3566133934e9570955ddda39b356
+  docs/sdk/models/shared/ordertype.md:
+    id: 9d758a9071d2
+    last_write_checksum: sha1:707a412beebe476ee8c8f76d70e9ec33a5ec333e
+    pristine_git_object: 5b99f0b6138638b27a7a567aebc269a98016757e
+  docs/sdk/models/shared/schemeclientcredentials.md:
+    id: 382c3ac56555
+    last_write_checksum: sha1:375e6be4d29a3bb15b7b647fc1e89e06f72f50cb
+    pristine_git_object: 711d43c62c74571c01935db8de5afe79d06c5e6f
+  docs/sdk/models/shared/security.md:
+    id: 972729c50a07
+    last_write_checksum: sha1:960af6da6cf559fb0c8d5b405add27927bbe86a2
+    pristine_git_object: 2c9a62c7aab5eacde0046b3608e2ff9b0b1c662b
+  docs/sdk/models/shared/status.md:
+    id: d40dc096aca1
+    last_write_checksum: sha1:82dc9974d6b09f6c9fcbcc1581c1cfabab80386e
+    pristine_git_object: d95d9c89838ecbf2bbca43c9e37f417c112c5bf0
+  docs/sdk/models/webhooks/stockupdaterequestbody.md:
+    id: fdf1dc68ace4
+    last_write_checksum: sha1:9c9c4c3e95643acfad762dbbfd77eaa4beb4aba1
+    pristine_git_object: daf95e80aff07584195e3137c5b936318ad9bc45
+  docs/sdk/models/webhooks/stockupdateresponse.md:
+    id: 00048800029b
+    last_write_checksum: sha1:24b4fc30af84bbffa7faaf3af17806b5bdad5e97
+    pristine_git_object: 2d61ccb1072a2d29c2faf1cae3140134194ccc32
+  docs/sdks/authentication/README.md:
+    id: 45be241adfc3
+    last_write_checksum: sha1:819716187f20de0ff13e5eda84250da591d297c8
+    pristine_git_object: 23a0f0e483daa3830c6271b4358de2cfe6020ac1
+  docs/sdks/config/README.md:
+    id: 1cb3aceda90c
+    last_write_checksum: sha1:6b223877b3ec42492ac9a505df0002b9c50d1ecb
+    pristine_git_object: e8d21876fd33fbd92481bb24d778ad46c826598d
+  docs/sdks/drinks/README.md:
+    id: 9022da1efa0f
+    last_write_checksum: sha1:2f77de4fb00c8d9b6705346523907134fbfca91f
+    pristine_git_object: 38416abbc9d90210510b2f3161d2c9c7c56cb4e1
+  docs/sdks/food/README.md:
+    id: 8e0150e0a446
+    last_write_checksum: sha1:2e7fba4d190c3764137a4c50e78dc8796b9e040a
+    pristine_git_object: c1c94edf9c5522c536571defb5960f7c0dcddb4d
+  docs/sdks/ingredients/README.md:
+    id: 6048018130c7
+    last_write_checksum: sha1:67f944dea724e07d6c3fc502ec949cc4bcda682e
+    pristine_git_object: 381565dc80bb39a89ae60de1df6d53cf7f3979e7
+  docs/sdks/orders/README.md:
+    id: fc5b2caf3cb2
+    last_write_checksum: sha1:406614a857fd452c1be5f15699b601d0b3eb7ccc
+    pristine_git_object: 6fb92dbdf335f113f52637a14cc4274ebe8f3732
+  eslint.config.mjs:
+    id: 461c8d07f6da
+    last_write_checksum: sha1:9398f326377fe47f67af2df6eb6370750c0790b4
+    pristine_git_object: 67bccfec985be20a00970d90155752832dd47135
+  examples/.env.template:
+    id: 52cbe5afed92
+    last_write_checksum: sha1:e3e56a66832efd16285d976f43364cb16ca4ed45
+    pristine_git_object: 90905d9da3f8eaa82c09187d89b569477d905684
+  examples/README.md:
+    id: 9d0f69d6e677
+    last_write_checksum: sha1:31faf5f2c3b64ca46d28fc30723570138128ef35
+    pristine_git_object: 754036f4c48a658148734f387de0c073bc97fd1b
+  examples/drinksListDrinks.example.ts:
+    id: 0743c2e072ff
+    last_write_checksum: sha1:064b3234646372721814badbe95c4349b03bbf47
+    pristine_git_object: 06a36476a1b1f37d88160913b87feb528a1cc7d8
+  examples/package.json:
+    id: c1d7b0ec8e7e
+    last_write_checksum: sha1:a325416afccbac5249b33d0e94bf01aa78f1ff6f
+    pristine_git_object: af8544db4abfc50b55dd2e5a947e28116d8ba84c
+  jsr.json:
+    id: 7f6ab7767282
+    last_write_checksum: sha1:e7e1f6039ba5587557e1237269f91ddabe8933a0
+    pristine_git_object: ab485ea9f412ab9af8a11ff1ed664764cd7f994c
+  package.json:
+    id: 7030d0b2f71b
+    last_write_checksum: sha1:936328f0f2a2f619560cda47bee63b0aaa9cbc0b
+    pristine_git_object: e34f054e646d8cd42c4f191882e33f7d68d2f16b
+  src/core.ts:
+    id: f431fdbcd144
+    last_write_checksum: sha1:af6bc5abac1cfcd472cea2df72eed0617fea984a
+    pristine_git_object: c5c6b3322cd24e58126abfc16e34f66d4f4c851f
+  src/funcs/authenticationAuthenticate.ts:
+    id: 22b6bec219a7
+    last_write_checksum: sha1:b43bcddf3e317cd8d10c3a277896578aecfca484
+    pristine_git_object: 244b446406d2a086551a7ca8c7dc28d4843dc2cc
+  src/funcs/configSubscribeToWebhooks.ts:
+    id: 95990a59358e
+    last_write_checksum: sha1:73c032bbb226a1df9993a5b18883006695bcd222
+    pristine_git_object: 18e254ae8506df28f57322d596008c0a6cf980f1
+  src/funcs/drinksGetDrink.ts:
+    id: c9798a69320f
+    last_write_checksum: sha1:48c1c7e182ad2ba6a92a8d1e4ed51071648f10ae
+    pristine_git_object: 176480b7940cf39d3209491d2dd81cf764c3608a
+  src/funcs/drinksListDrinks.ts:
+    id: be06978527c0
+    last_write_checksum: sha1:82be6bad101af7a194dc92ca1ff28f8e4a418424
+    pristine_git_object: afa97de36f38e0b1311578e81c0cea0216cc956b
+  src/funcs/foodGetFood.ts:
+    id: e3c773201181
+    last_write_checksum: sha1:1869f3ee41207267efef159518ddd8559cdde8d2
+    pristine_git_object: 47c402a02c373aa8764814ee0b10482d25eda8ea
+  src/funcs/foodListFoods.ts:
+    id: 1f6d0ef4419a
+    last_write_checksum: sha1:1bb4119334272a693d508f220060f02abeda489d
+    pristine_git_object: 58c7d2f87654967632017f70be41eced0d5c876b
+  src/funcs/ingredientsListIngredients.ts:
+    id: ff3fe894e1a6
+    last_write_checksum: sha1:7dfde9405d1256432edcf7e3fd8a5632517bc0ee
+    pristine_git_object: 88f9f1cadf7feb4ef0f1cb02a1bc58055c2bb570
+  src/funcs/ordersCreateOrder.ts:
+    id: 5c01e5a8cc4f
+    last_write_checksum: sha1:048d3e841b48c6840281a61ed75ecf02ee877480
+    pristine_git_object: f9ca7d3a34d90129d1b7d80b6ae84bd189239f35
+  src/funcs/validateWebhook.ts:
+    id: f3ebc1bebb84
+    last_write_checksum: sha1:ee3968ecc90af601676cd5c3fc2f9f924408f0f5
+    pristine_git_object: cbbcdf39fc15f83e17c3057c0c32fe1765ebd105
+  src/hooks/clientcredentials.ts:
+    id: 81c2e30380d8
+    last_write_checksum: sha1:d2b5aaf391c29acdb4c263e7e97660ba61b73e1c
+    pristine_git_object: 37296221e3198b6d73999cf10b814e2c99ac859b
+  src/hooks/hooks.ts:
+    id: a2463fc6f69b
+    last_write_checksum: sha1:99df2b04a4b09cfc5cd8833df78aa5cbb1d23c5d
+    pristine_git_object: d4b6c62b00eaaf678bfbe94c67cd8d3145fcc531
+  src/hooks/index.ts:
+    id: 5f2dab62b520
+    last_write_checksum: sha1:1a11c073a6cd792932218e1d4ed36b8567bad8ef
+    pristine_git_object: f60ec7acd76141a71d78008c5a362eb0236d8335
+  src/hooks/types.ts:
+    id: 2a02d86ec24f
+    last_write_checksum: sha1:a2145ca7943102b61791b4b067fb593f221349b3
+    pristine_git_object: 494395f66d0a6de6f6cd8b1dc918557843158c1d
+  src/index.ts:
+    id: c5fb850250c7
+    last_write_checksum: sha1:35c9cde3ae14b18b3f893a1afe8b6c44f8760f24
+    pristine_git_object: dbcba164a0082e3bb8c43cf21fa7f8ffb9d35dfc
+  src/lib/base64.ts:
+    id: "598522066688"
+    last_write_checksum: sha1:b0b12ddbd8625efb47c0e955a18641aeb10c6532
+    pristine_git_object: 0aebd8b0a4867e35cb3348fc52921c3c0b4725b7
+  src/lib/config.ts:
+    id: 320761608fb3
+    last_write_checksum: sha1:abb8c75d01f2a46c20f0c94acb6df48a63c69cfa
+    pristine_git_object: 66a59fab4f05b2c84a9ca38a354a6d29e526dd68
+  src/lib/dlv.ts:
+    id: b1988214835a
+    last_write_checksum: sha1:1dd3e3fbb4550c4bf31f5ef997faff355d6f3250
+    pristine_git_object: e81091f5e536f82739f71379b1fddc2d147c49e2
+  src/lib/encodings.ts:
+    id: 3bd8ead98afd
+    last_write_checksum: sha1:d20c131976ab8ac68b22bdde2b7ed84b5b873922
+    pristine_git_object: 31cd3733907afbee3641b9ab680ed417247a7d33
+  src/lib/files.ts:
+    id: e5efa54fcb95
+    last_write_checksum: sha1:d0f325f445b8d22e7d73baf052c585ec2dd24841
+    pristine_git_object: 0344cd046d033f9e8a55de02f7935c5cec5dc30b
+  src/lib/http.ts:
+    id: 63a80782d37e
+    last_write_checksum: sha1:797cbf16d3c7c4d62d3ba0eedb08617524938457
+    pristine_git_object: 13cf1fd7894a89f727b8d2db2ad24313a94f68c7
+  src/lib/is-plain-object.ts:
+    id: b9862591096a
+    last_write_checksum: sha1:df687f25a9590b6fd95d39df41a652ae3fd4e517
+    pristine_git_object: 61070d3d7c7e5e95b1ed7e7ea21869eb0767db77
+  src/lib/logger.ts:
+    id: 7ee7741a02bf
+    last_write_checksum: sha1:0ec9d3a2a34c362746b767e4f9a746c055d57a7b
+    pristine_git_object: d181f2937d4128afbe9b0327e0f81d1fa9c877b7
+  src/lib/matchers.ts:
+    id: d54b2253b719
+    last_write_checksum: sha1:659a81459136527b27d3aa3787f2fe94c3c50531
+    pristine_git_object: 993f7ac7d4969fe48990509d96dde5506c380b88
+  src/lib/oauth2-sessions.ts:
+    id: 537b7294cec0
+    last_write_checksum: sha1:5dd800929f75f5006fcbaba031a0c21e5f9d9ee9
+    pristine_git_object: 932c170f5c0ab5d76cf789838bd3fe8cba33ba44
+  src/lib/primitives.ts:
+    id: 74859f750b28
+    last_write_checksum: sha1:987869fc54790b9c22e9182099103d6aa7c67016
+    pristine_git_object: d21f1dc49affa4e6d324bdd60811b470fdfa7eb6
+  src/lib/retries.ts:
+    id: b24a69d15639
+    last_write_checksum: sha1:f3da74dffcbe2756c69393f8600205aa1dc06e68
+    pristine_git_object: e3ce9aba72150fc3c18f3105d39b21aba809377b
+  src/lib/schemas.ts:
+    id: deb4b531fae1
+    last_write_checksum: sha1:b8517a14d3043f488f44e3b10ddd6cabdd22242f
+    pristine_git_object: dc2510e330727b01894e4d3954ea92a62c962e5d
+  src/lib/sdks.ts:
+    id: 8a6d91f1218d
+    last_write_checksum: sha1:01e629478fc05c7b08075b347ed1e37d4101c3c7
+    pristine_git_object: 9979e5f58db0bf944065908b82409c146a48f787
+  src/lib/security.ts:
+    id: 0502afa7922e
+    last_write_checksum: sha1:fc56f9176fb1193aed7335288ce7f38825a6c703
+    pristine_git_object: ca0827ffe26171f5be75274940690779344f3d94
+  src/lib/url.ts:
+    id: b0057e24ed76
+    last_write_checksum: sha1:d124050c7e755c0cce233b9e029afb584ff65201
+    pristine_git_object: f3a8de6c021de59c991707946cd294596cae954d
+  src/sdk/authentication.ts:
+    id: 627e108b9d4b
+    last_write_checksum: sha1:42a2aae19104ab509f5d0e2b22c6ab01809cf929
+    pristine_git_object: 18873c012b5f6e30cb1a7b81aea55d56abae5bb4
+  src/sdk/config.ts:
+    id: 245460c23f6b
+    last_write_checksum: sha1:574fac3b5dbbcf0f5237b0998a00cab8f40622e5
+    pristine_git_object: a034d212ddcd19b5ce18d4cdbdc26af6915da873
+  src/sdk/drinks.ts:
+    id: e82fc1a8a455
+    last_write_checksum: sha1:56ebd2091268deffe132ed94ed77b080cffa1318
+    pristine_git_object: 56ce7f866419764512c619f01b0893d31c1d4857
+  src/sdk/food.ts:
+    id: 1f9aa9e6cd96
+    last_write_checksum: sha1:0417fffc6bd841e2ebfd2e93da25e8c743b1ddca
+    pristine_git_object: 55fba760a3cebdd73445c95948803a1a36d772d1
+  src/sdk/index.ts:
+    id: a857902a703f
+    last_write_checksum: sha1:ed6d64f2a6135349aa8498b8d8cff9ba85c7fb8f
+    pristine_git_object: ecac2264817bb369ff2dbf0f0e9029807e67ff77
+  src/sdk/ingredients.ts:
+    id: 99bb8d907e36
+    last_write_checksum: sha1:a03638945b9f8123ad8c270b7d9c29ce54387e22
+    pristine_git_object: 2148c83ea16e4e5d7f6083db260f7dcbd0c28597
+  src/sdk/models/callbacks/createorder.ts:
+    id: fee26ca1b6bf
+    last_write_checksum: sha1:81391e8842323b3f2050186f0a30b0a34ac1ded5
+    pristine_git_object: 92e8b153a088b80b302a6ad8ddb9ee107464c7a9
+  src/sdk/models/callbacks/index.ts:
+    id: 01406d2d59c2
+    last_write_checksum: sha1:a9b879ae015354a6c856b4b0b1070ad3f797fe07
+    pristine_git_object: 65bc28e46843c9e95dbc948b22f9641eacc41cf7
+  src/sdk/models/errors/apierror.ts:
+    id: 456b688c5bd4
+    last_write_checksum: sha1:1cb7b664ef0c732d4a3464d244edbb0b669bedb5
+    pristine_git_object: 1697b9669b1eb78ea21a5eba5dedc9394265e96f
+  src/sdk/models/errors/barsdkerror.ts:
+    id: 9185be05efe7
+    last_write_checksum: sha1:3cfc699adb8d912099ec60bc94ed883a1d2e8655
+    pristine_git_object: faaf1f7920d80a40dac206565ca4897160e566a2
+  src/sdk/models/errors/httpclienterrors.ts:
+    id: 7be0894f205a
+    last_write_checksum: sha1:994ced121c54fecd0af038ccfb7855fbfd3868ec
+    pristine_git_object: b34f612124c797c2a1106b9735708f679a90b74f
+  src/sdk/models/errors/index.ts:
+    id: 017ae2dc215b
+    last_write_checksum: sha1:34034c7adf85cdd6facd471ab08e5a4614e142d7
+    pristine_git_object: e58129e48246081ed9c801e4cfc84ec90874df70
+  src/sdk/models/errors/responsevalidationerror.ts:
+    id: 0b76670204e7
+    last_write_checksum: sha1:eacfe2098ba0401b41e4cfbee3eaa14148591c5e
+    pristine_git_object: 22969c09184cad885d31473907203dd8ca6047f1
+  src/sdk/models/errors/sdkerror.ts:
+    id: c231fdf3b914
+    last_write_checksum: sha1:ff5bd68647a5c18ff6dfdd7b43f1e09ee248f89a
+    pristine_git_object: ea1c039348e21f5af0a2b241eb7bc006d83574ef
+  src/sdk/models/errors/sdkvalidationerror.ts:
+    id: 7c8a11e099b9
+    last_write_checksum: sha1:a69da17627bcc32b820544608f3400423ea53f26
+    pristine_git_object: 6826e1208a5d7b7d310535d18909646522bf0fbd
+  src/sdk/models/operations/authenticate.ts:
+    id: 701a4ff7ca27
+    last_write_checksum: sha1:f96747d007c6a69ef1110c7911bcc164d7a302c7
+    pristine_git_object: 65a9f45392d8adfa0e40b76ed21bd9de56a3b11e
+  src/sdk/models/operations/createorder.ts:
+    id: deec9ee1bd5f
+    last_write_checksum: sha1:ddb64d5cbdf2a54813aa1ced693f757a24f5774c
+    pristine_git_object: cdffe9f32c97aa4e117deea16dcb9dbb1c197a97
+  src/sdk/models/operations/getdrink.ts:
+    id: ccd85a93bce8
+    last_write_checksum: sha1:6cf6c924008bb798b333d4ce0c970163eded85ef
+    pristine_git_object: 80debc3a39f2a446dfdcfe56ce728ccc9f74cbce
+  src/sdk/models/operations/getfood.ts:
+    id: c9a23af771b9
+    last_write_checksum: sha1:7d22b9b9dec34f70824b94efd4e94ea85aff60ed
+    pristine_git_object: 851c73773406ff1f4a6a16d79eb21dcf8e502295
+  src/sdk/models/operations/index.ts:
+    id: b2864d0519d7
+    last_write_checksum: sha1:da70d1b8e841d9f9e072f96120d128ec34470bec
+    pristine_git_object: d49fbdd050fe21a8e6f94d2d6fcbe9902c034831
+  src/sdk/models/operations/listdrinks.ts:
+    id: f8d1708939ba
+    last_write_checksum: sha1:c093c05f8444f2a3ad67e9b68a1f4f61c9a7e59b
+    pristine_git_object: 870446d0996be254f35fff09fe493590642dac4c
+  src/sdk/models/operations/listfoods.ts:
+    id: 158d7973cb3c
+    last_write_checksum: sha1:4af86bc3d645bd73708ea517572491bde5714458
+    pristine_git_object: c2a142b216b39018f43fa2b4c769364b77f4aa08
+  src/sdk/models/operations/listingredients.ts:
+    id: 075d1052003f
+    last_write_checksum: sha1:2a8cf8f1dbd99603133eb1d6096c0ee4f297c6c3
+    pristine_git_object: 84fa6dae40d8a681af9815af41da1e2e3c87c02c
+  src/sdk/models/operations/subscribetowebhooks.ts:
+    id: 5cdcbd54fd92
+    last_write_checksum: sha1:9dcd84ef28364c9fb10a9289579453cdc194d001
+    pristine_git_object: d8f9be39ee8fd6dc84134539e76fcc9e89c8b1eb
+  src/sdk/models/shared/drink.ts:
+    id: 1ead3e6a83b0
+    last_write_checksum: sha1:894e126bda44615b5985b7572fd994021a47eea8
+    pristine_git_object: 473c58c948624d6816c0e38886e57705fb98c90e
+  src/sdk/models/shared/drinkinput.ts:
+    id: 1d1afd94bc88
+    last_write_checksum: sha1:68fe8742bc03e7d85fd6ea79ddd0c81d6ed05629
+    pristine_git_object: d6629ad8bcd48ebba7533eb79d10311d6e5a621a
+  src/sdk/models/shared/drinktype.ts:
+    id: a34dfdce9c98
+    last_write_checksum: sha1:62e7c45c345db9619778b32a5668ee4ccf47b48c
+    pristine_git_object: e028711fac1b348c958039b66d7289cc9d8bedd1
+  src/sdk/models/shared/error.ts:
+    id: 12cb8c3a8e71
+    last_write_checksum: sha1:2b4bbec54afdf1e5832adce8378992fb0a5c862e
+    pristine_git_object: 699ae96646b57b27ca9913dbfcf066ee12bad3fe
+  src/sdk/models/shared/index.ts:
+    id: e97e906e3c14
+    last_write_checksum: sha1:b526c2e2a4a9de998e8eca7c205e67aa16369764
+    pristine_git_object: f819c05405aa894220b04d6b921c8bc4db8c12eb
+  src/sdk/models/shared/ingredient.ts:
+    id: 4572ccad1525
+    last_write_checksum: sha1:c8000ee54ada2baa19f9dd89c375126ed588e207
+    pristine_git_object: e145e85147837236b8a4a50a8901be1bd0ce3ff5
+  src/sdk/models/shared/ingredienttype.ts:
+    id: 8c33ce041b98
+    last_write_checksum: sha1:29710659ec57aa3367cefd04000daec8c3db4e99
+    pristine_git_object: 6418b60b6d32d039a2f5f857c49b9e2fec6f35c5
+  src/sdk/models/shared/order.ts:
+    id: 566aa60e9e27
+    last_write_checksum: sha1:8f758e7c5394c7d7ce7d824edc7d65c1cd5c0b8f
+    pristine_git_object: cc766b1e2c8cbb5254cfee86c7f1784f9b590f08
+  src/sdk/models/shared/orderinput.ts:
+    id: a8b7a9ce917f
+    last_write_checksum: sha1:74496bf2209456f7112353dd7fcf35e7e86c68e6
+    pristine_git_object: 345bf52707e51c113166a8766d301f0a0460e0f4
+  src/sdk/models/shared/ordertype.ts:
+    id: c3464977da71
+    last_write_checksum: sha1:c490db724d42355acdc6d3e378c23abdf66aea31
+    pristine_git_object: 426615c7d2a89d3c15184eabfac0daaf434d497d
+  src/sdk/models/shared/schemeclientcredentials.ts:
+    id: fabd33e6c366
+    last_write_checksum: sha1:f7615594069fb12903fc6cd4cf81ba1e92d88119
+    pristine_git_object: ef6b9cb548bffcea6f59264ccb31ab6f4639784e
+  src/sdk/models/shared/security.ts:
+    id: 4a9790ed1c2f
+    last_write_checksum: sha1:528d643bbbadfa1335ca3f58dcd5b4e073611b93
+    pristine_git_object: 52852afc61116254204eb251e4023548fb7243a7
+  src/sdk/models/webhooks/index.ts:
+    id: d1f95b6a4d0b
+    last_write_checksum: sha1:e374793719fa28d45fb0b46ca9f7bf9c78b3493c
+    pristine_git_object: 12e77e02cddf628b1d13cdbedde64aa456c1c295
+  src/sdk/models/webhooks/stockupdate.ts:
+    id: 7813dfe56a8f
+    last_write_checksum: sha1:339a4b1b70bdbe545a6ea0d8355446ba8c5b1ffe
+    pristine_git_object: e75b029e8f073af578e2cc21d2fa91fa86cd3f47
+  src/sdk/orders.ts:
+    id: b318c92b1ee9
+    last_write_checksum: sha1:ff1912b3c25083f43574332fbb0ac36a45771f1b
+    pristine_git_object: 7dd1620c6b8a69c3c12d9ba634b7b590f9ca0089
+  src/sdk/sdk.ts:
+    id: 784571af2f69
+    last_write_checksum: sha1:24884dde28fe7377eec92cf4c681f23091965186
+    pristine_git_object: 66dee41ddfcc4ebbea44d496289e8a556e2ff311
+  src/sdk/types/async.ts:
+    id: 966026768b05
+    last_write_checksum: sha1:3ff07b3feaf390ec1aeb18ff938e139c6c4a9585
+    pristine_git_object: 689dba5de50e8769e5f3bb913e3f42a146d15bc1
+  src/sdk/types/blobs.ts:
+    id: 1def31341768
+    last_write_checksum: sha1:cf45d78916671cb6345a11c97c633c64402bc27c
+    pristine_git_object: cce2892d4f573a120ef3907db90ab15f5979cfda
+  src/sdk/types/constdatetime.ts:
+    id: 7e64cb450e63
+    last_write_checksum: sha1:dfaaf9adfaf49808bd4c9dea0039f21b7088d9c0
+    pristine_git_object: fe62144eaf6a2054fc8ca9a98466e70f41b5434d
+  src/sdk/types/enums.ts:
+    id: 2ac17fb928cd
+    last_write_checksum: sha1:ee590453d2c87e33e89c633d37ee46907eca0e58
+    pristine_git_object: aba0ffd2a3308a31e516d83b52823d80aa65a8f9
+  src/sdk/types/fp.ts:
+    id: d9ec77b9460c
+    last_write_checksum: sha1:d24994d58f37a1ca106847fcc6d2e976c6f1c093
+    pristine_git_object: ccbe51eac69dfb0da5131f14fd753c4b47c1d527
+  src/sdk/types/index.ts:
+    id: 8c869d66c5f3
+    last_write_checksum: sha1:25820e050c332015aaff5b5de2bbec51c3edd3ad
+    pristine_git_object: 8249564b4af12e95d783f3ad39f37f88346b6d09
+  src/sdk/types/operations.ts:
+    id: c5e9c75d4266
+    last_write_checksum: sha1:c49e724cfb1259296381cb57bc0fcdd2eae45865
+    pristine_git_object: beb81e10f0b9eee2ed398a853fe6f737b743f818
+  src/sdk/types/rfcdate.ts:
+    id: fc969c92a7c1
+    last_write_checksum: sha1:8e5f382e02fe21c2f2e24deb1b7bbf8cddd3dd16
+    pristine_git_object: c79b3f53a3dd922aa2ace5a4191c8652cf9a8e89
+  src/sdk/types/streams.ts:
+    id: e556b428e8dc
+    last_write_checksum: sha1:cc9ced2dd34a76c3a1bd7784ccda1cc3b37ab9a9
+    pristine_git_object: a0163e7a99cea88f21d0ad4ce3af1c720180ee20
+  src/sdk/types/unrecognized.ts:
+    id: 690d294a1973
+    last_write_checksum: sha1:d33ac686528492f4cdc0dbf81ed343b4afe020fe
+    pristine_git_object: b7a2a13f3dff50663429df24ae2f55b647ff1084
+  src/sdk/types/webhooks.ts:
+    id: 0f676e5e22a7
+    last_write_checksum: sha1:dbce0cb417bcdcfcae0827fa045ee93ccab1c2c8
+    pristine_git_object: 9510d20c09d8dd689f6e37254030de22e997f3cc
+  tsconfig.json:
+    id: 61ebb9fd6e8c
+    last_write_checksum: sha1:c3ec7996536cdb9a54319e7d1eb3b199b733d34c
+    pristine_git_object: 0ccdbe286a8780e06a469a9eb7e2fb95322fd507
+examples:
+  authenticate:
+    speakeasy-default-authenticate:
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  getDrink:
+    speakeasy-default-get-drink:
+      parameters:
+        path:
+          name: "<value>"
+      responses:
+        "200":
+          application/json: {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  listDrinks:
+    speakeasy-default-list-drinks:
+      responses:
+        "200":
+          application/json: [{"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}]
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  stockUpdate:
+    speakeasy-default-stock-update:
+      requestBody:
+        application/json: {"drink": {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}, "ingredient": {"name": "Sugar Syrup", "productCode": "AC-A2DF3", "type": "fresh"}}
+      responses:
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  getFood:
+    speakeasy-default-get-food:
+      parameters:
+        path:
+          name: "<value>"
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  listFoods:
+    speakeasy-default-list-foods:
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  listIngredients:
+    speakeasy-default-list-ingredients:
+      parameters:
+        query:
+          page: 982293
+      responses:
+        "200":
+          application/json: {}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  createOrder:
+    speakeasy-default-create-order:
+      requestBody:
+        application/json: []
+      responses:
+        "200":
+          application/json: {"productCode": "AC-A2DF3", "quantity": 185162, "status": "complete", "type": "ingredient"}
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+  subscribeToWebhooks:
+    speakeasy-default-subscribe-to-webhooks:
+      requestBody:
+        application/json: []
+      responses:
+        5XX:
+          application/json: {}
+        default:
+          application/json: {}
+examplesVersion: 1.0.2
+generatedTests: {}
 generatedFiles:
   - .gitattributes
   - .npmignore
@@ -171,108 +833,3 @@ generatedFiles:
   - src/sdk/types/streams.ts
   - src/sdk/types/webhooks.ts
   - tsconfig.json
-examples:
-  authenticate:
-    speakeasy-default-authenticate:
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  getDrink:
-    speakeasy-default-get-drink:
-      parameters:
-        path:
-          name: "<value>"
-      responses:
-        "200":
-          application/json: {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  listDrinks:
-    speakeasy-default-list-drinks:
-      responses:
-        "200":
-          application/json: [{"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}]
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  stockUpdate:
-    speakeasy-default-stock-update:
-      requestBody:
-        application/json: {"drink": {"name": "Old Fashioned", "price": 1000, "productCode": "AC-A2DF3", "volume": 100}, "ingredient": {"name": "Sugar Syrup", "productCode": "AC-A2DF3", "type": "fresh"}}
-      responses:
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  getFood:
-    speakeasy-default-get-food:
-      parameters:
-        path:
-          name: "<value>"
-      responses:
-        "200":
-          application/json: {}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  listFoods:
-    speakeasy-default-list-foods:
-      responses:
-        "200":
-          application/json: {}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  listIngredients:
-    speakeasy-default-list-ingredients:
-      parameters:
-        query:
-          page: 982293
-      responses:
-        "200":
-          application/json: {}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  createOrder:
-    speakeasy-default-create-order:
-      requestBody:
-        application/json: []
-      responses:
-        "200":
-          application/json: {"productCode": "AC-A2DF3", "quantity": 185162, "status": "complete", "type": "ingredient"}
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-  subscribeToWebhooks:
-    speakeasy-default-subscribe-to-webhooks:
-      requestBody:
-        application/json: []
-      responses:
-        5XX:
-          application/json: {}
-        default:
-          application/json: {}
-examplesVersion: 1.0.2
-generatedTests: {}
-releaseNotes: |
-  ## SDK Changes Detected:
-  This is a custom message added in the release Notes.
-  I can Add whatever here
-  * `barsdk.food.getFood()`: **Added**
-  * `barsdk.food.listFoods()`: **Added**
-  * `barsdk.drinks.getDrink()`:  `response.volume` **Added**
-  * `barsdk.drinks.listDrinks()`:  `response.[].volume` **Added**
